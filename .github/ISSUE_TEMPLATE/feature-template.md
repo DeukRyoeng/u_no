@@ -1,7 +1,7 @@
 ---
 name: Feature Template
 about: "[Feat] 기능추가 "
-title: ''
+title: "[Feat]"
 labels: ''
 assignees: ''
 
