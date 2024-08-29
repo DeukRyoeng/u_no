@@ -115,7 +115,7 @@
 		AFD0E9312C80120D00D0C24C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C2D7DA8D2C806BD4009C8652 /* SettingModel */,
+				C2D7DA8D2C806BD4009C8652 /* Setting */,
 				AFD0E9392C8012C100D0C24C /* MainModel.swift */,
 			);
 			path = Model;
@@ -124,7 +124,7 @@
 		AFD0E9322C80121300D0C24C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C234BD612C8045C40074C822 /* SettingView */,
+				C234BD612C8045C40074C822 /* Setting */,
 				AFD0E9092C800BA800D0C24C /* ViewController.swift */,
 				AFD0E9372C80129900D0C24C /* MainViewController.swift */,
 			);
@@ -134,7 +134,7 @@
 		AFD0E9332C80122200D0C24C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C2D7DA8A2C8060A5009C8652 /* SettingViewModel */,
+				C2D7DA8A2C8060A5009C8652 /* Setting */,
 				AFD0E9352C80127C00D0C24C /* MainViewModel.swift */,
 			);
 			path = ViewModel;
@@ -148,30 +148,30 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		C234BD612C8045C40074C822 /* SettingView */ = {
+		C234BD612C8045C40074C822 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				C2D7DA882C805B8B009C8652 /* SettingCell.swift */,
 				C234BD622C80465C0074C822 /* SettingView.swift */,
 				C234BD642C8046680074C822 /* SettingController.swift */,
 			);
-			path = SettingView;
+			path = Setting;
 			sourceTree = "<group>";
 		};
-		C2D7DA8A2C8060A5009C8652 /* SettingViewModel */ = {
+		C2D7DA8A2C8060A5009C8652 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */,
 			);
-			path = SettingViewModel;
+			path = Setting;
 			sourceTree = "<group>";
 		};
-		C2D7DA8D2C806BD4009C8652 /* SettingModel */ = {
+		C2D7DA8D2C806BD4009C8652 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */,
 			);
-			path = SettingModel;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
