@@ -21,6 +21,7 @@ class SettingController: UIViewController {
         view.backgroundColor = .white
         setupUI()
         bindTableView()
+        bindViewModel()
     }
     
     private func setupUI() {
@@ -40,20 +41,24 @@ class SettingController: UIViewController {
         
         settingView.settingTable.rx
             .modelSelected(SettingItem.self)
-            .subscribe(onNext: { [weak self] item in
-                guard let self = self else { return }
-                if item.title == "문의사항" {
-                    self.openWebsite()
-                } else if !item.hasSwitch {
+            .bind(to: viewModel.itemSelected)
+            .disposed(by: disposeBag)
+        
+        viewModel.selection
+            .subscribe(onNext: { item in
+                if !item.hasSwitch {
                     print("Selected: \(item.title)")
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    private func openWebsite() {
-        if let url = URL(string: "https://www.naver.com") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
+    private func bindViewModel() {
+        viewModel.openURL
+            .compactMap { $0 }
+            .subscribe(onNext: { url in
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            })
+            .disposed(by: disposeBag)
     }
 }

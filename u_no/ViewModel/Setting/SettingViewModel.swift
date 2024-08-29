@@ -7,20 +7,19 @@
 
 import RxSwift
 import RxCocoa
+import Foundation
 
 class SettingViewModel {
     
-    // Input
     let itemSelected = PublishRelay<SettingItem>()
     
-    // Output
     let items: Observable<[SettingItem]>
     let selection: Observable<SettingItem>
-    
+    let openURL: Observable<URL?>
+
     private let disposeBag = DisposeBag()
     
     init() {
-        // Sample data
         let sampleItems = [
             SettingItem(title: "계정설정", hasSwitch: false),
             SettingItem(title: "알람", hasSwitch: true),
@@ -32,6 +31,13 @@ class SettingViewModel {
         items = Observable.just(sampleItems)
         
         selection = itemSelected.asObservable()
+
+        openURL = selection.map { item in
+            if item.title == "문의사항" {
+                return URL(string: "https://www.naver.com")
+            } else {
+                return nil
+            }
+        }
     }
 }
-
