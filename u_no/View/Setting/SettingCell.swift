@@ -12,7 +12,7 @@ import RxCocoa
 
 class SettingCell: UITableViewCell {
     
-    let customLabel: UILabel = {
+    private let customLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
@@ -25,7 +25,7 @@ class SettingCell: UITableViewCell {
         return imageView
     }()
     
-    let toggleSwitch: UISwitch = {
+    private let toggleSwitch: UISwitch = {
         let toggle = UISwitch()
         return toggle
     }()
