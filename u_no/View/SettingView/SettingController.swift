@@ -40,16 +40,20 @@ class SettingController: UIViewController {
         
         settingView.settingTable.rx
             .modelSelected(SettingItem.self)
-            .bind(to: viewModel.itemSelected)
-            .disposed(by: disposeBag)
-        
-        viewModel.selection
             .subscribe(onNext: { [weak self] item in
                 guard let self = self else { return }
-                if !item.hasSwitch {
+                if item.title == "문의사항" {
+                    self.openWebsite()
+                } else if !item.hasSwitch {
                     print("Selected: \(item.title)")
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func openWebsite() {
+        if let url = URL(string: "https://www.naver.com") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
