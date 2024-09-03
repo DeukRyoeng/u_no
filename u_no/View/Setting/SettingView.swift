@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class SettingView: UIView {
-    
+
     private let logoImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .systemBlue
@@ -20,6 +20,8 @@ class SettingView: UIView {
         let table = UITableView()
         table.isScrollEnabled = false
         table.register(SettingCell.self, forCellReuseIdentifier: "CustomCell")
+        table.separatorColor = .black
+        table.separatorInset = .zero
         return table
     }()
     
@@ -58,7 +60,7 @@ class SettingView: UIView {
 extension SettingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let customCell = cell as? SettingCell {
-            customCell.backgroundColor = UIColor(red: 163/255, green: 244/255, blue: 123/255, alpha: 1.0)
+            customCell.backgroundColor = .white
         }
     }
 }
