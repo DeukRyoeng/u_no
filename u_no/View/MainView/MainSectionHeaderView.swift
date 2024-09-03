@@ -12,10 +12,10 @@ class MainSectionHeaderView: UICollectionReusableView {
     
     static let id = "MainSectionHeaderView"
     
-    private let sectionTitle: UILabel = {
+    let sectionTitle: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 23)
-        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 35)
+        label.textAlignment = .left
         label.textColor = .black
         return label
     }()
@@ -32,14 +32,12 @@ class MainSectionHeaderView: UICollectionReusableView {
     private func setupUI() {
         addSubview(sectionTitle)
         sectionTitle.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.trailing.equalToSuperview().inset(8)
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.edges.equalToSuperview().inset(10)
         }
     }
     
-    func configure(with text: String) {
-        sectionTitle.text = text
-    }
+    func configure(with title: String) {
+        sectionTitle.text = title
+        }
     
 }
