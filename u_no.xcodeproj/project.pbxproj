@@ -25,6 +25,7 @@
 		AFD0E9382C80129900D0C24C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9372C80129900D0C24C /* MainViewController.swift */; };
 		AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9392C8012C100D0C24C /* MainModel.swift */; };
 		AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */; };
+		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
 		C234BD632C80465C0074C822 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD622C80465C0074C822 /* SettingView.swift */; };
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
@@ -45,6 +46,7 @@
 		AFD0E9372C80129900D0C24C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		AFD0E9392C8012C100D0C24C /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
 		C234BD622C80465C0074C822 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */,
+				AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				AFD0E90A2C800BA800D0C24C /* ViewController.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
+				AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */,
 				AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */,
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
 				AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */,
