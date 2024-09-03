@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4D2C86D40700F02657 /* GraphViewController.swift */; };
+		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
 		AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */; };
 		AFD0E90A2C800BA800D0C24C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9092C800BA800D0C24C /* ViewController.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FA06E4D2C86D40700F02657 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AFD0E9022C800BA800D0C24C /* u_no.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = u_no.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD0E9052C800BA800D0C24C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +130,8 @@
 			children = (
 				C234BD612C8045C40074C822 /* Setting */,
 				AFD0E9092C800BA800D0C24C /* ViewController.swift */,
+				4FA06E4E2C86D40700F02657 /* GraphView.swift */,
+				4FA06E4D2C86D40700F02657 /* GraphViewController.swift */,
 				AFD0E9372C80129900D0C24C /* MainViewController.swift */,
 			);
 			path = View;
@@ -269,7 +275,9 @@
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
 				AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */,
 				C234BD632C80465C0074C822 /* SettingView.swift in Sources */,
+				4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */,
 				AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */,
+				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
 				C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */,
