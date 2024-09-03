@@ -89,7 +89,9 @@ class MainViewController: UIViewController {
                     cell.configure(with: item)
                     return cell
                 } else {
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as! MainViewSecoundCell
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
+                        return UICollectionViewCell()
+                    }
                     cell.configure(with: item)
                     return cell
                 }
