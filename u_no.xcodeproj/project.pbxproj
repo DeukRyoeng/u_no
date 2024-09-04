@@ -116,12 +116,12 @@
 			path = MainViewModel;
 			sourceTree = "<group>";
 		};
-		45C958022C87FCEC005ADB63 /* SerchView */ = {
+		45C958022C87FCEC005ADB63 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
 				45C958002C87FCA8005ADB63 /* SearchViewController.swift */,
 			);
-			path = SerchView;
+			path = SearchView;
 			sourceTree = "<group>";
 		};
 		AFD0E8F92C800BA800D0C24C = {
@@ -179,7 +179,7 @@
 			children = (
 				C234BD612C8045C40074C822 /* Setting */,
 				AFD0E9092C800BA800D0C24C /* ViewController.swift */,
-				45C958022C87FCEC005ADB63 /* SerchView */,
+				45C958022C87FCEC005ADB63 /* SearchView */,
 				45C957ED2C817838005ADB63 /* MainView */,
 				4FA06E4E2C86D40700F02657 /* GraphView.swift */,
 				4FA06E4D2C86D40700F02657 /* GraphViewController.swift */,
