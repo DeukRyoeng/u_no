@@ -12,14 +12,9 @@ import RxCocoa
 
 class FavoritesController: UIViewController {
     
-    private let favoritesView = FavoritesView()
     private let disposeBag = DisposeBag()
-    
-    private let items = BehaviorRelay<[FavoritesItem]>(value: [
-        FavoritesItem(leftTopText: "복숭아", rightTopText: "23,021원", rightBottomText: "20%"),
-        FavoritesItem(leftTopText: "쌀", rightTopText: "51,816원", rightBottomText: "0%"),
-        FavoritesItem(leftTopText: "당근", rightTopText: "6,981원", rightBottomText: "3.13%")
-    ])
+    private let viewModel = FavoritesViewModel()
+    private lazy var favoritesView = FavoritesView(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +31,7 @@ class FavoritesController: UIViewController {
     }
     
     private func bindData() {
-        items.bind(to: favoritesView.items)
-            .disposed(by: disposeBag)
+        viewModel.itemDeleted.subscribe(onNext: { indexPath in
+        }).disposed(by: disposeBag)
     }
 }

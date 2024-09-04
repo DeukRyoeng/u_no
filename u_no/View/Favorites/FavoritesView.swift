@@ -12,8 +12,8 @@ import RxCocoa
 
 class FavoritesView: UIView {
     
-    let items = BehaviorRelay<[FavoritesItem]>(value: [])
     private let disposeBag = DisposeBag()
+    private let viewModel: FavoritesViewModel
     
     private let favoritesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,8 +27,9 @@ class FavoritesView: UIView {
         return collection
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: FavoritesViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setupUI()
         configureCollectionView()
         bindCollectionView()
@@ -53,32 +54,19 @@ class FavoritesView: UIView {
     }
     
     private func bindCollectionView() {
-        items.bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
+        viewModel.items.bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
             cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
-            
             cell.delegate = self
-            
         }.disposed(by: disposeBag)
-    }
-    
-    private func handleDelete(at indexPath: IndexPath) {
-        var currentItems = items.value
-        
-        guard indexPath.row < currentItems.count else {
-            print("Index out of range, no item to delete.")
-            return
-        }
-        
-        currentItems.remove(at: indexPath.row)
-        items.accept(currentItems)
     }
 }
 
 extension FavoritesView: SwipeableCollectionViewCellDelegate {
     func didSwipeToDelete(at indexPath: IndexPath) {
-        handleDelete(at: indexPath)
+        viewModel.deleteItem(at: indexPath)
     }
 }
 
 extension FavoritesView: UICollectionViewDelegate {
+ 
 }
