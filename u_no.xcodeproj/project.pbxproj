@@ -12,6 +12,8 @@
 		45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F72C85D6C3005ADB63 /* Differentiator */; };
 		45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */; };
 		45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */; };
+		4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4D2C86D40700F02657 /* GraphViewController.swift */; };
+		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
 		AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */; };
 		AFD0E90A2C800BA800D0C24C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9092C800BA800D0C24C /* ViewController.swift */; };
@@ -30,6 +32,7 @@
 		AFD0E9382C80129900D0C24C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9372C80129900D0C24C /* MainViewController.swift */; };
 		AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9392C8012C100D0C24C /* MainModel.swift */; };
 		AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */; };
+		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
 		C234BD632C80465C0074C822 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD622C80465C0074C822 /* SettingView.swift */; };
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
@@ -38,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4FA06E4D2C86D40700F02657 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
 		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
 		45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewSecoundCell.swift; sourceTree = "<group>"; };
@@ -53,6 +58,7 @@
 		AFD0E9372C80129900D0C24C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		AFD0E9392C8012C100D0C24C /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
 		C234BD622C80465C0074C822 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -164,6 +170,9 @@
 				C234BD612C8045C40074C822 /* Setting */,
 				AFD0E9092C800BA800D0C24C /* ViewController.swift */,
 				45C957ED2C817838005ADB63 /* MainView */,
+				4FA06E4E2C86D40700F02657 /* GraphView.swift */,
+				4FA06E4D2C86D40700F02657 /* GraphViewController.swift */,
+				AFD0E9372C80129900D0C24C /* MainViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -181,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */,
+				AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -306,11 +316,14 @@
 				AFD0E90A2C800BA800D0C24C /* ViewController.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
 				45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */,
+				AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */,
 				AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */,
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
 				AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */,
 				C234BD632C80465C0074C822 /* SettingView.swift in Sources */,
+				4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */,
 				AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */,
+				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
 				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
