@@ -18,7 +18,7 @@ class SettingController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
         setupUI()
         bindTableView()
         bindViewModel()
