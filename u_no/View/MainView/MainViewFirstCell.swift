@@ -56,8 +56,8 @@ class MainViewFirstCell: UICollectionViewCell {
         [nameLabel, priceLabel, discountLabel].forEach { contentView.addSubview($0) }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.equalToSuperview().offset(5)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(10)
             $0.width.equalTo(130)
         }
         
