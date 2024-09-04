@@ -18,7 +18,7 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: SwipeableCollectionViewCellDelegate?
     var disposeBag = DisposeBag()
-    var indexPath: IndexPath? // Store the index path
+    var indexPath: IndexPath?
     
     private let leftTopLabel: UILabel = {
         let label = UILabel()
@@ -136,7 +136,7 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
     
     private func setupDeleteAction() {
         deleteButton.rx.tap
-            .compactMap { self.indexPath } // Ensure indexPath is not nil
+            .compactMap { self.indexPath }
             .bind { [weak self] indexPath in
                 self?.delegate?.didSwipeToDelete(at: indexPath)
             }

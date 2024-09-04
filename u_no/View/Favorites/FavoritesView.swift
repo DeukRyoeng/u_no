@@ -56,7 +56,6 @@ class FavoritesView: UIView {
         items.bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
             cell.configure(leftTopText: model.leftTopText, leftBottomText: model.leftBottomText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
             
-            // Set delegate to handle delete action
             cell.delegate = self
             
         }.disposed(by: disposeBag)
@@ -82,5 +81,4 @@ extension FavoritesView: SwipeableCollectionViewCellDelegate {
 }
 
 extension FavoritesView: UICollectionViewDelegate {
-    // Implement delegate methods if needed
 }

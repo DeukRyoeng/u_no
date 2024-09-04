@@ -15,12 +15,10 @@ class FavoritesController: UIViewController {
     private let favoritesView = FavoritesView()
     private let disposeBag = DisposeBag()
     
-    // Example data source
     private let items = BehaviorRelay<[FavoritesItem]>(value: [
         FavoritesItem(leftTopText: "복숭아", leftBottomText: "10개", rightTopText: "23,021원", rightBottomText: "20%"),
         FavoritesItem(leftTopText: "쌀", leftBottomText: "20kg", rightTopText: "51,816원", rightBottomText: "0%"),
         FavoritesItem(leftTopText: "당근", leftBottomText: "1kg", rightTopText: "6,981", rightBottomText: "3.13%")
-        // Add more items as needed
     ])
     
     override func viewDidLoad() {
