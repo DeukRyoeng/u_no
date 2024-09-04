@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */; };
+		45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F52C85D67D005ADB63 /* RxDataSources */; };
+		45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F72C85D6C3005ADB63 /* Differentiator */; };
+		45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */; };
+		45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */; };
+		45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957FE2C87F8B9005ADB63 /* MainViewController.swift */; };
 		4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4D2C86D40700F02657 /* GraphViewController.swift */; };
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
@@ -24,7 +30,6 @@
 		AFD0E92D2C800EFC00D0C24C /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = AFD0E92C2C800EFC00D0C24C /* RxKakaoSDK */; };
 		AFD0E92F2C800EFC00D0C24C /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AFD0E92E2C800EFC00D0C24C /* RxKakaoSDKAuth */; };
 		AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9352C80127C00D0C24C /* MainViewModel.swift */; };
-		AFD0E9382C80129900D0C24C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9372C80129900D0C24C /* MainViewController.swift */; };
 		AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9392C8012C100D0C24C /* MainModel.swift */; };
 		AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */; };
 		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
@@ -36,6 +41,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
+		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
+		45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewSecoundCell.swift; sourceTree = "<group>"; };
+		45C957FE2C87F8B9005ADB63 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		4FA06E4D2C86D40700F02657 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AFD0E9022C800BA800D0C24C /* u_no.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = u_no.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,7 +56,6 @@
 		AFD0E9132C800BA900D0C24C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFD0E9222C800D6F00D0C24C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AFD0E9352C80127C00D0C24C /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		AFD0E9372C80129900D0C24C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		AFD0E9392C8012C100D0C24C /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		AFD0E93B2C8012EE00D0C24C /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
@@ -69,6 +77,8 @@
 				AFD0E92F2C800EFC00D0C24C /* RxKakaoSDKAuth in Frameworks */,
 				AFD0E9212C800C2300D0C24C /* DGCharts in Frameworks */,
 				AFD0E9262C800DD500D0C24C /* FirebaseAnalytics in Frameworks */,
+				45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */,
+				45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */,
 				AFD0E91B2C800BE600D0C24C /* SnapKit in Frameworks */,
 				AFD0E92A2C800DD500D0C24C /* FirebaseFirestore in Frameworks */,
 			);
@@ -77,6 +87,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45C957ED2C817838005ADB63 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				45C957FE2C87F8B9005ADB63 /* MainViewController.swift */,
+				45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */,
+				45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */,
+				45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		45C957F22C8593E5005ADB63 /* MainViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AFD0E9352C80127C00D0C24C /* MainViewModel.swift */,
+			);
+			path = MainViewModel;
+			sourceTree = "<group>";
+		};
+		45C957F32C85B790005ADB63 /* MainViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				AFD0E9392C8012C100D0C24C /* MainModel.swift */,
+			);
+			path = MainViewModel;
+			sourceTree = "<group>";
+		};
 		AFD0E8F92C800BA800D0C24C = {
 			isa = PBXGroup;
 			children = (
@@ -121,8 +158,8 @@
 		AFD0E9312C80120D00D0C24C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				45C957F32C85B790005ADB63 /* MainViewModel */,
 				C2D7DA8D2C806BD4009C8652 /* Setting */,
-				AFD0E9392C8012C100D0C24C /* MainModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -132,9 +169,9 @@
 			children = (
 				C234BD612C8045C40074C822 /* Setting */,
 				AFD0E9092C800BA800D0C24C /* ViewController.swift */,
+				45C957ED2C817838005ADB63 /* MainView */,
 				4FA06E4E2C86D40700F02657 /* GraphView.swift */,
 				4FA06E4D2C86D40700F02657 /* GraphViewController.swift */,
-				AFD0E9372C80129900D0C24C /* MainViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -142,8 +179,8 @@
 		AFD0E9332C80122200D0C24C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				45C957F22C8593E5005ADB63 /* MainViewModel */,
 				C2D7DA8A2C8060A5009C8652 /* Setting */,
-				AFD0E9352C80127C00D0C24C /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -208,6 +245,8 @@
 				AFD0E9292C800DD500D0C24C /* FirebaseFirestore */,
 				AFD0E92C2C800EFC00D0C24C /* RxKakaoSDK */,
 				AFD0E92E2C800EFC00D0C24C /* RxKakaoSDKAuth */,
+				45C957F52C85D67D005ADB63 /* RxDataSources */,
+				45C957F72C85D6C3005ADB63 /* Differentiator */,
 			);
 			productName = u_no;
 			productReference = AFD0E9022C800BA800D0C24C /* u_no.app */;
@@ -243,6 +282,7 @@
 				AFD0E91F2C800C2300D0C24C /* XCRemoteSwiftPackageReference "Charts" */,
 				AFD0E9242C800DD500D0C24C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				AFD0E92B2C800EFC00D0C24C /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				45C957F42C85D67C005ADB63 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = AFD0E9032C800BA800D0C24C /* Products */;
 			projectDirPath = "";
@@ -274,6 +314,7 @@
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				AFD0E90A2C800BA800D0C24C /* ViewController.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
+				45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */,
 				AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */,
 				AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */,
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
@@ -284,8 +325,10 @@
 				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
+				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
+				45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */,
+				45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */,
 				C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */,
-				AFD0E9382C80129900D0C24C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +545,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		45C957F42C85D67C005ADB63 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		AFD0E9192C800BE600D0C24C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -545,6 +596,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		45C957F52C85D67D005ADB63 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45C957F42C85D67C005ADB63 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
+		45C957F72C85D6C3005ADB63 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45C957F42C85D67C005ADB63 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
 		AFD0E91A2C800BE600D0C24C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AFD0E9192C800BE600D0C24C /* XCRemoteSwiftPackageReference "SnapKit" */;
