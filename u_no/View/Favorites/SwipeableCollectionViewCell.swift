@@ -15,35 +15,40 @@ protocol SwipeableCollectionViewCellDelegate: AnyObject {
 }
 
 class SwipeableCollectionViewCell: UICollectionViewCell {
-    
+
     weak var delegate: SwipeableCollectionViewCellDelegate?
     var disposeBag = DisposeBag()
     var indexPath: IndexPath?
     
-    private let leftTopLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.textColor = .black
-        return label
+    private let shadowContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowOpacity = 0.4
+        view.layer.shadowRadius = 4
+        return view
     }()
     
-    private let leftBottomLabel: UILabel = {
+    private let leftTopLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 33)
+        label.textColor = .black
         return label
     }()
     
     private let rightTopLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 22)
         label.textColor = UIColor(red: 75/255.0, green: 166/255.0, blue: 251/255.0, alpha: 1.0)
         return label
     }()
     
     private let rightBottomLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 75/255.0, green: 166/255.0, blue: 251/255.0, alpha: 1.0)
         return label
     }()
@@ -54,13 +59,14 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .red
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.layer.cornerRadius = 16
         button.isHidden = true
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         setupUI()
         setupSwipeGesture()
         setupDeleteAction()
@@ -77,32 +83,20 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         rightBottomLabel.transform = .identity
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.layer.cornerRadius = 16
-        self.layer.masksToBounds = true
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.black.cgColor
-        
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 4)
-        self.layer.shadowOpacity = 0.4
-        self.layer.shadowRadius = 4
-    }
-    
     private func setupUI() {
-        [leftTopLabel, leftBottomLabel, rightTopLabel, rightBottomLabel, deleteButton].forEach { self.addSubview($0) }
+        addSubview(shadowContainerView)
+        shadowContainerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        shadowContainerView.addSubview(leftTopLabel)
+        shadowContainerView.addSubview(rightTopLabel)
+        shadowContainerView.addSubview(rightBottomLabel)
+        shadowContainerView.addSubview(deleteButton)
         
         leftTopLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(5)
-        }
-        
-        leftBottomLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(leftTopLabel.snp.bottom).offset(4)
-            $0.bottom.equalToSuperview().offset(-10)
+            $0.top.equalToSuperview().offset(20)
         }
         
         rightTopLabel.snp.makeConstraints {
@@ -154,9 +148,8 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         deleteButton.isHidden = (gesture.direction == .right)
     }
     
-    func configure(leftTopText: String, leftBottomText: String, rightTopText: String, rightBottomText: String, indexPath: IndexPath) {
+    func configure(leftTopText: String, rightTopText: String, rightBottomText: String, indexPath: IndexPath) {
         leftTopLabel.text = leftTopText
-        leftBottomLabel.text = leftBottomText
         rightTopLabel.text = rightTopText
         rightBottomLabel.text = rightBottomText
         self.indexPath = indexPath

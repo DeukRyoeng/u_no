@@ -18,8 +18,8 @@ class FavoritesView: UIView {
     private let favoritesCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 350, height: 100)
-        layout.minimumLineSpacing = 20
-        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
@@ -54,7 +54,7 @@ class FavoritesView: UIView {
     
     private func bindCollectionView() {
         items.bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
-            cell.configure(leftTopText: model.leftTopText, leftBottomText: model.leftBottomText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
+            cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
             
             cell.delegate = self
             

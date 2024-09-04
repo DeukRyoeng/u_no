@@ -29,6 +29,7 @@ class SettingView: UIView {
         super.init(frame: frame)
         setupUI()
         customizeCells()
+        addTopSeparator()
     }
     
     required init?(coder: NSCoder) {
@@ -54,6 +55,19 @@ class SettingView: UIView {
     
     private func customizeCells() {
         settingTable.delegate = self
+    }
+    
+    private func addTopSeparator() {
+        // 테이블 뷰 맨 위에 검정색 라인 추가
+        let topSeparator = UIView()
+        topSeparator.backgroundColor = .black
+        self.addSubview(topSeparator)
+        
+        topSeparator.snp.makeConstraints {
+            $0.leading.trailing.equalTo(settingTable)
+            $0.bottom.equalTo(settingTable.snp.top)  // 테이블 뷰 위쪽에 위치
+            $0.height.equalTo(0.5)  // 라인의 두께 설정
+        }
     }
 }
 

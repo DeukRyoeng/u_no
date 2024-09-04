@@ -9,7 +9,6 @@ import Foundation
 
 struct FavoritesItem {
     let leftTopText: String
-    let leftBottomText: String
     let rightTopText: String
     let rightBottomText: String
 }
