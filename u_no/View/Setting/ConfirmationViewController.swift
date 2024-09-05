@@ -12,6 +12,12 @@ import SnapKit
 
 class ConfirmationViewController: UIViewController {
     
+    private let titleUnderlineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 25)
@@ -21,7 +27,15 @@ class ConfirmationViewController: UIViewController {
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let subLable: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -48,11 +62,12 @@ class ConfirmationViewController: UIViewController {
     private let actionHandler: () -> Void
     
     // Custom initializer
-    init(title: String, description: String, actionButtonText: String, actionHandler: @escaping () -> Void) {
+    init(title: String, description: String, sub: String, actionButtonText: String, actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler
         super.init(nibName: nil, bundle: nil)
         titleLabel.text = title
         descriptionLabel.text = description
+        subLable.text = sub
         actionButton.setTitle(actionButtonText, for: .normal)
     }
     
@@ -76,7 +91,14 @@ class ConfirmationViewController: UIViewController {
         buttonStackView.distribution = .fillEqually
         buttonStackView.spacing = 10
 
-        [titleLabel, descriptionLabel, buttonStackView].forEach { view.addSubview($0) }
+        [titleUnderlineView, titleLabel, descriptionLabel, subLable, buttonStackView].forEach { view.addSubview($0) }
+        
+        titleUnderlineView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(0)
+            $0.leading.equalToSuperview().inset(0)
+            $0.trailing.equalToSuperview().inset(0)
+            $0.height.equalTo(70)
+        }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
@@ -85,6 +107,11 @@ class ConfirmationViewController: UIViewController {
         
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(40)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
+        
+        subLable.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
