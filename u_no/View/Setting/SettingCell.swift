@@ -14,7 +14,7 @@ class SettingCell: UITableViewCell {
     
     private let customLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = .black
         return label
     }()
@@ -67,6 +67,9 @@ class SettingCell: UITableViewCell {
 
         // Ensure the switch is off by default
         toggleSwitch.isOn = false
+
+        // Set the label color based on the item
+        customLabel.textColor = item.titleColor
 
         if item.hasSwitch {
             toggleSwitch.rx.controlEvent(.valueChanged)

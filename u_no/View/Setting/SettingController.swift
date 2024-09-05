@@ -18,7 +18,7 @@ class SettingController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
         setupUI()
         bindTableView()
         bindViewModel()
@@ -60,5 +60,51 @@ class SettingController: UIViewController {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             })
             .disposed(by: disposeBag)
+        
+        // Listen to the actions like logout and account deletion
+        viewModel.actionTrigger
+            .subscribe(onNext: { [weak self] action in
+                guard let self = self else { return }
+                
+                switch action {
+                case .accountDeletion:
+                    self.presentConfirmationModal(
+                        title: "계정탈퇴",
+                        description: "정말로 계정을 탈퇴하시겠습니까?",
+                        actionButtonText: "계정탈퇴",
+                        actionHandler: {
+                            print("Account deleted")
+                        }
+                    )
+                    
+                case .logout:
+                    self.presentConfirmationModal(
+                        title: "로그아웃",
+                        description: "정말로 로그아웃 하시겠습니까?",
+                        actionButtonText: "로그아웃",
+                        actionHandler: {
+                            print("Logged out")
+                        }
+                    )
+                }
+            })
+            .disposed(by: disposeBag)
     }
+    
+    private func presentConfirmationModal(title: String, description: String, actionButtonText: String, actionHandler: @escaping () -> Void) {
+        let confirmationVC = ConfirmationViewController(
+            title: title,
+            description: description,
+            actionButtonText: actionButtonText,
+            actionHandler: actionHandler
+        )
+        
+        confirmationVC.modalPresentationStyle = .pageSheet
+        if let sheet = confirmationVC.sheetPresentationController {
+            // Use custom height detent (e.g., 300 points)
+            sheet.detents = [.custom(resolver: { _ in return 300 })] // Adjust 300 to the desired height
+        }
+        present(confirmationVC, animated: true, completion: nil)
+    }
+    
 }

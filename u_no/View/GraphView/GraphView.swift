@@ -12,28 +12,42 @@ import DGCharts
 class GraphView: UIView{
     let lineChart = LineChartView()
     let collectionView: UICollectionView
-    
+    let pickerView = UIPickerView()
+    let textField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        return textField
+    }()
+    var months: [String] = []
     
     override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical // 세로 방향 스크롤
+        layout.scrollDirection = .vertical              // 세로 방향 스크롤
         layout.itemSize = CGSize(width: 80, height: 40) // 셀 크기 설정
-        layout.minimumInteritemSpacing = 10 // 셀 간 간격 설정
-        layout.minimumLineSpacing = 10 // 줄 간 간격 설정
+        layout.minimumInteritemSpacing = 10             // 셀 간 간격 설정
+        layout.minimumLineSpacing = 10                  // 줄 간 간격 설정
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         super.init(frame: frame)
         backgroundColor = .white
         setConfigure()
+        setupTapGesture()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        addGestureRecognizer(tapGesture)
+    }
+
+    @objc func dismissKeyboard() {
+        endEditing(true)
+    }
     private func setConfigure(){
-        
-        [lineChart, collectionView].forEach { addSubview($0) }
+        textField.inputView = pickerView
+        textField.text = months.last
+        [lineChart, collectionView, textField].forEach { addSubview($0) }
         lineChart.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview().inset(16)
@@ -44,6 +58,13 @@ class GraphView: UIView{
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
+        textField.snp.makeConstraints {
+            $0.top.equalTo(lineChart.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().inset(16)
+            $0.width.equalTo(200)
+        }
+        lineChart.scaleXEnabled = false
+        lineChart.scaleYEnabled = false
         //x축
         lineChart.xAxis.labelPosition = .bottom
         lineChart.xAxis.labelFont = .boldSystemFont(ofSize: 12)
@@ -98,5 +119,3 @@ extension GraphView: AxisValueFormatter, ValueFormatter {
         return numberFormatter.string(from: NSNumber(value: value)) ?? "\(value)"
     }
 }
-
-
