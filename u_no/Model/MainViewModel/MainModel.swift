@@ -129,3 +129,10 @@ enum StringOrArray: Codable {
     }
 }
 
+struct Product {
+    let name: String // 이름
+    let quantity: String // 수량
+    let price: String // 가격
+    let discount: String // 등락률
+}
+
