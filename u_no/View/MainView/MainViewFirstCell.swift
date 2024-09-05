@@ -50,14 +50,14 @@ class MainViewFirstCell: UICollectionViewCell {
         contentView.backgroundColor = .lightGray
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowOpacity = 1
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         
         [nameLabel, priceLabel, discountLabel].forEach { contentView.addSubview($0) }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(5)
-            $0.leading.equalToSuperview().offset(5)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(10)
             $0.width.equalTo(130)
         }
         
@@ -74,10 +74,10 @@ class MainViewFirstCell: UICollectionViewCell {
         }
     }
     
-    func configure(with product: Product) {
-        nameLabel.text = product.name
-        priceLabel.text = product.price
-        discountLabel.text = product.discount
-    }
+//    func configure(with product: Product) {
+//        nameLabel.text = product.name
+//        priceLabel.text = product.price
+//        discountLabel.text = product.discount
+//    }
     
 }

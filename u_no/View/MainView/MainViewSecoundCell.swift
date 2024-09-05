@@ -50,7 +50,7 @@ class MainViewSecoundCell: UICollectionViewCell {
         contentView.backgroundColor = .lightGray
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowOpacity = 1
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         
         [nameLabel, quantityLabel, priceLabel].forEach { contentView.addSubview($0) }
@@ -73,10 +73,10 @@ class MainViewSecoundCell: UICollectionViewCell {
         }
     }
     
-    func configure(with product: Product) {
-        nameLabel.text = product.name
-        quantityLabel.text = product.quantity
-        priceLabel.text = product.price
-    }
+//    func configure(with product: Product) {
+//        nameLabel.text = product.name
+//        quantityLabel.text = product.quantity
+//        priceLabel.text = product.price
+//    }
     
 }
