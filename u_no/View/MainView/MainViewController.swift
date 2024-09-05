@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
         collectionView.isScrollEnabled = false
         
         mainVM.fetchAllData()
-//        bindPriceData()
+        bindPriceData()
         
         func setupCollectionView() {
             collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
                         return UICollectionViewCell()
                     }
-//                    cell.configure(with: item)
+//                    cell.configure(with: )
                     return cell
                 }
             }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
@@ -117,20 +117,21 @@ class MainViewController: UIViewController {
 //                .disposed(by: disposeBag)
         }
         
-//        func bindPriceData() {
-//            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
-//                [weak self] data in
-//                print("+++called MainViewController+++")
-//                
-//                for i in data {
-//                    print(i.itemName)
-//                }
-//                
-//            }, onError: { error in
-//                print("--- called MainViewController ERROR ---")
-//                print("\(error)")
-//            }
-//            )
-//        }
+        func bindPriceData() {
+            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
+                [weak self] data in
+                print("+++called MainViewController+++")
+                
+                for i in data {
+                    print("출력")
+                    print(i.itemName)
+                }
+                
+            }, onError: { error in
+                print("--- called MainViewController ERROR ---")
+                print("\(error)")
+            }
+            )
+        }
     }
 }
