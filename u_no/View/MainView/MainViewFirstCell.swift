@@ -74,10 +74,10 @@ class MainViewFirstCell: UICollectionViewCell {
         }
     }
     
-    func configure(with product: Product) {
-        nameLabel.text = product.name
-        priceLabel.text = product.price
-        discountLabel.text = product.discount
-    }
+//    func configure(with product: Product) {
+//        nameLabel.text = product.name
+//        priceLabel.text = product.price
+//        discountLabel.text = product.discount
+//    }
     
 }

@@ -69,7 +69,8 @@ class MainViewController: UIViewController {
         bindCollectionView()
         collectionView.isScrollEnabled = false
         
-    }
+        mainVM.fetchAllData()
+//        bindPriceData()
     
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
@@ -116,4 +117,19 @@ class MainViewController: UIViewController {
                 .disposed(by: disposeBag)
         }
     
-    }
+//    func bindPriceData() {
+//        mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
+//            [weak self] data in
+//            print("+++called MainViewController+++")
+//            
+//            for i in data {
+//                print(i.itemName)
+//            }
+//            
+//        }, onError: { error in
+//            print("--- called MainViewController ERROR ---")
+//            print("\(error)")
+//        }
+//        )
+//    }
+}
