@@ -31,7 +31,7 @@ class SettingViewModel {
     init() {
         let sampleItems = [
             SettingItem(title: "계정설정", hasSwitch: false, titleColor: .black),
-            SettingItem(title: "알람", hasSwitch: true, titleColor: .black),
+            SettingItem(title: "알림", hasSwitch: true, titleColor: .black),
             SettingItem(title: "문의사항", hasSwitch: false, titleColor: .black),
             SettingItem(title: "로그아웃", hasSwitch: false, titleColor: .black),
             SettingItem(title: "계정탈퇴", hasSwitch: false, titleColor: UIColor(red: 247/255, green: 63/255, blue: 63/255, alpha: 1))
