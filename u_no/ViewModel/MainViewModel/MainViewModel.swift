@@ -11,31 +11,35 @@ import RxCocoa
 
 class MainViewModel {
     
-    let items: Observable<[SectionModel<String, Product>]>
+    private let disposeBag = DisposeBag()
+
     
-    init() {
-        let top3Products = [
-            Product(name: "복숭아", quantity: "10개", price: "23,021원", discount: "-20%"),
-            Product(name: "부추", quantity: "1단", price: "5,816원", discount: "7.1%"),
-            Product(name: "양파", quantity: "1kg", price: "6,981원", discount: "3.1%")
-        ]
+    let network = NetworkManager.shared
         
-        let interestProducts = [
-            Product(name: "쌀", quantity: "20kg", price: "51,816원", discount: ""),
-            Product(name: "토마토", quantity: "1kg", price: "6,726원", discount: ""),
-            Product(name: "고춧가루", quantity: "1kg", price: "35,268원", discount: ""),
-            Product(name: "수박", quantity: "1개", price: "30,376원", discount: ""),
-            Product(name: "김치", quantity: "1개", price: "35,151원", discount: ""),
-            Product(name: "참외", quantity: "10개", price: "21,008원", discount: ""),
-            Product(name: "삽겹살", quantity: "1kg", price: "35,268원", discount: ""),
-            Product(name: "대파", quantity: "1kg", price: "15,268원", discount: "")
-        ]
+//    let foodPrices = BehaviorSubject<[Price]>(value: [])
+    
+  
+//https://www.kamis.or.kr/service/price/xml.do?p_cert_key=5845f7c3-4274-41a7-a88a-c79efefe21dc&action=dailySalesList&p_cert_id=4710&p_returntype=json
+    func fetchAllData() {
+        let endpoint = Endpoint(
+            baseURL: "https://www.kamis.or.kr",
+            path: "/service/price/xml.do",
+            queryParameters: [
+                "p_cert_key": "5845f7c3-4274-41a7-a88a-c79efefe21dc",
+                "action": "dailySalesList",
+                "p_cert_id": "4710",
+                "p_returntype": "json"
+            ])
         
-        let sections = [
-            SectionModel(model: "Top3 Products", items: top3Products),
-            SectionModel(model: "Interested Products", items: interestProducts)
-        ]
-        
-        self.items = Observable.just(sections)
+        network.fetch(endpoint: endpoint)
+            .subscribe(onSuccess: { [weak self] (result: Foodprices) in
+                print("+++called SUCCESS MainViewModel+++")
+//                self?.foodPrices.onNext(result.price)
+            }, onFailure: {error in
+                print("called ERROR MainViewmodel: \(error)")
+            }
+            ).disposed(by: disposeBag)
     }
+    
+    
 }

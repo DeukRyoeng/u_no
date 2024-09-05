@@ -73,10 +73,10 @@ class MainViewSecoundCell: UICollectionViewCell {
         }
     }
     
-    func configure(with product: Product) {
-        nameLabel.text = product.name
-        quantityLabel.text = product.quantity
-        priceLabel.text = product.price
-    }
+//    func configure(with product: Product) {
+//        nameLabel.text = product.name
+//        quantityLabel.text = product.quantity
+//        priceLabel.text = product.price
+//    }
     
 }
