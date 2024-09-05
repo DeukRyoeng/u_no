@@ -73,12 +73,10 @@ class MainViewSecoundCell: UICollectionViewCell {
         }
     }
     
-    func configure(with product: Price) {
-        guard let itemName = product.itemName else { return }
-        
-        nameLabel.text = itemName
-        quantityLabel.text = "Tset Label"
-        priceLabel.text = "Test Label"
+    func configure(with favorites: FavoritesItem) {
+        nameLabel.text = favorites.leftTopText
+        quantityLabel.text = favorites.rightTopText
+        priceLabel.text = favorites.rightBottomText
     }
     
 }

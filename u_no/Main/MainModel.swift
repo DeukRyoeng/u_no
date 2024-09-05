@@ -129,10 +129,15 @@ enum StringOrArray: Codable {
     }
 }
 
-struct Product {
-    let name: String // 이름
-    let quantity: String // 수량
-    let price: String // 가격
-    let discount: String // 등락률
+// StringOrArrey 타입 확장
+extension StringOrArray {
+    func asString() -> String {
+        switch self {
+        case .string(let str):
+            return str
+        case .array(let arr):
+            return arr.first ?? ""
+        }
+    }
 }
 
