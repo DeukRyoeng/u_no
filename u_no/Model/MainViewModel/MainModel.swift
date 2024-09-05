@@ -79,10 +79,10 @@ struct Price: Codable {
     let dpr4: StringOrArray
     
     /// 등락 여부 (0: 가격 하락, 1: 가격 상승, 2: 등락 없음)
-    let direction: String?
+    let direction: StringOrArray
     
     /// 등락율
-    let value: String?
+    let value: StringOrArray
     
     enum CodingKeys: String, CodingKey {
         case productClsCode = "product_cls_code"
