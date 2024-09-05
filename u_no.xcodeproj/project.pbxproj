@@ -42,6 +42,7 @@
 		C24E5F712C85B8A3008DC4D6 /* FavoritesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F702C85B8A3008DC4D6 /* FavoritesModel.swift */; };
 		C24E5F752C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F742C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift */; };
 		C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F762C88012A008DC4D6 /* TabbarController.swift */; };
+		C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
 		C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */; };
 		C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */; };
@@ -75,6 +76,7 @@
 		C24E5F702C85B8A3008DC4D6 /* FavoritesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesModel.swift; sourceTree = "<group>"; };
 		C24E5F742C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCollectionViewCell.swift; sourceTree = "<group>"; };
 		C24E5F762C88012A008DC4D6 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				C2D7DA882C805B8B009C8652 /* SettingCell.swift */,
 				C234BD622C80465C0074C822 /* SettingView.swift */,
 				C234BD642C8046680074C822 /* SettingController.swift */,
+				C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
 				45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */,
 				45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */,
+				C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */,
 				C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
