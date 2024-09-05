@@ -71,7 +71,7 @@ class SettingController: UIViewController {
                     self.presentConfirmationModal(
                         title: "계정탈퇴",
                         description: "정말로 계정을 탈퇴하시겠습니까?",
-                        sub: "(알고싶어를 이용하지 못하십니다.)",
+                        sub: "(알고싶어를 이용하지 못하십니다)",
                         actionButtonText: "계정탈퇴",
                         actionHandler: {
                             print("Account deleted")
@@ -82,7 +82,7 @@ class SettingController: UIViewController {
                     self.presentConfirmationModal(
                         title: "로그아웃",
                         description: "정말로 로그아웃 하시겠습니까?",
-                        sub: "(로그인화면으로 넘어갑니다)",
+                        sub: "(로그인화면으로 이동합니다)",
                         actionButtonText: "로그아웃",
                         actionHandler: {
                             print("Logged out")

@@ -82,7 +82,7 @@ class ConfirmationViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
         view.layer.cornerRadius = 16
         
         // Create a stack view to hold the buttons horizontally
