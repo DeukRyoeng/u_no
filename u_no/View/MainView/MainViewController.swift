@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         print("+++called MainViewController : Run App+++")
         
-//        mainVM.fetchAllprices()
+        mainVM.fetchAllData()
 //        bindPriceData()
     
     }
@@ -27,10 +27,14 @@ class MainViewController: UIViewController {
 extension MainViewController {
     
 //    func bindPriceData() {
-//        mainVM.foodPriceDataSubject.observe(on: MainScheduler.instance).subscribe(onNext: {
+//        mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
 //            [weak self] data in
 //            print("+++called MainViewController+++")
-//            print(data)
+//            
+//            for i in data {
+//                print(i.itemName)
+//            }
+//            
 //        }, onError: { error in
 //            print("--- called MainViewController ERROR ---")
 //            print("\(error)")
