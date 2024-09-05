@@ -22,6 +22,7 @@ class SettingView: UIView {
         table.register(SettingCell.self, forCellReuseIdentifier: "CustomCell")
         table.separatorColor = .black
         table.separatorInset = .zero
+        table.layer.cornerRadius = 8
         return table
     }()
     
@@ -49,7 +50,7 @@ class SettingView: UIView {
         settingTable.snp.makeConstraints {
             $0.top.equalTo(logoImage.snp.bottom).offset(200)
             $0.leading.trailing.equalToSuperview().inset(0)
-            $0.height.equalTo(225)
+            $0.height.equalTo(300)
         }
     }
     
@@ -77,4 +78,7 @@ extension SettingView: UITableViewDelegate {
             customCell.backgroundColor = .white
         }
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 60
+        }
 }
