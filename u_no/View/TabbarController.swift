@@ -16,7 +16,7 @@ class TabbarController: UITabBarController {
     
     private func setupTabbar() {
         
-        let first = GraphViewController()
+        let first = MainViewController()
         let second = SearchViewController()
         let third = FavoritesController()
         let four = SettingController()
