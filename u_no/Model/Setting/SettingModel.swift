@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct SettingItem {
     let title: String
     let hasSwitch: Bool
+    let titleColor: UIColor
 }
