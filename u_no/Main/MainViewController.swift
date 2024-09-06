@@ -70,7 +70,9 @@ class MainViewController: UIViewController {
         collectionView.isScrollEnabled = false
         
         mainVM.fetchAllData()
+        mainVM.fetchSearchData()
         bindPriceData()
+
         
         func setupCollectionView() {
             collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
@@ -121,17 +123,19 @@ class MainViewController: UIViewController {
             mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
                 [weak self] data in
                 print("+++called MainViewController+++")
-                
-                for i in data {
-                    print("출력")
-                    print(i.itemName)
-                }
-                
             }, onError: { error in
                 print("--- called MainViewController ERROR ---")
                 print("\(error)")
-            }
-            )
+            })
+            mainVM.searchData.observe(on: MainScheduler.instance).subscribe(onNext: { [weak self] data in
+                print("+++called MainViewController+++")
+                for i in data {
+                    print("검색 데이터 테스트 성공 \(i)")
+                }
+            }, onError: { error in
+                    print("검색 테스트 실패 Error: \(error) ")
+            })
         }
+        
     }
 }
