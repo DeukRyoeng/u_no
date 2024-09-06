@@ -14,26 +14,27 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-//MARK: - Alamofire 사용
-    func fetch<T: Decodable>(endpoint: Endpoint) -> Single<T> {
-        return Single.create { observer in
-            
-            AF.request(endpoint.createURL()!, parameters: endpoint.queryParameters)
-                .validate() // 응답 검증
-                .responseDecodable(of: T.self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer(.success(data))
-                        print("디코딩 성공")
-                    case .failure(let error):
-                        print("디코딩 실패 ERROR:\(error)")
-                        observer(.failure(error))
+    //MARK: - Alamofire 사용
+        func fetch<T: Decodable>(endpoint: Endpoint) -> Single<T> {
+            return Single.create { observer in
+    
+                AF.request(endpoint.createURL()!, parameters: endpoint.queryParameters)
+                    .validate() // 응답 검증
+                    .responseDecodable(of: T.self) { response in
+                        switch response.result {
+                        case .success(let data):
+                            observer(.success(data))
+                            print("디코딩 성공")
+                        case .failure(let error):
+                            print("디코딩 실패 ERROR:\(error)")
+                            observer(.failure(error))
+                        }
                     }
-                }
-            return Disposables.create()
-            
+                return Disposables.create()
+    
+            }
         }
-    }
+
     
 //    func fetch<T: Decodable>(endpoint: Endpoint) -> Single<T> {
 //        do {
@@ -96,4 +97,6 @@ class NetworkManager {
 //            }
 //        }
 //    }
+    
 }
+

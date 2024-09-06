@@ -69,9 +69,11 @@ class MainViewController: UIViewController {
         view.backgroundColor = .white
         setupCollectionView()
         bindCollectionView()
-        
-        mainVM.fetchAllData()
+
 //        bindPriceData()
+
+        mainVM.fetchSearchData()
+        bindPriceData()
         
         func setupCollectionView() {
             collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
@@ -113,6 +115,7 @@ class MainViewController: UIViewController {
                 }
                 return header
             })
+          
             mainVM.foodPrices
                 .map { prices in
                     return [SectionModel(model: "prices", items: prices)]
@@ -145,5 +148,6 @@ extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let graphViewController = GraphViewController()
         present(graphViewController, animated: true, completion: nil)
+            
     }
 }
