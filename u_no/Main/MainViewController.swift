@@ -13,6 +13,11 @@ import RxDataSources
 
 class MainViewController: UIViewController {
     
+    private let disposeBag = DisposeBag()
+    private let mainVM = MainViewModel()
+    // 임시 즐겨찾기 모델
+    private let favoritesVM = FavoritesViewModel()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
@@ -59,11 +64,6 @@ class MainViewController: UIViewController {
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
-    private let disposeBag = DisposeBag()
-    private let mainVM = MainViewModel()
-    // 임시 즐겨찾기 모델
-    private let favoritesVM = FavoritesViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -78,6 +78,7 @@ class MainViewController: UIViewController {
             collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)
             collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
             collectionView.backgroundColor = .white
+            collectionView.delegate = self
             view.addSubview(collectionView)
             
             collectionView.snp.makeConstraints {
@@ -139,3 +140,10 @@ class MainViewController: UIViewController {
     }
 }
 
+extension MainViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let graphViewController = GraphViewController()
+        present(graphViewController, animated: true, completion: nil)
+    }
+}
