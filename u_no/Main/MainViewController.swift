@@ -13,6 +13,11 @@ import RxDataSources
 
 class MainViewController: UIViewController {
     
+    private let disposeBag = DisposeBag()
+    private let mainVM = MainViewModel()
+    // 임시 즐겨찾기 모델
+    private let favoritesVM = FavoritesViewModel()
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
@@ -59,26 +64,23 @@ class MainViewController: UIViewController {
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
-    private let disposeBag = DisposeBag()
-    private let mainVM = MainViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
         bindCollectionView()
-        collectionView.isScrollEnabled = false
-        
-        mainVM.fetchAllData()
+
+//        bindPriceData()
+
         mainVM.fetchSearchData()
         bindPriceData()
-
         
         func setupCollectionView() {
             collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
             collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)
             collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
             collectionView.backgroundColor = .white
+            collectionView.delegate = self
             view.addSubview(collectionView)
             
             collectionView.snp.makeConstraints {
@@ -87,18 +89,18 @@ class MainViewController: UIViewController {
         }
         
         func bindCollectionView() {
-            let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Product>>(configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
+            let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Price>>(configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
                 if indexPath.section == 0 {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewFirstCell.id, for: indexPath) as? MainViewFirstCell else {
                         return UICollectionViewCell()
                     }
-//                    cell.configure(with: item)
+                    cell.configure(with: item)
                     return cell
                 } else {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
                         return UICollectionViewCell()
                     }
-//                    cell.configure(with: )
+                    cell.configure(with: FavoritesItem(leftTopText: "복숭아", rightTopText: "23,000원", rightBottomText: "20%"))
                     return cell
                 }
             }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
@@ -113,29 +115,39 @@ class MainViewController: UIViewController {
                 }
                 return header
             })
-            
-//            mainVM.items
-//                .bind(to: collectionView.rx.items(dataSource: dataSource))
-//                .disposed(by: disposeBag)
-        }
-        
-        func bindPriceData() {
-            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
-                [weak self] data in
-                print("+++called MainViewController+++")
-            }, onError: { error in
-                print("--- called MainViewController ERROR ---")
-                print("\(error)")
-            })
-            mainVM.searchData.observe(on: MainScheduler.instance).subscribe(onNext: { [weak self] data in
-                print("+++called MainViewController+++")
-                for i in data {
-                    print("검색 데이터 테스트 성공 \(i)")
+          
+            mainVM.foodPrices
+                .map { prices in
+                    return [SectionModel(model: "prices", items: prices)]
                 }
-            }, onError: { error in
-                    print("검색 테스트 실패 Error: \(error) ")
-            })
+                .bind(to: collectionView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
         }
         
+//        func bindPriceData() {
+//            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
+//                [weak self] data in
+//                print("+++called MainViewController+++")
+//                
+//                for i in data {
+//                    print("출력")
+//                    print(i.itemName)
+//                }
+//                
+//            }, onError: { error in
+//                print("--- called MainViewController ERROR ---")
+//                print("\(error)")
+//            }
+//            )
+//        }
+    }
+}
+
+extension MainViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let graphViewController = GraphViewController()
+        present(graphViewController, animated: true, completion: nil)
+            
     }
 }

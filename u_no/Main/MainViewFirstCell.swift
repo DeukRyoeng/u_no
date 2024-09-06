@@ -14,7 +14,8 @@ class MainViewFirstCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 33)
+        label.font = .boldSystemFont(ofSize: 27)
+        label.numberOfLines = 2
         label.textAlignment = .left
         label.textColor = .black
         return label
@@ -58,13 +59,14 @@ class MainViewFirstCell: UICollectionViewCell {
         nameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(10)
-            $0.width.equalTo(130)
+            $0.width.equalTo(200)
+            $0.height.equalTo(70)
         }
         
         priceLabel.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-5)
-            $0.width.equalTo(150)
+            $0.width.equalTo(120)
         }
         
         discountLabel.snp.makeConstraints {
@@ -74,10 +76,10 @@ class MainViewFirstCell: UICollectionViewCell {
         }
     }
     
-//    func configure(with product: Product) {
-//        nameLabel.text = product.name
-//        priceLabel.text = product.price
-//        discountLabel.text = product.discount
-//    }
+    func configure(with price: Price) {
+        nameLabel.text = price.itemName
+        priceLabel.text = "\(price.dpr1.asString())원"
+        discountLabel.text = "\(price.value.asString())%"
+    }
     
 }
