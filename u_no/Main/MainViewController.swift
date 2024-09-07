@@ -72,7 +72,7 @@ class MainViewController: UIViewController {
 
 //        bindPriceData()
 
-        mainVM.fetchSearchData()
+        mainVM.fetchAllData()
         bindPriceData()
         
         func setupCollectionView() {
@@ -124,22 +124,22 @@ class MainViewController: UIViewController {
                 .disposed(by: disposeBag)
         }
         
-//        func bindPriceData() {
-//            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
-//                [weak self] data in
-//                print("+++called MainViewController+++")
-//                
-//                for i in data {
-//                    print("출력")
-//                    print(i.itemName)
-//                }
-//                
-//            }, onError: { error in
-//                print("--- called MainViewController ERROR ---")
-//                print("\(error)")
-//            }
-//            )
-//        }
+        func bindPriceData() {
+            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
+                [weak self] data in
+                print("+++called MainViewController+++")
+                
+                for i in data {
+                    print("출력")
+                    print(i.itemName)
+                }
+                
+            }, onError: { error in
+                print("--- called MainViewController ERROR ---")
+                print("\(error)")
+            }
+            )
+        }
     }
 }
 
