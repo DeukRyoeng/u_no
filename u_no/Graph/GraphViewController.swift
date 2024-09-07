@@ -8,39 +8,99 @@
 import Foundation
 import UIKit
 import DGCharts
+import RxSwift
 class GraphViewController: UIViewController {
     private let graphView = GraphView()
-    private let testData: [String] = ["2024-02-01", "2024-02-02", "2024-02-03", "2024-02-04", "2024-02-05"]
-    private let priceData: [Double] = [18900, 12300, 8900, 23700, 35000]
-    private let tableData: [[String]] = [
-        ["날짜", "가격", "등락률"],
-        ["작년", "54,234", "-4.5"],
-        ["2024.08.30", "51,816", "0"],
-        ["Data10", "Data11", "Data12"]
-    ]
-    
+    private let graphViewModel = GraphViewModel()
+    private let disposeBag = DisposeBag()
+    private var dateData: [String] = []
+    private var priceData: [Double] = []
+    private var tableData: [[String]] = []
+    private var GraphPriceInfo = [PriceInfo]()
+    var itemCodeData: String = "212"
     override func loadView() {
         view = graphView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        graphView.collectionView.dataSource = self // 변경: 데이터 소스 설정
-        graphView.collectionView.delegate = self // 변경: 델리게이트 설정
+        createDay()
+        graphView.collectionView.dataSource = self
+        graphView.collectionView.delegate = self
         graphView.months = setDatePickerView()
         graphView.pickerView.dataSource = self
         graphView.pickerView.delegate = self
-        setChartData()
+        bind()
+    }
+    func createDay(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let calendar = Calendar.current
+        let currentDate = Date()
+        let currentDateString = dateFormatter.string(from: currentDate)
+        var date16DaysAgoString = ""
+        if let date16DaysAgo = calendar.date(byAdding: .day, value: -16, to: currentDate) {
+            date16DaysAgoString = dateFormatter.string(from: date16DaysAgo)
+        }
+        graphViewModel.fetchData(strtDay: date16DaysAgoString, endDay: currentDateString, itemCode: itemCodeData)
     }
     
+    func bind(){
+        graphViewModel.graphPrice.observe(on: MainScheduler.instance).skip(1).debug("test").subscribe(onNext: {[weak self] priceInfos in
+            self?.priceData.removeAll()
+            self?.dateData.removeAll()
+            self?.tableData.removeAll()
+            
+            var infoAry: [PriceInfo] = priceInfos.filter { $0.countyName == "평균" }
+            infoAry.sort { info1, info2 in
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                if let date1 = formatter.date(from: info1.regday ?? ""),
+                   let date2 = formatter.date(from: info2.regday ?? "") {
+                    return date1 < date2
+                }
+                return false
+            }
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            var previousPrice: Double? = nil
+            
+            for info in infoAry{
+                if let priceString = info.price,
+                   let price = Double(priceString.replacingOccurrences(of: ",", with: "")), // 쉼표 제거 후 Double로 변환
+                   let date = info.regday,
+                   let year = info.yyyy {
+                    let formattedDate = "\(year)-\(date)"
+                    if let dateObject = dateFormatter.date(from: formattedDate) {
+                        let formattedDateString = dateFormatter.string(from: dateObject)
+                        self?.priceData.append(price)
+                        self?.dateData.append(formattedDateString)
+                        
+                        ///등락률 계산
+                        var changeRateString = "-"
+                        if let previousPrice = previousPrice {
+                            let changeRate = ((price - previousPrice) / previousPrice) * 100
+                            changeRateString = String(format: "%.2f", changeRate) + "%"
+                        }
+                        self?.tableData.append([formattedDateString,priceString, changeRateString])
+                        previousPrice = price
+                    }
+                }
+                
+                
+            }
+            self?.tableData.append(["날짜", "가격", "등락률"])
+            self?.setChartData()
+            self?.tableData.reverse()
+            self?.graphView.collectionView.reloadData()
+        }).disposed(by: disposeBag)
+    }
     private func setDatePickerView() -> [String]{
         var result: [String] = []
         let formatter = DateFormatter()
         formatter.dateFormat = "MM"
-        let month = formatter.string(from: Date())
-        if let mon = Int(month){
-            for i in 1...Int(mon){
-                let monthInt = i
-                result.append("\(monthInt)월")
+        if let month = Int(formatter.string(from: Date())) {
+            for i in 1...month {
+                result.append("\(i)월")
             }
         }
         return result
@@ -56,16 +116,32 @@ class GraphViewController: UIViewController {
         return formatter
     }
     private func generateDataEntries() -> [ChartDataEntry] {
-        
         var entries: [ChartDataEntry] = []
-        let formatter = dateFormatter()
+        let dateFormatter = DateFormatter()
+        
+        var calendar = Calendar.current
+        let timeZone = TimeZone(identifier: "UTC") ?? TimeZone.current
+        calendar.timeZone = timeZone
+        dateFormatter.timeZone = timeZone
+        
         for (index, value) in priceData.enumerated() {
-            let date = formatter.date(from: testData[index]) ?? Date()
-            let timestamp = date.timeIntervalSince1970
-            let entry = ChartDataEntry(x: timestamp, y: value)
-            entries.append(entry)
+            guard index < dateData.count else { continue }
+            let dateString = dateData[index]
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            if let date = dateFormatter.date(from: dateString) {
+                var components = calendar.dateComponents([.year, .month, .day], from: date)
+                components.hour = 0
+                components.minute = 0
+                components.second = 0
+                
+                if let startOfDay = calendar.date(from: components) {
+                    let timestamp = startOfDay.timeIntervalSince1970
+                    let entry = ChartDataEntry(x: timestamp, y: value)
+                    entries.append(entry)
+                }
+            }
         }
-
         return entries
     }
     
@@ -82,12 +158,11 @@ extension GraphViewController: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         cell.backgroundColor = .white
-
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         // 셀에 데이터 설정
         let data = tableData[indexPath.section][indexPath.item]
         let label = UILabel()
         label.text = data
-        label.textAlignment = .center
         label.frame = cell.contentView.bounds
         
         // 셀 정렬
