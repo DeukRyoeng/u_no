@@ -1,5 +1,5 @@
 //
-//  MainViewSecoundCell.swift
+//  Top3Cell.swift
 //  u_no
 //
 //  Created by 유민우 on 9/3/24.
@@ -8,22 +8,14 @@
 import UIKit
 import SnapKit
 
-class MainViewSecoundCell: UICollectionViewCell {
+class MainViewFirstCell: UICollectionViewCell {
     
-    static let id = "MainViewSecoundCell"
+    static let id = "MainViewFirstCell"
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 23)
+        label.font = .boldSystemFont(ofSize: 27)
         label.numberOfLines = 2
-        label.textAlignment = .left
-        label.textColor = .black
-        return label
-    }()
-    
-    private let quantityLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 15)
         label.textAlignment = .left
         label.textColor = .black
         return label
@@ -31,7 +23,15 @@ class MainViewSecoundCell: UICollectionViewCell {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15)
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textAlignment = .right
+        label.textColor = .black
+        return label
+    }()
+    
+    private let discountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
         label.textAlignment = .right
         label.textColor = .black
         return label
@@ -40,6 +40,7 @@ class MainViewSecoundCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -53,32 +54,32 @@ class MainViewSecoundCell: UICollectionViewCell {
         contentView.layer.shadowOpacity = 1
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         
-        [nameLabel, quantityLabel, priceLabel].forEach { contentView.addSubview($0) }
+        [nameLabel, priceLabel, discountLabel].forEach { contentView.addSubview($0) }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().offset(5)
-            $0.width.equalTo(120)
-            $0.height.equalTo(50)
-        }
-        
-        quantityLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-5)
-            $0.leading.equalToSuperview().offset(5)
+            $0.top.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(10)
+            $0.width.equalTo(200)
+            $0.height.equalTo(70)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-5)
+            $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-5)
+            $0.width.equalTo(120)
+        }
+        
+        discountLabel.snp.makeConstraints {
+            $0.top.equalTo(priceLabel.snp.bottom).offset(10)
+            $0.trailing.equalToSuperview().offset(-5)
+            $0.bottom.equalToSuperview().offset(-10)
         }
     }
     
-    func configure(with product: Price) {
-        guard let itemName = product.itemName else { return }
-        
-        nameLabel.text = itemName
-        quantityLabel.text = "Tset Label"
-        priceLabel.text = "Test Label"
+    func configure(with price: Price) {
+        nameLabel.text = price.itemName
+        priceLabel.text = "\(price.dpr1.asString())원"
+        discountLabel.text = "\(price.value.asString())%"
     }
     
 }
