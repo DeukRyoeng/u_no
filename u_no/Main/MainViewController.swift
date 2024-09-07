@@ -73,7 +73,6 @@ class MainViewController: UIViewController {
 //        bindPriceData()
 
         mainVM.fetchAllData()
-        bindPriceData()
         
         func setupCollectionView() {
             collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
