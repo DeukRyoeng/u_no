@@ -17,6 +17,7 @@ class MainViewModel {
     let network = NetworkManager.shared
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
+    let top3Prices = BehaviorSubject<[Price]>(value: []) // 등락률이 높은 상위 3개 품목을 저장하는 subject
     
     /// API 전체데이터 불러오기
     func fetchAllData() {
@@ -33,6 +34,17 @@ class MainViewModel {
             .subscribe(onSuccess: { [weak self] (result: Foodprices) in
                 print("+++called SUCCESS MainViewModel+++")
                 self?.foodPrices.onNext(result.price)
+                
+                // 등락률이 높은 상위 3개 품목만 필터링
+                let sortedPrices = result.price.sorted { price1, price2 in
+                    let value1 = Double(price1.value.asString()) ?? 0.0
+                    let value2 = Double(price2.value.asString()) ?? 0.0
+                    return value1 > value2
+                }
+                // 상위 3개 품목만 top3prices 에 넣음
+                let top3 = Array(sortedPrices.prefix(3))
+                self?.top3Prices.onNext(top3)
+                
             }, onFailure: {error in
                 print("called ERROR MainViewmodel: \(error)")
             }).disposed(by: disposeBag)

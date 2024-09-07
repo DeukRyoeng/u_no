@@ -69,9 +69,6 @@ class MainViewController: UIViewController {
         view.backgroundColor = .white
         setupCollectionView()
         bindCollectionView()
-
-//        bindPriceData()
-
         mainVM.fetchAllData()
         
         func setupCollectionView() {
@@ -115,30 +112,14 @@ class MainViewController: UIViewController {
                 return header
             })
           
-            mainVM.foodPrices
+            mainVM.top3Prices
                 .map { prices in
-                    return [SectionModel(model: "prices", items: prices)]
+                    return [SectionModel(model: "Top3", items: prices)]
                 }
                 .bind(to: collectionView.rx.items(dataSource: dataSource))
                 .disposed(by: disposeBag)
         }
-        
-        func bindPriceData() {
-            mainVM.foodPrices.observe(on: MainScheduler.instance).subscribe(onNext: {
-                [weak self] data in
-                print("+++called MainViewController+++")
-                
-                for i in data {
-                    print("출력")
-                    print(i.itemName)
-                }
-                
-            }, onError: { error in
-                print("--- called MainViewController ERROR ---")
-                print("\(error)")
-            }
-            )
-        }
+    
     }
 }
 
