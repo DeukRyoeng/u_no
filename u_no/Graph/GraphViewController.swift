@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 import DGCharts
 import RxSwift
+import RxCocoa
+import CoreData
+
 class GraphViewController: UIViewController {
     private let graphView = GraphView()
     private let graphViewModel = GraphViewModel()
@@ -19,9 +22,11 @@ class GraphViewController: UIViewController {
     private var GraphPriceInfo = [PriceData]()
     var itemCodeData: String = "212"
     var nameData: [Price] = []
+
     override func loadView() {
         view = graphView
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         createDay()
@@ -31,15 +36,46 @@ class GraphViewController: UIViewController {
         graphView.pickerView.dataSource = self
         graphView.pickerView.delegate = self
         bind()
-        setAddAction()
+        setupBindings()
     }
-    func setAddAction(){
-        graphView.backButton.addTarget(self, action: #selector(backAction), for: .touchDown)
+
+    // 버튼 처리
+    private func setupBindings() {
+        graphView.backButton.rx.tap
+            .bind { [weak self] in
+                self?.presentingViewController?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        // 즐겨찾기 추가 버튼에 대한 RxSwift 액션
+        graphView.favoritPlusButton.rx.tap
+            .bind { [weak self] in
+                self?.addFavorite()
+            }
+            .disposed(by: disposeBag)
     }
-    @objc func backAction(){
-        self.presentingViewController?.dismiss(animated: true)
+
+    // 즐겨찾기 추가 기능
+    private func addFavorite() {
+        guard let name = nameData.first?.itemName,
+              let price = priceData.last.map({ String($0) }),
+              let fluctuationRate = tableData.last?[2] else {
+            return
+        }
+
+        // Core Data에 저장
+        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate)
+        print("즐겨찾기에 추가되었습니다: \(name)")
+        
+        // 즐겨찾기 목록 출력
+        let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
+        print("현재 즐겨찾기 목록:")
+        for item in favoriteItems {
+            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown")")
+        }
     }
-    func createDay(){
+        
+    func createDay() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let calendar = Calendar.current
@@ -52,6 +88,7 @@ class GraphViewController: UIViewController {
         graphView.titleLabel.text = nameData[0].itemName
         graphViewModel.fetchData(regday: nameData[0].lastestDay ?? "", productNo: nameData[0].productno ?? "")
     }
+
     func calculateDateTenDaysBefore(dateString: String?) -> String? {
         guard let dateString = dateString else {
             return nil
@@ -68,7 +105,8 @@ class GraphViewController: UIViewController {
         }
         return dateFormatter.string(from: tenDaysBefore)
     }
-    func bind(){
+
+    func bind() {
         graphViewModel.graphPrice.observe(on: MainScheduler.instance).skip(1).debug("test").subscribe(onNext: {[weak self] priceInfos in
             self?.priceData.removeAll()
             self?.dateData.removeAll()
@@ -115,6 +153,7 @@ class GraphViewController: UIViewController {
             self?.graphView.collectionView.reloadData()
         }).disposed(by: disposeBag)
     }
+
     private func setDatePickerView() -> [String]{
         var result: [String] = []
         let formatter = DateFormatter()
@@ -126,16 +165,18 @@ class GraphViewController: UIViewController {
         }
         return result
     }
-    
+
     private func setChartData() {
         let entries = generateDataEntries()
         graphView.setData(entries: entries)
     }
+
     private func dateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }
+
     private func generateDataEntries() -> [ChartDataEntry] {
         var entries: [ChartDataEntry] = []
         let dateFormatter = DateFormatter()
@@ -165,8 +206,8 @@ class GraphViewController: UIViewController {
         }
         return entries
     }
-    
 }
+
 extension GraphViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return tableData[section].count // 각 섹션의 셀 개수
