@@ -34,7 +34,7 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
     
     private let leftTopLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 33)
+        label.font = UIFont.boldSystemFont(ofSize: 27)
         label.textColor = .black
         return label
     }()
@@ -88,15 +88,13 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         shadowContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
-        shadowContainerView.addSubview(leftTopLabel)
-        shadowContainerView.addSubview(rightTopLabel)
-        shadowContainerView.addSubview(rightBottomLabel)
-        shadowContainerView.addSubview(deleteButton)
+        [leftTopLabel, rightTopLabel, rightBottomLabel, deleteButton].forEach { self.addSubview($0)}
         
         leftTopLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().offset(10)
+            $0.width.equalTo(150)
+            $0.height.equalTo(70)
         }
         
         rightTopLabel.snp.makeConstraints {
