@@ -119,6 +119,7 @@ class SearchViewController: UIViewController {
     private func getItemCodes(for query: String) -> [String: String]? {
         let itemCodes: [String: [String: String]] = [
             "쌀": ["부류코드": "100", "품목코드": "111", "품종코드": "01"],
+            "쌀": ["부류코드": "100", "품목코드": "111", "품종코드": "02"],
             "양배추": ["부류코드": "200", "품목코드": "212", "품종코드": "001"],
             "감자": ["부류코드": "300", "품목코드": "321", "품종코드": "002"],
             "고구마": ["부류코드": "300", "품목코드": "322", "품종코드": "003"]
