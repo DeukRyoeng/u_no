@@ -126,7 +126,12 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let prices = try? mainVM.top3Prices.value() else { return }
+        
+        let selectedPrices = prices[indexPath.row]
         let graphViewController = GraphViewController()
+        graphViewController.nameData = [selectedPrices]
+        print("@@@@\(selectedPrices)")
         present(graphViewController, animated: true, completion: nil)
             
     }
