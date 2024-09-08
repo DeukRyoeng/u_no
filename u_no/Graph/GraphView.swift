@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import DGCharts
+import Charts
 class GraphView: UIView{
     let lineChart = LineChartView()
     let collectionView: UICollectionView
@@ -65,47 +66,46 @@ class GraphView: UIView{
         }
         lineChart.scaleXEnabled = false
         lineChart.scaleYEnabled = false
-        //x축
         lineChart.xAxis.labelPosition = .bottom
         lineChart.xAxis.labelFont = .boldSystemFont(ofSize: 12)
-        lineChart.xAxis.granularity = 86400 // 하루를 초 단위로 설정
-        lineChart.xAxis.valueFormatter = self
-        lineChart.xAxis.labelCount = 5
-        lineChart.xAxis.granularity = 1.5
+        lineChart.xAxis.drawGridLinesEnabled = false//보조선
+        lineChart.xAxis.labelRotationAngle = -45
         lineChart.xAxis.forceLabelsEnabled = true
-        
-        //y축
+        lineChart.xAxis.granularity = 0.5
+        lineChart.xAxis.granularityEnabled = true
         lineChart.leftAxis.enabled = false
+        
         let yAxisFormatter = NumberFormatter()
         yAxisFormatter.numberStyle = .decimal
         lineChart.rightAxis.valueFormatter = DefaultAxisValueFormatter(formatter: yAxisFormatter)
-        lineChart.rightAxis.labelCount = 7
         lineChart.rightAxis.forceLabelsEnabled = true
-        
+        lineChart.xAxis.drawLabelsEnabled = false
         collectionView.backgroundColor = .white
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
     }
     func setData(entries: [ChartDataEntry]) {
         let lineChartDataSet = LineChartDataSet(entries: entries, label: "가격")
-        lineChartDataSet.colors = [.green] // 선 색상 설정
-        lineChartDataSet.circleColors = [.red] // 데이터 포인트 색상 설정
+        lineChartDataSet.colors = [.green]         // 선 색상 설정
+        lineChartDataSet.circleColors = [.red]     // 데이터 포인트 색상 설정
         lineChartDataSet.drawCirclesEnabled = true // 데이터 포인트 표시 여부 설정
-        lineChartDataSet.valueFormatter = self // 데이터 포인트 위 값 포맷터 설정
-        lineChartDataSet.circleRadius = 3.0
-        lineChartDataSet.valueFont = .boldSystemFont(ofSize: 10)
+        lineChartDataSet.valueFormatter = self     // 데이터 포인트 위 값 포맷터 설정
+        lineChartDataSet.circleRadius = 5.0
+        lineChartDataSet.valueFont = .boldSystemFont(ofSize: 8)
         let lineChartData = LineChartData(dataSet: lineChartDataSet)
         lineChart.data = lineChartData
-        print(entries)
         guard let firstEntry = entries.first, let lastEntry = entries.last else { return }
         lineChart.xAxis.axisMinimum = firstEntry.x
         lineChart.xAxis.axisMaximum = lastEntry.x
+        lineChart.xAxis.labelCount = entries.count
+        lineChart.xAxis.valueFormatter = self
     }
-
+    
 }
 extension GraphView: AxisValueFormatter, ValueFormatter {
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
+        formatter.dateFormat = "MM-dd"
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter
     }
     
