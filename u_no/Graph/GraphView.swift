@@ -20,7 +20,25 @@ class GraphView: UIView{
         return textField
     }()
     var months: [String] = []
-    
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    let favoritPlusButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("즐겨찾기 추가", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    let titleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Title"
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 25)
+        return label
+    }()
     override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical              // 세로 방향 스크롤
@@ -48,21 +66,34 @@ class GraphView: UIView{
     private func setConfigure(){
         textField.inputView = pickerView
         textField.text = months.last
-        [lineChart, collectionView, textField].forEach { addSubview($0) }
+        [lineChart, collectionView, textField, backButton, favoritPlusButton, titleLabel].forEach { addSubview($0) }
+        
+        backButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(16)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        favoritPlusButton.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(16)
+            $0.trailing.equalToSuperview().inset(16)
+        }
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(backButton.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(16)
+        }
         lineChart.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(300)
-        }
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(lineChart.snp.bottom).offset(100)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
         textField.snp.makeConstraints {
             $0.top.equalTo(lineChart.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(16)
             $0.width.equalTo(200)
+        }
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(textField.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
         lineChart.scaleXEnabled = false
         lineChart.scaleYEnabled = false
