@@ -47,6 +47,7 @@ class GraphViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        // 즐겨찾기 추가 버튼에 대한 RxSwift 액션
         graphView.favoritPlusButton.rx.tap
             .bind { [weak self] in
                 self?.addFavorite()
