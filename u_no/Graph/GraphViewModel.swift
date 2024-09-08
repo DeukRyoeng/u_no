@@ -13,31 +13,27 @@ import RxCocoa
 class GraphViewModel{
     private let disposeBag = DisposeBag()
     let network = NetworkManager.shared
-    let graphPrice = BehaviorSubject(value: [PriceInfo]())
+    let graphPrice = BehaviorSubject(value: [PriceData]())
     
-    func fetchData(strtDay: String, endDay: String, itemCode: String) {
+    func fetchData(regday: String, productNo: String) {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
             path: "/service/price/xml.do",
             queryParameters: [
                 "p_cert_key": "5845f7c3-4274-41a7-a88a-c79efefe21dc",
-                "action": "periodProductList",
+                "action": "recentlyPriceTrendList",
                 "p_cert_id": "4710",
                 "p_returntype": "json",
-                "p_startday": strtDay,
-                "p_endday": endDay,
-                "p_productclscode": "01",//소매01, 도매02
-                "p_itemcode": itemCode,//필수
-                "p_countrycode": "1101",
-                "p_convert_kg_yn": "Y"
+                "p_regday": regday,
+                "p_productno": productNo
             ])
         
         network.fetch(endpoint: endpoint)
             .subscribe(onSuccess: { [weak self] (result: GraphPrice) in
-                print("+++called SUCCESS MainViewModel+++")
-                self?.graphPrice.onNext(result.data.item)
+                print("+++called SUCCESS GraphViewModel+++")
+                self?.graphPrice.onNext(result.price)
             }, onFailure: {error in
-                print("called ERROR MainViewmodel: \(error)")
+                print("called ERROR GraphViewModel: \(error)")
             }
             ).disposed(by: disposeBag)
     }

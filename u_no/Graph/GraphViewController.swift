@@ -16,7 +16,7 @@ class GraphViewController: UIViewController {
     private var dateData: [String] = []
     private var priceData: [Double] = []
     private var tableData: [[String]] = []
-    private var GraphPriceInfo = [PriceInfo]()
+    private var GraphPriceInfo = [PriceData]()
     var itemCodeData: String = "212"
     var nameData: [Price] = []
     override func loadView() {
@@ -31,6 +31,13 @@ class GraphViewController: UIViewController {
         graphView.pickerView.dataSource = self
         graphView.pickerView.delegate = self
         bind()
+        setAddAction()
+    }
+    func setAddAction(){
+        graphView.backButton.addTarget(self, action: #selector(backAction), for: .touchDown)
+    }
+    @objc func backAction(){
+        self.presentingViewController?.dismiss(animated: true)
     }
     func createDay(){
         let dateFormatter = DateFormatter()
@@ -42,53 +49,66 @@ class GraphViewController: UIViewController {
         if let date16DaysAgo = calendar.date(byAdding: .day, value: -16, to: currentDate) {
             date16DaysAgoString = dateFormatter.string(from: date16DaysAgo)
         }
-        graphViewModel.fetchData(strtDay: date16DaysAgoString, endDay: currentDateString, itemCode: itemCodeData)
+        graphView.titleLabel.text = nameData[0].itemName
+        graphViewModel.fetchData(regday: nameData[0].lastestDay ?? "", productNo: nameData[0].productno ?? "")
     }
-    
+    func calculateDateTenDaysBefore(dateString: String?) -> String? {
+        guard let dateString = dateString else {
+            return nil
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let date = dateFormatter.date(from: dateString) else {
+            return nil
+        }
+        let calendar = Calendar.current
+        guard let tenDaysBefore = calendar.date(byAdding: .day, value: -10, to: date) else {
+            return nil
+        }
+        return dateFormatter.string(from: tenDaysBefore)
+    }
     func bind(){
         graphViewModel.graphPrice.observe(on: MainScheduler.instance).skip(1).debug("test").subscribe(onNext: {[weak self] priceInfos in
             self?.priceData.removeAll()
             self?.dateData.removeAll()
             self?.tableData.removeAll()
             
-            var infoAry: [PriceInfo] = priceInfos.filter { $0.countyName == "평균" }
-            infoAry.sort { info1, info2 in
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd"
-                if let date1 = formatter.date(from: info1.regday ?? ""),
-                   let date2 = formatter.date(from: info2.regday ?? "") {
-                    return date1 < date2
-                }
-                return false
-            }
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+            print("@#@#\(priceInfos)")
+            self?.priceData.append(Double(priceInfos[0].d0.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
+            self?.priceData.append(Double(priceInfos[0].d10.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
+            self?.priceData.append(Double(priceInfos[0].d20.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
+            self?.priceData.append(Double(priceInfos[0].d30.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
+            self?.priceData.append(Double(priceInfos[0].d40.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
+            self?.dateData.append(self?.nameData[0].lastestDay ?? "")
+            let minus10 = self?.calculateDateTenDaysBefore(dateString: self?.nameData[0].lastestDay)
+            self?.dateData.append(minus10 ?? "")
+            let minus20 = self?.calculateDateTenDaysBefore(dateString: minus10)
+            self?.dateData.append(minus20 ?? "")
+            let minus30 = self?.calculateDateTenDaysBefore(dateString: minus20)
+            self?.dateData.append(minus30 ?? "")
+            let minus40 = self?.calculateDateTenDaysBefore(dateString: minus30)
+            self?.dateData.append(minus40 ?? "")
+            print("!!!!!\(self?.priceData)")
+            print("!!!!!\(self?.dateData)")
+            self?.priceData.reverse()
+            self?.dateData.reverse()
             var previousPrice: Double? = nil
-            
-            for info in infoAry{
-                if let priceString = info.price,
-                   let price = Double(priceString.replacingOccurrences(of: ",", with: "")), // 쉼표 제거 후 Double로 변환
-                   let date = info.regday,
-                   let year = info.yyyy {
-                    let formattedDate = "\(year)-\(date)"
-                    if let dateObject = dateFormatter.date(from: formattedDate) {
-                        let formattedDateString = dateFormatter.string(from: dateObject)
-                        self?.priceData.append(price)
-                        self?.dateData.append(formattedDateString)
-                        
-                        ///등락률 계산
-                        var changeRateString = "-"
-                        if let previousPrice = previousPrice {
-                            let changeRate = ((price - previousPrice) / previousPrice) * 100
-                            changeRateString = String(format: "%.2f", changeRate) + "%"
-                        }
-                        self?.tableData.append([formattedDateString,priceString, changeRateString])
-                        previousPrice = price
+            for i in 0..<(self?.priceData.count ?? 0){
+                if let price = self?.priceData[i]{
+                    ///등락률 계산
+                    var changeRateString = "-"
+                    if let previousPrice = previousPrice {
+                        let changeRate = ((price - previousPrice) / previousPrice) * 100
+                        changeRateString = String(format: "%.2f", changeRate) + "%"
                     }
+                    self?.tableData.append([self?.dateData[i] ?? "", String(price), changeRateString])
+                    previousPrice = price
+                    
                 }
-                
-                
             }
+            print("!!!!!\(self?.tableData)")
+
             self?.tableData.append(["날짜", "가격", "등락률"])
             self?.setChartData()
             self?.tableData.reverse()
