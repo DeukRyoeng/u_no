@@ -19,6 +19,7 @@ class GraphViewController: UIViewController {
     private var GraphPriceInfo = [PriceInfo]()
     var itemCodeData: String = "212"
     var nameData: [Price] = []
+    
     override func loadView() {
         view = graphView
     }
