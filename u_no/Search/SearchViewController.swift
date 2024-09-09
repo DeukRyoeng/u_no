@@ -15,6 +15,7 @@ class SearchViewController: UIViewController {
     let searchVM = SearchViewModel()
     
     private let network = NetworkManager.shared
+    private let itemManager = ItemManager.shared
     
     private let disposeBag = DisposeBag()
     
@@ -78,15 +79,21 @@ class SearchViewController: UIViewController {
                 print("검색어 입력: \(query)")
                 // 여기에 검색 로직을 추가
                 
-                if let itemCodes = self.getItemCodes(for: query) {
-                    let itemcategory = itemCodes["부류코드"] ?? ""
-                    let itemcode = itemCodes["품목코드"] ?? ""
-                    let kindcode = itemCodes["품종코드"] ??  ""
-                    
-                    print("부류코드: \(itemcategory), 품목코드: \(itemcode)")
-                    
-                    self.searchVM.fetchSearchData(itemcategory: itemcategory, itemcode: itemcode, kindcode: kindcode)
-                } else { print("상품을 찾을 수 없습니다.")}
+                if let itemCategory = self.itemManager.getItemCategory(for: query) {
+                    if let firstCode = itemCategory.codes.first {
+                        let itemcategory = firstCode.itemcategory
+                        let itemcode = firstCode.itemcode
+                        let kindcode = firstCode.kindcode
+                        
+                        print("부류코드: \(itemcategory), 품목코드: \(itemcode), 품종코드: \(kindcode)")
+                        self.searchVM.fetchSearchData(itemcategory: itemcategory, itemcode: itemcode, kindcode: kindcode)
+
+                    } else {
+                        print("해당품목에 코드가 없습니다")
+                    }
+                } else {
+                    print("상품을 찾을 수 없습니다.")
+                }
             })
             .disposed(by: disposeBag)
         // 검색 버튼 클릭 감지
@@ -123,7 +130,7 @@ class SearchViewController: UIViewController {
             "양배추": ["부류코드": "200", "품목코드": "212", "품종코드": "001"],
             "감자": ["부류코드": "300", "품목코드": "321", "품종코드": "002"],
             "고구마": ["부류코드": "300", "품목코드": "322", "품종코드": "003"]
-        ]            
+        ]
         return itemCodes[query]
     }
 }
