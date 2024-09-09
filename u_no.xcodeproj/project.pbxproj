@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451D9EB02C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */; };
 		45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */; };
 		45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F52C85D67D005ADB63 /* RxDataSources */; };
 		45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F72C85D6C3005ADB63 /* Differentiator */; };
@@ -49,13 +50,13 @@
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
 		C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */; };
 		C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */; };
-		C2EC7C292C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2EC7C272C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodeld */; };
 		C2EC7C2C2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */; };
 		C2EC7C2D2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */; };
 		C2EC7C2F2C8DDBE500A19FE9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
 		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
 		45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewSecoundCell.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
-		C2EC7C282C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorites+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorites+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -156,8 +156,8 @@
 			children = (
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
-				C2EC7C272C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
+				451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
 			);
@@ -328,7 +328,6 @@
 				C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */,
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
-				C2EC7C292C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
 				C2EC7C2C2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift in Sources */,
@@ -347,6 +346,7 @@
 				AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */,
 				C2EC7C2F2C8DDBE500A19FE9 /* CoreDataManager.swift in Sources */,
 				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
+				451D9EB02C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
 				AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */,
@@ -677,14 +677,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		C2EC7C272C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodeld */ = {
+		451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C2EC7C282C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodel */,
+				451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = C2EC7C282C8DD2B600A19FE9 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = 451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/t2023-m0117/Desktop/sparta/u_no/FavoritesCoreData.xcdatamodeld";
+			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
