@@ -5,7 +5,7 @@
 //  Created by t2023-m0117 on 9/2/24.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxCocoa
 
@@ -23,14 +23,33 @@ class FavoritesViewModel {
     }
     
     private func setupInitialData() {
-        let initialItems = [
-            FavoritesItem(leftTopText: "복숭아", rightTopText: "23,021원", rightBottomText: "20%"),
-            FavoritesItem(leftTopText: "쌀", rightTopText: "51,816원", rightBottomText: "0%"),
-            FavoritesItem(leftTopText: "당근", rightTopText: "6,981원", rightBottomText: "3.13%")
-        ]
-        items.accept(initialItems)
+        let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
+        
+        // NumberFormatter 설정
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 0 // 소수점 제거
+        
+        let favorites = favoriteItems.map { item in
+            // 가격 값을 숫자로 변환하고, 3자리마다 콤마를 추가
+            let priceWithoutDecimal = item.price?.split(separator: ".").first ?? "Unknown"
+            if let priceNumber = Int(priceWithoutDecimal), let formattedPrice = numberFormatter.string(from: NSNumber(value: priceNumber)) {
+                let priceWithCurrency = formattedPrice + "원"
+                
+                return FavoritesItem(leftTopText: item.name ?? "Unknown",
+                                     rightTopText: priceWithCurrency,
+                                     rightBottomText: item.discount ?? "Unknown")
+            } else {
+                return FavoritesItem(leftTopText: item.name ?? "Unknown",
+                                     rightTopText: "Unknown",
+                                     rightBottomText: item.discount ?? "Unknown")
+            }
+        }
+        
+        items.accept(favorites)
+        print("Loaded favorites: \(favorites)") // 데이터 로깅
     }
-    
+
     func deleteItem(at indexPath: IndexPath) {
         var currentItems = items.value
         guard indexPath.row < currentItems.count else { return }
