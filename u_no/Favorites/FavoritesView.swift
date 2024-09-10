@@ -54,10 +54,18 @@ class FavoritesView: UIView {
     }
     
     private func bindCollectionView() {
-        viewModel.items.bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
-            cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
-            cell.delegate = self
-        }.disposed(by: disposeBag)
+        viewModel.items
+            .bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
+                cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
+                cell.delegate = self
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.items
+            .subscribe(onNext: { [weak self] _ in
+                self?.favoritesCollection.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
 

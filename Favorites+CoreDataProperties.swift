@@ -19,6 +19,7 @@ extension Favorites {
     @NSManaged public var name: String?
     @NSManaged public var price: String?
     @NSManaged public var discount: String?
+    @NSManaged public var productno: String?
 
 }
 

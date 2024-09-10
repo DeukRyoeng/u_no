@@ -59,21 +59,23 @@ class GraphViewController: UIViewController {
     private func addFavorite() {
         guard let name = nameData.first?.itemName,
               let price = priceData.last.map({ String($0) }),
-              let fluctuationRate = nameData.first?.value.asString() else {
+              let fluctuationRate = nameData.first?.value.asString(),
+              let productno = nameData.first?.productno else {
             return
         }
-
         // Core Data에 저장
-        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate)
-        print("즐겨찾기에 추가되었습니다: \(name), 등락률: \(fluctuationRate)")
+        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate, productno: productno)
+        print("즐겨찾기에 추가되었습니다: \(name), 등락률: \(fluctuationRate), ProductNo: \(productno)")
         common.showAlert(viewController: self, message: "즐겨찾기에 추가되었습니다")
+        
         // 즐겨찾기 목록 출력
         let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
         print("현재 즐겨찾기 목록:")
         for item in favoriteItems {
-            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown")")
+            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown"), ProductNo: \(item.productno ?? "Unknown")")
         }
     }
+
         
     func createDay() {
         graphView.textField.isHidden = true
