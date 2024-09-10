@@ -10,49 +10,56 @@ import RxSwift
 import RxCocoa
 
 class FavoritesViewModel {
-    // Input: Data
+
     let items = BehaviorRelay<[FavoritesItem]>(value: [])
-    
-    // Output: Actions
     let itemDeleted = PublishRelay<IndexPath>()
     
     private let disposeBag = DisposeBag()
+    private let coreDataManager: CoreDataManager
     
-    init() {
-        setupInitialData()
+    init(coreDataManager: CoreDataManager = CoreDataManager.shared) {
+        self.coreDataManager = coreDataManager
     }
-    
-    private func setupInitialData() {
-        let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
-        
-        // NumberFormatter 설정
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = 0 // 소수점 제거
-        
-        let favorites = favoriteItems.map { item in
-            // 가격 값을 숫자로 변환하고, 3자리마다 콤마를 추가
-            let priceWithoutDecimal = item.price?.split(separator: ".").first ?? "Unknown"
-            if let priceNumber = Int(priceWithoutDecimal), let formattedPrice = numberFormatter.string(from: NSNumber(value: priceNumber)) {
-                let priceWithCurrency = formattedPrice + "원"
+    func loadData() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            let favoriteItems = self.coreDataManager.fetchFavoriteItems()
+            
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            numberFormatter.maximumFractionDigits = 0
+            
+            let favorites = favoriteItems.map { item in
+                let priceWithoutDecimal = item.price?.split(separator: ".").first ?? "Unknown"
+                let priceWithCurrency: String
+                if let priceNumber = Int(priceWithoutDecimal),
+                   let formattedPrice = numberFormatter.string(from: NSNumber(value: priceNumber)) {
+                    priceWithCurrency = formattedPrice + "원"
+                } else {
+                    priceWithCurrency = "Unknown"
+                }
+                
+                let discountWithPercentage = (item.discount ?? "Unknown") + "%"
                 
                 return FavoritesItem(leftTopText: item.name ?? "Unknown",
                                      rightTopText: priceWithCurrency,
-                                     rightBottomText: item.discount ?? "Unknown")
-            } else {
-                return FavoritesItem(leftTopText: item.name ?? "Unknown",
-                                     rightTopText: "Unknown",
-                                     rightBottomText: item.discount ?? "Unknown")
+                                     rightBottomText: discountWithPercentage)
+            }
+            
+            DispatchQueue.main.async {
+                self.items.accept(favorites)
+                print("Loaded favorites: \(favorites)")
             }
         }
-        
-        items.accept(favorites)
-        print("Loaded favorites: \(favorites)") // 데이터 로깅
     }
 
     func deleteItem(at indexPath: IndexPath) {
         var currentItems = items.value
         guard indexPath.row < currentItems.count else { return }
+        
+        let name = currentItems[indexPath.row].leftTopText
+        coreDataManager.deleteFavoriteItem(name: name)
+        
         currentItems.remove(at: indexPath.row)
         items.accept(currentItems)
         itemDeleted.accept(indexPath)

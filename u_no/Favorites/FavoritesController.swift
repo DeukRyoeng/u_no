@@ -11,9 +11,9 @@ import RxSwift
 import RxCocoa
 
 class FavoritesController: UIViewController {
-    
+
     private let disposeBag = DisposeBag()
-    private let viewModel = FavoritesViewModel()
+    private let viewModel = FavoritesViewModel() 
     private lazy var favoritesView = FavoritesView(viewModel: viewModel)
     
     override func viewDidLoad() {
@@ -22,16 +22,22 @@ class FavoritesController: UIViewController {
         setupUI()
         bindData()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.loadData()
+    }
     private func setupUI() {
         view.addSubview(favoritesView)
         favoritesView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
-    
+
     private func bindData() {
-        viewModel.itemDeleted.subscribe(onNext: { indexPath in
-        }).disposed(by: disposeBag)
+        viewModel.itemDeleted
+            .subscribe(onNext: { indexPath in
+                print("Deleted item at: \(indexPath)")
+            })
+            .disposed(by: disposeBag)
     }
 }

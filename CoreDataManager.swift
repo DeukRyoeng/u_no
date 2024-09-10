@@ -51,6 +51,7 @@ class CoreDataManager {
         
         do {
             let items = try CoreDataManager.shared.context.fetch(fetchRequest)
+            print("\(fetchRequest)")
             return items
         } catch {
             print("Failed to fetch favorite items: \(error)")
@@ -81,8 +82,8 @@ class CoreDataManager {
             let items = try context.fetch(fetchRequest)
             if let itemToDelete = items.first {
                 context.delete(itemToDelete)
-                try context.save()
                 print("Favorite item deleted: \(name)")
+                try context.save()
             }
         } catch {
             print("Failed to delete favorite item: \(error)")
