@@ -11,4 +11,5 @@ struct FavoritesItem {
     let leftTopText: String
     let rightTopText: String
     let rightBottomText: String
+    let productno: String 
 }
