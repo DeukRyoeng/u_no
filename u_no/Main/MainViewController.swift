@@ -20,25 +20,26 @@ class MainViewController: UIViewController {
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
-            if sectionIndex == 0 {
+            if sectionIndex == 0 || sectionIndex == 1 {
                 // 첫번째 섹션
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
                 
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(330))
-                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item, item, item])
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .groupPaging
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                section.orthogonalScrollingBehavior = .none
+//                section.orthogonalScrollingBehavior = .none
                 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header]
                 
                 return section
-            } else {
+            } else if sectionIndex == 2 {
                 // 두번째 섹션
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -60,6 +61,7 @@ class MainViewController: UIViewController {
                 
                 return section
             }
+            return nil
         }
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
