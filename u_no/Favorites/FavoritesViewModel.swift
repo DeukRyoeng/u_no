@@ -20,6 +20,7 @@ class FavoritesViewModel {
     init(coreDataManager: CoreDataManager = CoreDataManager.shared) {
         self.coreDataManager = coreDataManager
     }
+    
     func loadData() {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
@@ -41,9 +42,12 @@ class FavoritesViewModel {
                 
                 let discountWithPercentage = (item.discount ?? "Unknown") + "%"
                 
-                return FavoritesItem(leftTopText: item.name ?? "Unknown",
-                                     rightTopText: priceWithCurrency,
-                                     rightBottomText: discountWithPercentage)
+                return FavoritesItem(
+                    leftTopText: item.name ?? "Unknown",
+                    rightTopText: priceWithCurrency,
+                    rightBottomText: discountWithPercentage,
+                    productno: item.productno ?? "Unknown" // Include productno
+                )
             }
             
             DispatchQueue.main.async {
@@ -57,8 +61,8 @@ class FavoritesViewModel {
         var currentItems = items.value
         guard indexPath.row < currentItems.count else { return }
         
-        let name = currentItems[indexPath.row].leftTopText
-        coreDataManager.deleteFavoriteItem(name: name)
+        let productno = currentItems[indexPath.row].productno
+        coreDataManager.deleteFavoriteItem(productno: productno)
         
         currentItems.remove(at: indexPath.row)
         items.accept(currentItems)

@@ -26,9 +26,9 @@ class CoreDataManager {
     }
     
     // 즐겨찾기 데이터 저장
-    func saveFavoriteItem(name: String, price: String, discount: String) {
-        if isItemAlreadyFavorited(name: name) {
-            print("Item with name \(name) already exists in favorites.")
+    func saveFavoriteItem(name: String, price: String, discount: String, productno: String) {
+        if isItemAlreadyFavorited(productno: productno) {
+            print("Item with productno \(productno) already exists in favorites.")
             return
         }
 
@@ -36,6 +36,7 @@ class CoreDataManager {
         favoriteItem.name = name
         favoriteItem.price = price
         favoriteItem.discount = discount
+        favoriteItem.productno = productno
         
         do {
             try context.save()
@@ -60,9 +61,9 @@ class CoreDataManager {
     }
     
     // 중복 항목 확인
-    private func isItemAlreadyFavorited(name: String) -> Bool {
+    private func isItemAlreadyFavorited(productno: String) -> Bool {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = NSPredicate(format: "productno == %@", productno)
         
         do {
             let count = try context.count(for: fetchRequest)
@@ -74,15 +75,15 @@ class CoreDataManager {
     }
     
     // 즐겨찾기 항목 삭제
-    func deleteFavoriteItem(name: String) {
+    func deleteFavoriteItem(productno: String) {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        fetchRequest.predicate = NSPredicate(format: "productno == %@", productno)
         
         do {
             let items = try context.fetch(fetchRequest)
             if let itemToDelete = items.first {
                 context.delete(itemToDelete)
-                print("Favorite item deleted: \(name)")
+                print("Favorite item deleted: \(productno)")
                 try context.save()
             }
         } catch {
