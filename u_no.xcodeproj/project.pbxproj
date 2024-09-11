@@ -70,6 +70,7 @@
 		AFB433392C8DC2C800642697 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		AFB4333F2C8FA28E00642697 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		AFB433432C91C04500642697 /* u_no.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = u_no.entitlements; sourceTree = "<group>"; };
 		AFD0E9022C800BA800D0C24C /* u_no.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = u_no.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD0E9052C800BA800D0C24C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +186,7 @@
 		AFD0E9042C800BA800D0C24C /* u_no */ = {
 			isa = PBXGroup;
 			children = (
+				AFB433432C91C04500642697 /* u_no.entitlements */,
 				AFB433362C8AD1C300642697 /* Search */,
 				AFB433342C89A3D900642697 /* Graph */,
 				C2D7DA8A2C8060A5009C8652 /* Setting */,
@@ -510,6 +512,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4DWV94Z6J6;
@@ -538,6 +541,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4DWV94Z6J6;
