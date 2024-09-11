@@ -16,11 +16,12 @@ class GraphViewController: UIViewController {
     private let graphView = GraphView()
     private let graphViewModel = GraphViewModel()
     private let disposeBag = DisposeBag()
+    private let common = Common()
+    
     private var dateData: [String] = []
     private var priceData: [Double] = []
     private var tableData: [[String]] = []
     private var GraphPriceInfo = [PriceData]()
-    var itemCodeData: String = "212"
     var nameData: [Price] = []
 
     override func loadView() {
@@ -58,32 +59,26 @@ class GraphViewController: UIViewController {
     private func addFavorite() {
         guard let name = nameData.first?.itemName,
               let price = priceData.last.map({ String($0) }),
-              let fluctuationRate = nameData.first?.value.asString() else {
+              let fluctuationRate = nameData.first?.value.asString(),
+              let productno = nameData.first?.productno else {
             return
         }
-
         // Core Data에 저장
-        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate)
-        print("즐겨찾기에 추가되었습니다: \(name), 등락률: \(fluctuationRate)")
-
+        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate, productno: productno)
+        print("즐겨찾기에 추가되었습니다: \(name), 등락률: \(fluctuationRate), ProductNo: \(productno)")
+        common.showAlert(viewController: self, message: "즐겨찾기에 추가되었습니다")
+        
         // 즐겨찾기 목록 출력
         let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
         print("현재 즐겨찾기 목록:")
         for item in favoriteItems {
-            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown")")
+            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown"), ProductNo: \(item.productno ?? "Unknown")")
         }
     }
+
         
     func createDay() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let calendar = Calendar.current
-        let currentDate = Date()
-        let currentDateString = dateFormatter.string(from: currentDate)
-        var date16DaysAgoString = ""
-        if let date16DaysAgo = calendar.date(byAdding: .day, value: -16, to: currentDate) {
-            date16DaysAgoString = dateFormatter.string(from: date16DaysAgo)
-        }
+        graphView.textField.isHidden = true
         graphView.titleLabel.text = nameData[0].itemName
         graphViewModel.fetchData(regday: nameData[0].lastestDay ?? "", productNo: nameData[0].productno ?? "")
     }

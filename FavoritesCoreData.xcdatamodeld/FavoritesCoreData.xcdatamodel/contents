@@ -4,5 +4,6 @@
         <attribute name="discount" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="price" optional="YES" attributeType="String"/>
+        <attribute name="productno" optional="YES" attributeType="String"/>
     </entity>
 </model>
