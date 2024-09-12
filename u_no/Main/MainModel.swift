@@ -84,6 +84,9 @@ struct Price: Codable {
     /// 등락율
     let value: StringOrArray
     
+    /// 등락율(mainVM 에서 사용할)
+    var rate: Double?
+    
     enum CodingKeys: String, CodingKey {
         case productClsCode = "product_cls_code"
         case productClsName = "product_cls_name"
