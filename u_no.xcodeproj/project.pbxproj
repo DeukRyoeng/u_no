@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		451D9EB02C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */; };
+		451D9EB02C8ECD2E0046A4C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		451D9EB32C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EB12C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld */; };
 		45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */; };
 		45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F52C85D67D005ADB63 /* RxDataSources */; };
 		45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F72C85D6C3005ADB63 /* Differentiator */; };
@@ -23,7 +24,6 @@
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433372C8AD1D900642697 /* SearchViewModel.swift */; };
 		AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433392C8DC2C800642697 /* ItemManager.swift */; };
-		AFB4333D2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */; };
 		AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333F2C8FA28E00642697 /* LoginViewController.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
 		AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */; };
@@ -60,7 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
+		451D9EB22C929F460046A4C0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
 		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
 		45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewSecoundCell.swift; sourceTree = "<group>"; };
@@ -74,7 +74,6 @@
 		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AFB433372C8AD1D900642697 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		AFB433392C8DC2C800642697 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
-		AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		AFB4333F2C8FA28E00642697 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AFB433432C91C04500642697 /* u_no.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = u_no.entitlements; sourceTree = "<group>"; };
 		AFD0E9022C800BA800D0C24C /* u_no.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = u_no.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,9 +173,8 @@
 				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
-				AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */,
+				451D9EB12C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
-				451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
 			);
@@ -349,6 +347,7 @@
 				C24E5F712C85B8A3008DC4D6 /* FavoritesModel.swift in Sources */,
 				C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */,
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
+				451D9EB32C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
@@ -369,7 +368,7 @@
 				AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */,
 				C2EC7C2F2C8DDBE500A19FE9 /* CoreDataManager.swift in Sources */,
 				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
-				451D9EB02C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */,
+				451D9EB02C8ECD2E0046A4C0 /* (null) in Sources */,
 				4F8D7BC62C8ED7CD0062EBD9 /* ColorExtension.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
@@ -704,14 +703,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */ = {
+		451D9EB12C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */,
+				451D9EB22C929F460046A4C0 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = 451D9EB22C929F460046A4C0 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = /Users/dx._.xk7/Desktop/u_no/FavoritesCoreData.xcdatamodeld;
+			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

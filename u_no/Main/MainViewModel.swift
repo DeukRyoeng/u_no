@@ -47,18 +47,21 @@ class MainViewModel {
                 }
                 
                 // 등락률 기준으로 데이터를 필터링 및 정렬
-                let sortedPrices = updatedPrices.sorted { ($0.rate ?? 0) > ($1.rate ?? 0) }
+                let sortedPrices = updatedPrices.sorted {
+                    (Double($0.value.asString()) ?? 0) > (Double($1.value.asString()) ?? 0)
+                }
                     
-                
-                
                 // 상승한 품목: 등락률이 양수인 품목만 필터링 하고 상위 3개 추출
-                let risingPrices = sortedPrices.filter { Double($0.value.asString()) ?? 0 > 0 }
+                let risingPrices = sortedPrices
+                    .filter { Double($0.value.asString()) ?? 0 > 0 }
+                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
                 let top3Rising = Array(risingPrices.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
                 // 하락한 품목: 등락률이 음수인 품목만 필터링 하고 상위 3개 추출
-                let fallingPrices = sortedPrices.filter { Double($0.value.asString()) ?? 0 < 0 }
-                print("Falling Prices: \(fallingPrices)")
+                let fallingPrices = sortedPrices
+                    .filter { Double($0.value.asString()) ?? 0 < 0 }
+                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
                 let top3Falling = Array(fallingPrices.prefix(3))
                 self?.top3FallingPirces.onNext(top3Falling)
                 
@@ -98,8 +101,7 @@ extension Price {
             day4: self.day4,
             dpr4: self.dpr4,
             direction: self.direction,
-            value: newValue != nil ? .string(newValue!) : self.value, // 새로운 값 있으면 업데이트
-            rate: rate ?? self.rate // 새로운 등락률이 있으면 업데이트
+            value: newValue != nil ? .string(newValue!) : self.value // 새로운 값 있으면 업데이트
         )
     }
 }
