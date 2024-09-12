@@ -90,7 +90,7 @@ class GraphViewController: UIViewController {
               let productno = nameData.first?.productno else {
             return
         }
-        graphViewModel.savedFavoriteCoreData(name: name, price: price, discount: fluctuationRate, productno: productno)
+        graphViewModel.savedFavoriteCoreData( productno: productno)
     }
 
         

@@ -44,6 +44,7 @@
 		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
 		C234BD632C80465C0074C822 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD622C80465C0074C822 /* SettingView.swift */; };
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
+		C23845152C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C23845132C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld */; };
 		C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */; };
 		C24E5F692C85AB36008DC4D6 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */; };
 		C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */; };
@@ -89,6 +90,7 @@
 		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
 		C234BD622C80465C0074C822 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		C23845142C9292690084ECD0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -173,8 +175,8 @@
 				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
-				451D9EB12C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
+				C23845132C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
 			);
@@ -374,6 +376,7 @@
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
 				AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */,
 				C24E5F692C85AB36008DC4D6 /* FavoritesController.swift in Sources */,
+				C23845152C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F752C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift in Sources */,
 				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
 				45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */,
@@ -703,14 +706,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		451D9EB12C929F460046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
+		C23845132C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				451D9EB22C929F460046A4C0 /* FavoritesCoreData.xcdatamodel */,
+				C23845142C9292690084ECD0 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = 451D9EB22C929F460046A4C0 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = C23845142C9292690084ECD0 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
+			path = "/Users/t2023-m0117/Desktop/sparta/u_no/FavoritesCoreData.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

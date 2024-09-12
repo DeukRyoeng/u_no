@@ -26,21 +26,18 @@ class CoreDataManager {
     }
     
     // 즐겨찾기 데이터 저장
-    func saveFavoriteItem(name: String, price: String, discount: String, productno: String) {
+    func saveFavoriteItem(productno: String) {
         if isItemAlreadyFavorited(productno: productno) {
             print("Item with productno \(productno) already exists in favorites.")
             return
         }
 
         let favoriteItem = Favorites(context: context)
-        favoriteItem.name = name
-        favoriteItem.price = price
-        favoriteItem.discount = discount
         favoriteItem.productno = productno
         
         do {
             try context.save()
-            print("Favorite item saved: \(name)")
+            print("Favorite item saved: \(productno)")
         } catch {
             print("Failed to save favorite item: \(error)")
         }
