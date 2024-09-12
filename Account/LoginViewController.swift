@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import RxSwift
 import CryptoKit
 import FirebaseAuth
 import SwiftUI
 import AuthenticationServices
-
+import RxKakaoSDKAuth
+import KakaoSDKAuth
+import RxKakaoSDKUser
+import KakaoSDKUser
 class LoginViewController: UIViewController {
     
     fileprivate var currentNonce: String?
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +60,7 @@ extension LoginViewController {
         view.addSubview(signUpButton)
         
         applebutton.addTarget(self, action: #selector(appleSignInBtn), for: .touchUpInside)
+        kakaobutton.addTarget(self, action: #selector(kakaoSignInBtn), for: .touchUpInside)
         
         mainLogoImage.snp.makeConstraints {
             $0.top.equalTo(40)
@@ -90,8 +96,31 @@ extension LoginViewController {
         print("clicked Apple SignIn Button")
         startSignInApple()
     }
+    
+    @objc func kakaoSignInBtn() {
+        print("clicked Kakao SignIn Button")
+        startSignInKakao()
+    }
 }
 
+//MARK: - SignIn With Kakao
+private extension LoginViewController {
+    
+    func startSignInKakao() {
+        // 카카오톡 실행 가능 여부 체크
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.rx.loginWithKakaoTalk()
+                .subscribe(onNext: { (oauthToken) in
+                    print("loginWithKakaoTalk() success.")
+                }, onError: { error in
+                    print("Kakao Login error: \(error)")
+                })
+                .disposed(by: disposeBag)
+        }
+    }
+}
+
+//MARK: - SignIn With Apple
 private extension LoginViewController {
     
     func startSignInApple() {
