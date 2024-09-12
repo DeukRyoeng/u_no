@@ -22,7 +22,6 @@
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433372C8AD1D900642697 /* SearchViewModel.swift */; };
 		AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433392C8DC2C800642697 /* ItemManager.swift */; };
-		AFB4333D2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */; };
 		AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333F2C8FA28E00642697 /* LoginViewController.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
 		AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */; };

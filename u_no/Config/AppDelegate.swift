@@ -9,18 +9,25 @@ import CoreData
 import UIKit
 import FirebaseCore
 import RxKakaoSDKCommon
+import RxKakaoSDKAuth
+import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-
         RxKakaoSDK.initSDK(appKey: "315d9b181ac74c4ec88c384ed7811914")
         
         FirebaseApp.configure()
         return true
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                return AuthController.rx.handleOpenUrl(url: url)
+            }
+            return false
+        }
 
     // MARK: UISceneSession Lifecycle
 
