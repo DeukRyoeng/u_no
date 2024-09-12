@@ -21,7 +21,6 @@ class GraphViewController: UIViewController {
     private var dateData: [String] = []
     private var priceData: [Double] = []
     private var tableData: [[String]] = []
-    private var GraphPriceInfo = [PriceData]()
     var nameData: [Price] = []
 
     override func loadView() {
@@ -30,13 +29,12 @@ class GraphViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createDay()
+        retrieveData()
         graphView.collectionView.dataSource = self
         graphView.collectionView.delegate = self
         graphView.months = setDatePickerView()
         graphView.pickerView.dataSource = self
         graphView.pickerView.delegate = self
-        bind()
         setupBindings()
     }
 
@@ -53,6 +51,35 @@ class GraphViewController: UIViewController {
                 self?.addFavorite()
             }
             .disposed(by: disposeBag)
+        
+        graphViewModel.tableData
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self]  datas in
+                self?.tableData.removeAll()
+                self?.tableData = datas
+                self?.graphView.collectionView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(graphViewModel.priceData, graphViewModel.dateData)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (prices, dates) in
+                self?.priceData = prices
+                self?.dateData = dates
+                if self?.priceData.count != 0 && self?.dateData.count != 0{
+                    self?.setChartData()
+                }
+                
+            })
+            .disposed(by: disposeBag)
+        
+        graphViewModel.alertMessage
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] message in
+                self?.common.showAlert(viewController: self!, message: message)
+            })
+            .disposed(by: disposeBag)
+        
     }
 
     // 즐겨찾기 추가 기능
@@ -63,90 +90,16 @@ class GraphViewController: UIViewController {
               let productno = nameData.first?.productno else {
             return
         }
-        // Core Data에 저장
-        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: fluctuationRate, productno: productno)
-        print("즐겨찾기에 추가되었습니다: \(name), 등락률: \(fluctuationRate), ProductNo: \(productno)")
-        common.showAlert(viewController: self, message: "즐겨찾기에 추가되었습니다")
-        
-        // 즐겨찾기 목록 출력
-        let favoriteItems = CoreDataManager.shared.fetchFavoriteItems()
-        print("현재 즐겨찾기 목록:")
-        for item in favoriteItems {
-            print("Name: \(item.name ?? "Unknown"), Price: \(item.price ?? "Unknown"), Discount: \(item.discount ?? "Unknown"), ProductNo: \(item.productno ?? "Unknown")")
-        }
+        graphViewModel.savedFavoriteCoreData(name: name, price: price, discount: fluctuationRate, productno: productno)
     }
 
         
-    func createDay() {
+    func retrieveData() {
         graphView.textField.isHidden = true
-        graphView.titleLabel.text = nameData[0].itemName
-        graphViewModel.fetchData(regday: nameData[0].lastestDay ?? "", productNo: nameData[0].productno ?? "")
+        graphView.titleLabel.text = nameData.first?.itemName
+        graphViewModel.fetchData(regday: nameData.first?.lastestDay ?? "", productNo: nameData.first?.productno ?? "")
     }
-
-    func calculateDateTenDaysBefore(dateString: String?) -> String? {
-        guard let dateString = dateString else {
-            return nil
-        }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = dateFormatter.date(from: dateString) else {
-            return nil
-        }
-        let calendar = Calendar.current
-        guard let tenDaysBefore = calendar.date(byAdding: .day, value: -10, to: date) else {
-            return nil
-        }
-        return dateFormatter.string(from: tenDaysBefore)
-    }
-
-    func bind() {
-        graphViewModel.graphPrice.observe(on: MainScheduler.instance).skip(1).debug("test").subscribe(onNext: {[weak self] priceInfos in
-            self?.priceData.removeAll()
-            self?.dateData.removeAll()
-            self?.tableData.removeAll()
-            
-            print("@#@#\(priceInfos)")
-            self?.priceData.append(Double(priceInfos[0].d0.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
-            self?.priceData.append(Double(priceInfos[0].d10.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
-            self?.priceData.append(Double(priceInfos[0].d20.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
-            self?.priceData.append(Double(priceInfos[0].d30.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
-            self?.priceData.append(Double(priceInfos[0].d40.asString().replacingOccurrences(of: ",", with: "")) ?? Double(0))
-            self?.dateData.append(self?.nameData[0].lastestDay ?? "")
-            let minus10 = self?.calculateDateTenDaysBefore(dateString: self?.nameData[0].lastestDay)
-            self?.dateData.append(minus10 ?? "")
-            let minus20 = self?.calculateDateTenDaysBefore(dateString: minus10)
-            self?.dateData.append(minus20 ?? "")
-            let minus30 = self?.calculateDateTenDaysBefore(dateString: minus20)
-            self?.dateData.append(minus30 ?? "")
-            let minus40 = self?.calculateDateTenDaysBefore(dateString: minus30)
-            self?.dateData.append(minus40 ?? "")
-            print("!!!!!\(self?.priceData)")
-            print("!!!!!\(self?.dateData)")
-            self?.priceData.reverse()
-            self?.dateData.reverse()
-            var previousPrice: Double? = nil
-            for i in 0..<(self?.priceData.count ?? 0){
-                if let price = self?.priceData[i]{
-                    ///등락률 계산
-                    var changeRateString = "-"
-                    if let previousPrice = previousPrice {
-                        let changeRate = ((price - previousPrice) / previousPrice) * 100
-                        changeRateString = String(format: "%.2f", changeRate) + "%"
-                    }
-                    self?.tableData.append([self?.dateData[i] ?? "", String(price), changeRateString])
-                    previousPrice = price
-                    
-                }
-            }
-            print("!!!!!\(self?.tableData)")
-
-            self?.tableData.append(["날짜", "가격", "등락률"])
-            self?.setChartData()
-            self?.tableData.reverse()
-            self?.graphView.collectionView.reloadData()
-        }).disposed(by: disposeBag)
-    }
+    
 
     private func setDatePickerView() -> [String]{
         var result: [String] = []
@@ -165,37 +118,35 @@ class GraphViewController: UIViewController {
         graphView.setData(entries: entries)
     }
 
-    private func dateFormatter() -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }
-
     private func generateDataEntries() -> [ChartDataEntry] {
         var entries: [ChartDataEntry] = []
         let dateFormatter = DateFormatter()
-        
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         var calendar = Calendar.current
         let timeZone = TimeZone(identifier: "UTC") ?? TimeZone.current
         calendar.timeZone = timeZone
         dateFormatter.timeZone = timeZone
         
-        for (index, value) in priceData.enumerated() {
-            guard index < dateData.count else { continue }
-            let dateString = dateData[index]
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+        let reversedPriceData = priceData.reversed()
+        let reversedDateData: [String] = dateData.reversed()
+        
+        for (index, value) in reversedPriceData.enumerated() {
+           
+            let dateString = reversedDateData[index]
             
             if let date = dateFormatter.date(from: dateString) {
                 var components = calendar.dateComponents([.year, .month, .day], from: date)
                 components.hour = 0
                 components.minute = 0
                 components.second = 0
-                
+
                 if let startOfDay = calendar.date(from: components) {
                     let timestamp = startOfDay.timeIntervalSince1970
                     let entry = ChartDataEntry(x: timestamp, y: value)
                     entries.append(entry)
                 }
+            } else {
+                print("Error: 타입 에러 \(dateString)")
             }
         }
         return entries
@@ -204,7 +155,7 @@ class GraphViewController: UIViewController {
 
 extension GraphViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tableData[section].count // 각 섹션의 셀 개수
+        return section < tableData.count ? tableData[section].count : 0
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
