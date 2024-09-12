@@ -49,8 +49,7 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
     private let rightBottomLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = UIColor(red: 75/255.0, green: 166/255.0, blue: 251/255.0, alpha: 1.0)
-        return label
+        return label // Set color in configure method
     }()
     
     private let deleteButton: UIButton = {
@@ -146,10 +145,14 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         deleteButton.isHidden = (gesture.direction == .right)
     }
     
-    func configure(leftTopText: String, rightTopText: String, rightBottomText: String, indexPath: IndexPath) {
+    func configure(leftTopText: String, rightTopText: String, rightBottomText: String, indexPath: IndexPath, priceColor: UIColor, fluctuationColor: UIColor) {
         leftTopLabel.text = leftTopText
         rightTopLabel.text = rightTopText
         rightBottomLabel.text = rightBottomText
         self.indexPath = indexPath
+        
+        // Set label colors based on the direction color
+        rightTopLabel.textColor = priceColor
+        rightBottomLabel.textColor = fluctuationColor
     }
 }

@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 struct FavoritesItem {
     let leftTopText: String
     let rightTopText: String
     let rightBottomText: String
     let productno: String?
+    let priceColor: UIColor
+    let fluctuationColor: UIColor
 }

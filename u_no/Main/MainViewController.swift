@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
                         return UICollectionViewCell()
                     }
-                    cell.configure(with: FavoritesItem(leftTopText: "복숭아", rightTopText: "23,000원", rightBottomText: "20%", productno: ""))
+                    cell.configure(with: FavoritesItem(leftTopText: "복숭아", rightTopText: "23,000원", rightBottomText: "20%", productno: "", priceColor: UIColor.mainBlue, fluctuationColor: UIColor.mainRed))
                     return cell
                 }
             }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
