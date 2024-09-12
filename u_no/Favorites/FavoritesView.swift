@@ -11,24 +11,21 @@ import RxSwift
 import RxCocoa
 
 class FavoritesView: UIView {
-    
+
     private let disposeBag = DisposeBag()
     private let viewModel: FavoritesViewModel
     
-    private let favoritesCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 350, height: 100)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
-        collection.isScrollEnabled = true
-        return collection
-    }()
+    let collectionView: UICollectionView
     
     init(viewModel: FavoritesViewModel) {
         self.viewModel = viewModel
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 32, height: 100)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
         setupUI()
         configureCollectionView()
@@ -40,32 +37,26 @@ class FavoritesView: UIView {
     }
     
     private func setupUI() {
-        addSubview(favoritesCollection)
-        favoritesCollection.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(70)
-            $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().offset(-20)
+        addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(50)
+            $0.leading.trailing.equalToSuperview().inset(0)
+            $0.bottom.equalToSuperview().offset(-10)
         }
     }
     
     private func configureCollectionView() {
-        favoritesCollection.register(SwipeableCollectionViewCell.self, forCellWithReuseIdentifier: "FavoritesCell")
-        favoritesCollection.rx.setDelegate(self).disposed(by: disposeBag)
+        collectionView.register(SwipeableCollectionViewCell.self, forCellWithReuseIdentifier: "FavoritesCell")
+        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+        collectionView.backgroundColor = UIColor.mainBackground
     }
     
     private func bindCollectionView() {
         viewModel.items
-            .bind(to: favoritesCollection.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
+            .bind(to: collectionView.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
                 cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
                 cell.delegate = self
             }
-            .disposed(by: disposeBag)
-        
-        viewModel.items
-            .observeOn(MainScheduler.instance) // Ensure this block runs on the main thread
-            .subscribe(onNext: { [weak self] _ in
-                self?.favoritesCollection.reloadData()
-            })
             .disposed(by: disposeBag)
     }
 }
@@ -76,6 +67,4 @@ extension FavoritesView: SwipeableCollectionViewCellDelegate {
     }
 }
 
-extension FavoritesView: UICollectionViewDelegate {
- 
-}
+extension FavoritesView: UICollectionViewDelegate { }
