@@ -23,6 +23,8 @@
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433372C8AD1D900642697 /* SearchViewModel.swift */; };
 		AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433392C8DC2C800642697 /* ItemManager.swift */; };
+		AFB4333D2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */; };
+		AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333F2C8FA28E00642697 /* LoginViewController.swift */; };
 		AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9052C800BA800D0C24C /* AppDelegate.swift */; };
 		AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */; };
 		AFD0E90F2C800BA900D0C24C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFD0E90E2C800BA900D0C24C /* Assets.xcassets */; };
@@ -72,6 +74,9 @@
 		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AFB433372C8AD1D900642697 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		AFB433392C8DC2C800642697 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
+		AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
+		AFB4333F2C8FA28E00642697 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		AFB433432C91C04500642697 /* u_no.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = u_no.entitlements; sourceTree = "<group>"; };
 		AFD0E9022C800BA800D0C24C /* u_no.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = u_no.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD0E9052C800BA800D0C24C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFD0E9072C800BA800D0C24C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,11 +160,21 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		AFB4333E2C8FA27700642697 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				AFB4333F2C8FA28E00642697 /* LoginViewController.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		AFD0E8F92C800BA800D0C24C = {
 			isa = PBXGroup;
 			children = (
+				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
+				AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
 				451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
@@ -178,6 +193,7 @@
 		AFD0E9042C800BA800D0C24C /* u_no */ = {
 			isa = PBXGroup;
 			children = (
+				AFB433432C91C04500642697 /* u_no.entitlements */,
 				AFB433362C8AD1C300642697 /* Search */,
 				AFB433342C89A3D900642697 /* Graph */,
 				C2D7DA8A2C8060A5009C8652 /* Setting */,
@@ -362,6 +378,7 @@
 				C24E5F752C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift in Sources */,
 				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
 				45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */,
+				AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */,
 				45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */,
 				C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */,
 				C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */,
@@ -506,6 +523,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4DWV94Z6J6;
@@ -534,6 +552,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4DWV94Z6J6;
@@ -685,14 +704,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		451D9EAE2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
+		AFB4333B2C8F9F5100642697 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */,
+				AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = 451D9EAF2C8ECD2E0046A4C0 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = AFB4333C2C8F9F5100642697 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
+			path = /Users/dx._.xk7/Desktop/u_no/FavoritesCoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
