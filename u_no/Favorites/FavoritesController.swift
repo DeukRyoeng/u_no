@@ -13,12 +13,12 @@ import RxCocoa
 class FavoritesController: UIViewController {
 
     private let disposeBag = DisposeBag()
-    private let viewModel = FavoritesViewModel() 
+    private let viewModel = FavoritesViewModel()
     private lazy var favoritesView = FavoritesView(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 245/255.0, green: 247/255.0, blue: 248/255.0, alpha: 1.0)
+        view.backgroundColor = UIColor.mainBackground
         setupUI()
         bindData()
     }
@@ -26,6 +26,7 @@ class FavoritesController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         viewModel.loadData()
     }
+
     private func setupUI() {
         view.addSubview(favoritesView)
         favoritesView.snp.makeConstraints {
@@ -37,6 +38,25 @@ class FavoritesController: UIViewController {
         viewModel.itemDeleted
             .subscribe(onNext: { indexPath in
                 print("Deleted item at: \(indexPath)")
+            })
+            .disposed(by: disposeBag)
+        
+        // Handle selection and navigate to GraphViewController
+        favoritesView.collectionView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                
+                let selectedItem = self.viewModel.items.value[indexPath.row]
+                guard let productno = selectedItem.productno else { return }
+                
+                // Find the Price object that corresponds to the selected item
+                let selectedPrice = self.viewModel.favoritePrices.value.first { $0.productno == productno }
+                
+                if let price = selectedPrice {
+                    let graphViewController = GraphViewController()
+                    graphViewController.nameData = [price]
+                    self.present(graphViewController, animated: true, completion: nil)
+                }
             })
             .disposed(by: disposeBag)
     }

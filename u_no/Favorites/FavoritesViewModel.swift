@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import UIKit
 
 class FavoritesViewModel {
 
@@ -53,17 +54,45 @@ class FavoritesViewModel {
                 self?.favoritePrices.accept(favoriteItems)
                 
                 let updatedItems = favoriteItems.map { price in
-                    FavoritesItem(leftTopText: price.productName ?? "",
-                                  rightTopText: "\(price.dpr1.asString())원", 
-                                  rightBottomText: "\(price.value.asString())%",
-                                  productno: price.productno ?? "")
+                    // Determine the direction sign, color, and price color
+                    let directionSign: String
+                    let directionColor: UIColor
+                    let priceColor: UIColor
+                    let direction = price.direction.asString()
+                    let value = price.value.asString()
+                    
+                    switch direction {
+                    case "0": // Price dropped
+                        directionSign = "-\(value)"
+                        directionColor = UIColor.mainBlue
+                        priceColor = UIColor.mainBlue
+                    case "1": // Price increased
+                        directionSign = "+\(value)"
+                        directionColor = UIColor.mainRed
+                        priceColor = UIColor.mainRed
+                    case "2": // No change
+                        directionSign = "\(value)"
+                        directionColor = .black
+                        priceColor = .black
+                    default:
+                        directionSign = "\(value)"
+                        directionColor = .black
+                        priceColor = .black
+                    }
+                    
+                    return FavoritesItem(leftTopText: price.productName ?? "",
+                                          rightTopText: "\(price.dpr1.asString())원",
+                                          rightBottomText: "\(directionSign)%",
+                                          productno: price.productno ?? "",
+                                          priceColor: priceColor,
+                                          fluctuationColor: directionColor)
                 }
                 self?.items.accept(updatedItems)
             }, onFailure: { error in
                 print("Error fetching favorite items: \(error)")
             }).disposed(by: disposeBag)
     }
-    
+
     func deleteItem(at indexPath: IndexPath) {
         let itemToDelete = items.value[indexPath.row]
         guard let productno = itemToDelete.productno else { return }
