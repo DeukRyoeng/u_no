@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class FavoritesView: UIView {
-
+    
     private let disposeBag = DisposeBag()
     private let viewModel: FavoritesViewModel
     
@@ -54,7 +54,12 @@ class FavoritesView: UIView {
     private func bindCollectionView() {
         viewModel.items
             .bind(to: collectionView.rx.items(cellIdentifier: "FavoritesCell", cellType: SwipeableCollectionViewCell.self)) { [weak self] index, model, cell in
-                cell.configure(leftTopText: model.leftTopText, rightTopText: model.rightTopText, rightBottomText: model.rightBottomText, indexPath: IndexPath(row: index, section: 0))
+                cell.configure(leftTopText: model.leftTopText,
+                               rightTopText: model.rightTopText,
+                               rightBottomText: model.rightBottomText,
+                               indexPath: IndexPath(row: index, section: 0),
+                               priceColor: model.priceColor,
+                               fluctuationColor: model.fluctuationColor)
                 cell.delegate = self
             }
             .disposed(by: disposeBag)
