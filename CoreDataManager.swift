@@ -52,7 +52,7 @@ class CoreDataManager {
         
         do {
             let items = try CoreDataManager.shared.context.fetch(fetchRequest)
-            print("\(fetchRequest)")
+            print("저장된 아이템들:\(items)")
             return items
         } catch {
             print("Failed to fetch favorite items: \(error)")
