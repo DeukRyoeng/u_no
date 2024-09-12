@@ -62,6 +62,7 @@ class FavoritesView: UIView {
             .disposed(by: disposeBag)
         
         viewModel.items
+            .observeOn(MainScheduler.instance) // Ensure this block runs on the main thread
             .subscribe(onNext: { [weak self] _ in
                 self?.favoritesCollection.reloadData()
             })

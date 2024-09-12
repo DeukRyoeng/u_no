@@ -103,8 +103,9 @@ class GraphViewModel{
     }
     
     ///즐겨찾기 추가
-    func savedFavoriteCoreData(name: String, price: String, discount: String, productno: String){
-        CoreDataManager.shared.saveFavoriteItem(name: name, price: price, discount: discount, productno: productno)
+    func savedFavoriteCoreData(productno: String) {
+        CoreDataManager.shared.saveFavoriteItem(productno: productno)
         alertMessage.onNext("즐겨찾기에 추가되었습니다.")
     }
+
 }
