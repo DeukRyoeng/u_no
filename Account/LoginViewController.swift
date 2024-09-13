@@ -25,10 +25,76 @@ class LoginViewController: UIViewController {
         print("called LoginViewcontroller - RunApp")
         view.backgroundColor = .white
         setupUI()
-        
+        checkAuthState()
+
     }
 }
 
+extension LoginViewController {
+    
+    /// 현재 로그인 상태를 체크하는 메서드.
+    func checkAuthState() {
+        if let user = Auth.auth().currentUser {
+            // 사용자가 로그인되어 있을 때 처리할 동작
+            print("사용자 로그인 됨 UID\(user.uid)")
+            
+        } else {
+            print("사용자가 로그인하지 않음.")
+            gotoLoginVC()
+        }
+        
+        if (AuthApi.hasToken()) {
+            UserApi.shared.rx.accessTokenInfo()
+                .subscribe(onSuccess: {(token) in
+                    //토크 유효성 체크 성공 필요시 갱신
+                    print("유효성 체크 완료:\(token.id)")
+                }, onFailure: { error in
+                    print(error)
+                })
+                .disposed(by: disposeBag)
+            
+        } else {
+            //로그인 필요
+            self.gotoLoginVC()
+            
+            
+        }
+        
+        //로그인 상태변경를 감지함
+        //        Auth.auth().addStateDidChangeListener { (auth, user) in
+        //            if let user = user {
+        //                //사용자가 로그인한 상태일때
+        //                print("사용자 로그인 됨 UID\(user.uid)")
+        //                // MainView로 넘어가는 메서드 추가
+        //            } else {
+        //                print("사용자가 로그인하지 않음.")
+        //                // LoginView로 넘어가는 메서드 추가
+        //
+        //            }
+        //        }
+    }
+    func gotoLoginVC() {
+        // MainViewController 인스턴스 생성
+        let tabbarVC = LoginViewController()
+        
+        // 윈도우 객체 가져오기
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first {
+            
+            // 루트 ViewController를 MainViewController로 교체
+            window.rootViewController = tabbarVC
+            
+            // 전환 애니메이션을 추가하려면 아래와 같이 설정 가능
+            UIView.transition(with: window, duration: 0.5, options: .allowAnimatedContent, animations: nil, completion: nil)
+            
+            // 화면 보이기
+            window.makeKeyAndVisible()
+        }
+    }
+    
+}
+
+//MARK: - UI
 extension LoginViewController {
     //MARK: - UI관련 메서드
     private func setupUI() {
@@ -114,6 +180,18 @@ private extension LoginViewController {
                     print("loginWithKakaoTalk() success.")
                 }, onError: { error in
                     print("Kakao Login error: \(error)")
+                })
+                .disposed(by: disposeBag)
+        } else {
+            //카카오톡 실행 안됨
+            UserApi.shared.rx.loginWithKakaoAccount()
+                .subscribe(onNext:{ (oauthToken) in
+                    print("loginWithKakaoAccount() success.")
+
+                    //do something
+                    _ = oauthToken
+                }, onError: {error in
+                    print(error)
                 })
                 .disposed(by: disposeBag)
         }
