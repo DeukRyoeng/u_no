@@ -42,7 +42,7 @@ class CoreDataManager {
             print("Failed to save favorite item: \(error)")
         }
     }
-    
+
     // 즐겨찾기 목록 불러오기
     func fetchFavoriteItems() -> [Favorites] {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
@@ -56,9 +56,8 @@ class CoreDataManager {
             return []
         }
     }
-    
     // 중복 항목 확인
-    private func isItemAlreadyFavorited(productno: String) -> Bool {
+    public func isItemAlreadyFavorited(productno: String) -> Bool {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "productno == %@", productno)
         
