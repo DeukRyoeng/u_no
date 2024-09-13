@@ -36,6 +36,8 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 27)
         label.textColor = .black
+        label.numberOfLines = 2 
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
