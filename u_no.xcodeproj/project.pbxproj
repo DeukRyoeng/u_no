@@ -56,6 +56,7 @@
 		C2B71B8E2C9BDCBA001DCDD2 /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */; };
 		C2B71B992C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */; };
 		C2B71B9D2C9C6725001DCDD2 /* PriceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */; };
+		C2B71B9F2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
 		C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */; };
 		C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */; };
@@ -106,6 +107,7 @@
 		C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
 		C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFilterViewController.swift; sourceTree = "<group>"; };
+		C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */,
 				AFD0E9392C8012C100D0C24C /* MainModel.swift */,
 				C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */,
+				C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */,
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				451D9EB32C929F460046A4C0 /* (null) in Sources */,
+				C2B71B9F2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,

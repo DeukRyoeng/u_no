@@ -17,12 +17,14 @@ class PriceFilterViewController: UIViewController {
     private let priceIncreaseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("시세상승", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
     private let priceDecreaseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("시세하락", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     

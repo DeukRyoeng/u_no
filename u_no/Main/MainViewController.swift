@@ -17,10 +17,19 @@ class MainViewController: UIViewController {
     private let mainVM = MainViewModel()
     
     private let priceButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
+        button.setTitle("시세보기", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.tintColor = .darkGray
+        button.setTitleColor(.darkGray, for: .normal)
+        button.backgroundColor = .white
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
@@ -68,14 +77,48 @@ class MainViewController: UIViewController {
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     
+    private var isPriceIncrease: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
+        setupPriceButton()
         bindCollectionView()
+        bindPriceButton()
         mainVM.fetchAllData()
     }
-    
+
+    private func setupPriceButton() {
+        view.addSubview(priceButton)
+        priceButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(60)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.width.equalTo(100)
+            $0.height.equalTo(50)
+        }
+    }
+
+    private func bindPriceButton() {
+        priceButton.rx.tap
+            .bind { [weak self] in
+                self?.showPriceFilter()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func showPriceFilter() {
+        let priceFilterVC = PriceFilterViewController()
+        priceFilterVC.modalPresentationStyle = .custom
+        priceFilterVC.transitioningDelegate = self
+        priceFilterVC.onFilterSelected = { [weak self] isPriceIncrease in
+            // Handle the filter action here
+            print("Filter selected: \(isPriceIncrease ? "Increase" : "Decrease")")
+            // You might want to reload or update your data based on the filter
+        }
+        present(priceFilterVC, animated: true, completion: nil)
+    }
+
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
         collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)
@@ -142,5 +185,9 @@ extension MainViewController: UICollectionViewDelegate {
     }
 }
 
-
-
+extension MainViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfModalPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
