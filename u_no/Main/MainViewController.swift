@@ -15,12 +15,16 @@ class MainViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let mainVM = MainViewModel()
-    private let toggleSwitch = UISwitch()
+    
+    private let priceButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
-                // 첫번째 섹션
+                // First section
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
@@ -38,7 +42,7 @@ class MainViewController: UIViewController {
                 
                 return section
             } else if sectionIndex == 1 {
-                // 두번째 섹션
+                // Second section
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
@@ -68,28 +72,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
-        setupToggleSwitch()
         bindCollectionView()
-        bindToggleSwitch()
         mainVM.fetchAllData()
-    }
-    
-    private func setupToggleSwitch() {
-        toggleSwitch.isOn = true
-        view.addSubview(toggleSwitch)
-        
-        toggleSwitch.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-20)
-        }
-    }
-    
-    private func bindToggleSwitch() {
-        toggleSwitch.rx.isOn
-            .subscribe(onNext: { [weak self] isOn in
-                self?.mainVM.isRising.onNext(isOn)
-            })
-            .disposed(by: disposeBag)
     }
     
     private func setupCollectionView() {
@@ -148,12 +132,15 @@ extension MainViewController: UICollectionViewDelegate {
             .take(1)
             .subscribe(onNext: { [weak self] prices in
                 guard let self = self else { return }
-                let selectedPrices = prices[indexPath.row]
+                let selectedPrice = prices[indexPath.row]
                 let graphViewController = GraphViewController()
-                graphViewController.nameData = [selectedPrices]
-                present(graphViewController, animated: true, completion: nil)
+                graphViewController.nameData = [selectedPrice] // Pass selected price data to GraphViewController
+                
+                self.present(graphViewController, animated: true, completion: nil) // Present as a modal
             })
             .disposed(by: disposeBag)
     }
 }
+
+
 

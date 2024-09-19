@@ -79,7 +79,7 @@ class MainViewFirstCell: UICollectionViewCell {
     func configure(with price: Price) {
         nameLabel.text = price.itemName
         priceLabel.text = "\(price.dpr1.asString())원"
-        discountLabel.text = "(전일대비) \(price.value.asString())%"
+        discountLabel.text = "\(price.value.asString())%"
     }
     
 }

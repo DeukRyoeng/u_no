@@ -13,15 +13,13 @@ class MainViewModel {
     
     private let disposeBag = DisposeBag()
     
-    
     let network = NetworkManager.shared
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
-    let top3RisingPrices = BehaviorSubject<[Price]>(value: []) // 등락률이 높은 상위 3개 품목을 저장하는 subject
-    let top3FallingPirces = BehaviorSubject<[Price]>(value: []) // 등락률이 낮은 상위 3개 품목을 저장하는 subject
-    let isRising = BehaviorSubject<Bool>(value: true) // 토글 스위치 
+    let top3RisingPrices = BehaviorSubject<[Price]>(value: []) // Top 3 items with highest fluctuation
+    let top3FallingPrices = BehaviorSubject<[Price]>(value: []) // Top 3 items with lowest fluctuation
     
-    /// API 전체데이터 불러오기
+    /// Fetch all data from the API
     func fetchAllData() {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
@@ -32,52 +30,39 @@ class MainViewModel {
                 "p_cert_id": "4710",
                 "p_returntype": "json"
             ])
+        
         network.fetch(endpoint: endpoint)
             .subscribe(onSuccess: { [weak self] (result: Foodprices) in
                 print("+++called SUCCESS MainViewModel+++")
                 self?.foodPrices.onNext(result.price)
                 
-                // 가격 비교 및 등락률 수정
-                let updatedPrices = result.price.map { price -> Price in
-                    let dpr1 = Double(price.dpr1.asString()) ?? 0.0
-                    let dpr2 = Double(price.dpr2.asString()) ?? 0.0
-                    
-                    let abjustdValue = dpr1 > dpr2 ? price.value.asString() : "-\(price.value.asString())"
-                    return price.updatedValue(newValue: abjustdValue)
+                // Get fluctuation rates as Double
+                let pricesWithRates = result.price.map { price -> Price in
+                    let rate = Double(price.value.asString()) ?? 0.0
+                    return price.updatedValue(newValue: "\(rate)")
                 }
                 
-                // 등락률 기준으로 데이터를 필터링 및 정렬
-                let sortedPrices = updatedPrices.sorted {
-                    (Double($0.value.asString()) ?? 0) > (Double($1.value.asString()) ?? 0)
+                let sortedByRate = pricesWithRates.sorted {
+                    (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
                 }
-                    
-                // 상승한 품목: 등락률이 양수인 품목만 필터링 하고 상위 3개 추출
-                let risingPrices = sortedPrices
-                    .filter { Double($0.value.asString()) ?? 0 > 0 }
-                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
+                
+                let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
                 let top3Rising = Array(risingPrices.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
-                // 하락한 품목: 등락률이 음수인 품목만 필터링 하고 상위 3개 추출
-                let fallingPrices = sortedPrices
-                    .filter { Double($0.value.asString()) ?? 0 < 0 }
-                    .sorted { Double($0.value.asString()) ?? 0 < Double($1.value.asString()) ?? 0 }
+                let fallingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 < 0 }
                 let top3Falling = Array(fallingPrices.prefix(3))
-                self?.top3FallingPirces.onNext(top3Falling)
+                self?.top3FallingPrices.onNext(top3Falling)
                 
-            }, onFailure: {error in
-                print("called ERROR MainViewmodel: \(error)")
+            }, onFailure: { error in
+                print("called ERROR MainViewModel: \(error)")
             }).disposed(by: disposeBag)
     }
     
-    // 선택한 시세 데이터 전달(스위치 토글 상태에 따라 상승/하락 데이터 제공)
+    // Provide top 3 prices (always rising prices)
     var currentTop3Prices: Observable<[Price]> {
-        return isRising
-            .flatMapLatest { isRising -> Observable<[Price]> in
-                return isRising ? self.top3RisingPrices : self.top3FallingPirces
-            }
+        return top3RisingPrices
     }
-  
 }
 
 extension Price {
@@ -101,7 +86,7 @@ extension Price {
             day4: self.day4,
             dpr4: self.dpr4,
             direction: self.direction,
-            value: newValue != nil ? .string(newValue!) : self.value // 새로운 값 있으면 업데이트
+            value: newValue != nil ? .string(newValue!) : self.value 
         )
     }
 }
