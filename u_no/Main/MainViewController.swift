@@ -22,18 +22,16 @@ class MainViewController: UIViewController {
         button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         button.tintColor = .darkGray
         button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = UIColor.mainBackground
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
-                // First section
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
@@ -51,7 +49,6 @@ class MainViewController: UIViewController {
                 
                 return section
             } else if sectionIndex == 1 {
-                // Second section
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
@@ -81,7 +78,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.mainBackground
         setupCollectionView()
         setupPriceButton()
         bindCollectionView()
@@ -112,18 +109,65 @@ class MainViewController: UIViewController {
         priceFilterVC.modalPresentationStyle = .custom
         priceFilterVC.transitioningDelegate = self
         priceFilterVC.onFilterSelected = { [weak self] isPriceIncrease in
-            // Handle the filter action here
-            print("Filter selected: \(isPriceIncrease ? "Increase" : "Decrease")")
-            // You might want to reload or update your data based on the filter
+            self?.isPriceIncrease = isPriceIncrease
+            self?.updateCollectionViewBasedOnFilter()
         }
         present(priceFilterVC, animated: true, completion: nil)
+    }
+
+    private func updateCollectionViewBasedOnFilter() {
+        collectionView.delegate = nil
+        collectionView.dataSource = nil
+
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Price>>(
+            configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
+                if indexPath.section == 0 {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewFirstCell.id, for: indexPath) as? MainViewFirstCell else {
+                        return UICollectionViewCell()
+                    }
+                    cell.configure(with: item)
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
+                        return UICollectionViewCell()
+                    }
+                    return cell
+                }
+            },
+            configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+                guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainSectionHeaderView.id, for: indexPath) as? MainSectionHeaderView else {
+                    return UICollectionReusableView()
+                }
+                
+                if indexPath.section == 0 {
+                    header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락")
+                } else if indexPath.section == 1 {
+                    header.configure(with: "관심품목")
+                }
+                return header
+            }
+        )
+        
+        let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPirces
+        
+        top3PricesObservable
+            .do(onNext: { prices in
+                print("Prices: \(prices)") // Debug print to check the data
+            })
+            .map { prices in
+                [SectionModel(model: "Top3", items: prices)]
+            }
+            .bind(to: collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        collectionView.delegate = self
     }
 
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
         collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)
         collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor.mainBackground
         collectionView.delegate = self
         view.addSubview(collectionView)
         
@@ -133,56 +177,28 @@ class MainViewController: UIViewController {
     }
     
     private func bindCollectionView() {
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Price>>(configureCell: { (dataSource, collectionView, indexPath, item) -> UICollectionViewCell in
-            if indexPath.section == 0 {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewFirstCell.id, for: indexPath) as? MainViewFirstCell else {
-                    return UICollectionViewCell()
-                }
-                cell.configure(with: item)
-                return cell
-            } else {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
-                    return UICollectionViewCell()
-                }
-                return cell
-            }
-        }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainSectionHeaderView.id, for: indexPath) as? MainSectionHeaderView else {
-                return UICollectionReusableView()
-            }
-            
-            if indexPath.section == 0 {
-                header.configure(with: "Top3: 시세상승")
-            } else if indexPath.section == 1 {
-                header.configure(with: "관심품목")
-            }
-            return header
-        })
-        
-        mainVM.currentTop3Prices
-            .map { prices in
-                [SectionModel(model: "Top3", items: prices)]
-            }
-            .bind(to: collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
+        updateCollectionViewBasedOnFilter()
     }
 }
 
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        mainVM.currentTop3Prices
+        let top3PricesObservable = isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPirces
+        
+        top3PricesObservable
             .take(1)
             .subscribe(onNext: { [weak self] prices in
                 guard let self = self else { return }
                 let selectedPrice = prices[indexPath.row]
                 let graphViewController = GraphViewController()
-                graphViewController.nameData = [selectedPrice] // Pass selected price data to GraphViewController
+                graphViewController.nameData = [selectedPrice]
                 
-                self.present(graphViewController, animated: true, completion: nil) // Present as a modal
+                self.present(graphViewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
     }
+
 }
 
 extension MainViewController: UIViewControllerTransitioningDelegate {

@@ -17,7 +17,7 @@ class MainViewModel {
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
     let top3RisingPrices = BehaviorSubject<[Price]>(value: []) // Top 3 items with highest fluctuation
-    let top3FallingPrices = BehaviorSubject<[Price]>(value: []) // Top 3 items with lowest fluctuation
+    let top3FallingPirces = BehaviorSubject<[Price]>(value: []) // Top 3 items with lowest fluctuation
     
     /// Fetch all data from the API
     func fetchAllData() {
@@ -30,35 +30,44 @@ class MainViewModel {
                 "p_cert_id": "4710",
                 "p_returntype": "json"
             ])
-        
         network.fetch(endpoint: endpoint)
             .subscribe(onSuccess: { [weak self] (result: Foodprices) in
                 print("+++called SUCCESS MainViewModel+++")
                 self?.foodPrices.onNext(result.price)
                 
-                // Get fluctuation rates as Double
-                let pricesWithRates = result.price.map { price -> Price in
-                    let rate = Double(price.value.asString()) ?? 0.0
-                    return price.updatedValue(newValue: "\(rate)")
+                // 가격 비교 및 등락률 수정
+                let updatedPrices = result.price.map { price -> Price in
+                    let dpr1 = Double(price.dpr1.asString()) ?? 0.0
+                    let dpr2 = Double(price.dpr2.asString()) ?? 0.0
+                    
+                    let abjustdValue = dpr1 > dpr2 ? price.value.asString() : "-\(price.value.asString())"
+                    return price.updatedValue(newValue: abjustdValue)
                 }
                 
-                let sortedByRate = pricesWithRates.sorted {
-                    (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
+                // 등락률 기준으로 데이터를 필터링 및 정렬
+                let sortedPrices = updatedPrices.sorted {
+                    (Double($0.value.asString()) ?? 0) > (Double($1.value.asString()) ?? 0)
                 }
-                
-                let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
+                    
+                // 상승한 품목: 등락률이 양수인 품목만 필터링 하고 상위 3개 추출
+                let risingPrices = sortedPrices
+                    .filter { Double($0.value.asString()) ?? 0 > 0 }
+                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
                 let top3Rising = Array(risingPrices.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
-                let fallingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 < 0 }
+                // 하락한 품목: 등락률이 음수인 품목만 필터링 하고 상위 3개 추출
+                let fallingPrices = sortedPrices
+                    .filter { Double($0.value.asString()) ?? 0 < 0 }
+                    .sorted { Double($0.value.asString()) ?? 0 < Double($1.value.asString()) ?? 0 }
                 let top3Falling = Array(fallingPrices.prefix(3))
-                self?.top3FallingPrices.onNext(top3Falling)
+                self?.top3FallingPirces.onNext(top3Falling)
                 
-            }, onFailure: { error in
-                print("called ERROR MainViewModel: \(error)")
+            }, onFailure: {error in
+                print("called ERROR MainViewmodel: \(error)")
             }).disposed(by: disposeBag)
     }
-    
+
     // Provide top 3 prices (always rising prices)
     var currentTop3Prices: Observable<[Price]> {
         return top3RisingPrices
@@ -86,7 +95,7 @@ extension Price {
             day4: self.day4,
             dpr4: self.dpr4,
             direction: self.direction,
-            value: newValue != nil ? .string(newValue!) : self.value 
+            value: newValue != nil ? .string(newValue!) : self.value
         )
     }
 }
