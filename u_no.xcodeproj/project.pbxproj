@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451D9EB02C8ECD2E0046A4C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		451D9EB32C929F460046A4C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		451D9EB92C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */; };
+		451D9EBB2C92E6640046A4C0 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EBA2C92E6640046A4C0 /* SearchTableViewCell.swift */; };
 		45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */; };
 		45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F52C85D67D005ADB63 /* RxDataSources */; };
 		45C957F82C85D6C3005ADB63 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F72C85D6C3005ADB63 /* Differentiator */; };
@@ -62,6 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
+		451D9EBA2C92E6640046A4C0 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
 		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
 		45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewSecoundCell.swift; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 				45C958002C87FCA8005ADB63 /* SearchViewController.swift */,
 				AFB433372C8AD1D900642697 /* SearchViewModel.swift */,
 				AFB433392C8DC2C800642697 /* ItemManager.swift */,
+				451D9EBA2C92E6640046A4C0 /* SearchTableViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -178,8 +185,8 @@
 				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
+				451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
-				C23845132C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
 			);
@@ -360,9 +367,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451D9EB92C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F712C85B8A3008DC4D6 /* FavoritesModel.swift in Sources */,
 				C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */,
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
+				451D9EB32C929F460046A4C0 /* (null) in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
@@ -388,9 +397,9 @@
 				4F8D7BC62C8ED7CD0062EBD9 /* ColorExtension.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
+				451D9EBB2C92E6640046A4C0 /* SearchTableViewCell.swift in Sources */,
 				AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */,
 				C24E5F692C85AB36008DC4D6 /* FavoritesController.swift in Sources */,
-				C23845152C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F752C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift in Sources */,
 				45C957FA2C86E84E005ADB63 /* MainViewFirstCell.swift in Sources */,
 				45C957FF2C87F8BA005ADB63 /* MainViewController.swift in Sources */,
@@ -725,14 +734,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		C23845132C9292690084ECD0 /* FavoritesCoreData.xcdatamodeld */ = {
+		451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C23845142C9292690084ECD0 /* FavoritesCoreData.xcdatamodel */,
+				451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = C23845142C9292690084ECD0 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = 451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/t2023-m0117/Desktop/sparta/u_no/FavoritesCoreData.xcdatamodeld";
+			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
