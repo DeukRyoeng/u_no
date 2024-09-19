@@ -19,6 +19,6 @@ class HalfModalPresentationController: UIPresentationController {
         super.presentationTransitionWillBegin()
         presentedView?.layer.cornerRadius = 12
         presentedView?.clipsToBounds = true
-        presentedView?.backgroundColor = .lightGray
+        presentedView?.backgroundColor = .white
     }
 }

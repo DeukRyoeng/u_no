@@ -18,17 +18,25 @@ class PriceFilterViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("시세상승", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25) // Set font size
+        button.contentHorizontalAlignment = .left // Align title to the left
+        button.frame.size = CGSize(width: 200, height: 60) // Set button size
         return button
     }()
-    
+
     private let priceDecreaseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("시세하락", for: .normal)
         button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25) // Set font size
+        button.contentHorizontalAlignment = .left // Align title to the left
+        button.frame.size = CGSize(width: 200, height: 60) // Set button size
         return button
     }()
+
     
     var onFilterSelected: ((Bool) -> Void)?
+    var isPriceIncrease: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,17 +44,21 @@ class PriceFilterViewController: UIViewController {
         
         setupButtons()
         setupBindings()
+        updateButtonStates()
     }
     
     private func setupButtons() {
         let stackView = UIStackView(arrangedSubviews: [priceIncreaseButton, priceDecreaseButton])
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 30
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.center.equalTo(view)
+        stackView.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().inset(20) // 20 points from the right
+
         }
     }
     
@@ -65,4 +77,27 @@ class PriceFilterViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
+    
+    private func updateButtonStates() {
+        let checkmarkImage = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
+        
+        if isPriceIncrease {
+            priceIncreaseButton.setImage(checkmarkImage, for: .normal)
+            priceIncreaseButton.tintColor = UIColor.mainBlue // Set checkmark color to mainBlue
+            priceDecreaseButton.setImage(nil, for: .normal)
+            priceIncreaseButton.setTitleColor(UIColor.mainBlue, for: .normal) // Set to blue
+            priceDecreaseButton.setTitleColor(.black, for: .normal) // Reset to black
+        } else {
+            priceIncreaseButton.setImage(nil, for: .normal)
+            priceDecreaseButton.setImage(checkmarkImage, for: .normal)
+            priceDecreaseButton.tintColor = UIColor.mainBlue // Set checkmark color to mainBlue
+            priceIncreaseButton.setTitleColor(.black, for: .normal) // Reset to black
+            priceDecreaseButton.setTitleColor(UIColor.mainBlue, for: .normal) // Set to blue
+        }
+        
+        // Align checkmark image to the right
+        priceIncreaseButton.semanticContentAttribute = .forceRightToLeft
+        priceDecreaseButton.semanticContentAttribute = .forceRightToLeft
+    }
+
 }

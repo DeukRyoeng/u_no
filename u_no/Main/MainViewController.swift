@@ -108,10 +108,14 @@ class MainViewController: UIViewController {
         let priceFilterVC = PriceFilterViewController()
         priceFilterVC.modalPresentationStyle = .custom
         priceFilterVC.transitioningDelegate = self
+        
+        priceFilterVC.isPriceIncrease = isPriceIncrease
+        
         priceFilterVC.onFilterSelected = { [weak self] isPriceIncrease in
             self?.isPriceIncrease = isPriceIncrease
             self?.updateCollectionViewBasedOnFilter()
         }
+        
         present(priceFilterVC, animated: true, completion: nil)
     }
 
@@ -125,7 +129,8 @@ class MainViewController: UIViewController {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewFirstCell.id, for: indexPath) as? MainViewFirstCell else {
                         return UICollectionViewCell()
                     }
-                    cell.configure(with: item)
+                    let isRising = item.value.asString() != "0" 
+                    cell.configure(with: item, isRising: isRising)
                     return cell
                 } else {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
