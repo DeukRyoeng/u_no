@@ -129,7 +129,7 @@ class MainViewController: UIViewController {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewFirstCell.id, for: indexPath) as? MainViewFirstCell else {
                         return UICollectionViewCell()
                     }
-                    let isRising = item.value.asString() != "0" 
+                    let isRising = self.isPriceIncrease && item.value.asString() != "0"
                     cell.configure(with: item, isRising: isRising)
                     return cell
                 } else {
@@ -154,7 +154,7 @@ class MainViewController: UIViewController {
         )
         
         let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPirces
-        
+
         top3PricesObservable
             .do(onNext: { prices in
                 print("Prices: \(prices)") // Debug print to check the data
@@ -164,7 +164,7 @@ class MainViewController: UIViewController {
             }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
-        
+
         collectionView.delegate = self
     }
 

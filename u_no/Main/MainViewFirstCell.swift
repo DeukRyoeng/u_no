@@ -85,9 +85,12 @@ class MainViewFirstCell: UICollectionViewCell {
         if isRising {
             priceLabel.textColor = UIColor.mainRed
             discountLabel.textColor = UIColor.mainRed
+            discountLabel.text = "+\(price.value.asString())%"
+
         } else {
             priceLabel.textColor = UIColor.mainBlue
             discountLabel.textColor = UIColor.mainBlue
+            discountLabel.text = "-\(price.value.asString())%"
         }
     }
 }

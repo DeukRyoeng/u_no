@@ -16,10 +16,9 @@ class MainViewModel {
     let network = NetworkManager.shared
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
-    let top3RisingPrices = BehaviorSubject<[Price]>(value: []) // Top 3 items with highest fluctuation
-    let top3FallingPirces = BehaviorSubject<[Price]>(value: []) // Top 3 items with lowest fluctuation
+    let top3RisingPrices = BehaviorSubject<[Price]>(value: []) 
+    let top3FallingPirces = BehaviorSubject<[Price]>(value: [])
     
-    /// Fetch all data from the API
     func fetchAllData() {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
@@ -30,41 +29,59 @@ class MainViewModel {
                 "p_cert_id": "4710",
                 "p_returntype": "json"
             ])
+        
         network.fetch(endpoint: endpoint)
             .subscribe(onSuccess: { [weak self] (result: Foodprices) in
                 print("+++called SUCCESS MainViewModel+++")
                 self?.foodPrices.onNext(result.price)
                 
-                // 가격 비교 및 등락률 수정
-                let updatedPrices = result.price.map { price -> Price in
-                    let dpr1 = Double(price.dpr1.asString()) ?? 0.0
-                    let dpr2 = Double(price.dpr2.asString()) ?? 0.0
-                    
-                    let abjustdValue = dpr1 > dpr2 ? price.value.asString() : "-\(price.value.asString())"
-                    return price.updatedValue(newValue: abjustdValue)
+                let pricesWithRates = result.price.map { price -> Price in
+                    let rate = Double(price.value.asString()) ?? 0.0
+                    return price.updatedValue(newValue: "\(rate)")
                 }
                 
-                // 등락률 기준으로 데이터를 필터링 및 정렬
-                let sortedPrices = updatedPrices.sorted {
-                    (Double($0.value.asString()) ?? 0) > (Double($1.value.asString()) ?? 0)
+                let sortedByRate = pricesWithRates.sorted {
+                    (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
                 }
-                    
-                // 상승한 품목: 등락률이 양수인 품목만 필터링 하고 상위 3개 추출
-                let risingPrices = sortedPrices
-                    .filter { Double($0.value.asString()) ?? 0 > 0 }
-                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
+                
+                print("Sorted Prices: \(sortedByRate)")
+                
+                let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
                 let top3Rising = Array(risingPrices.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
-                // 하락한 품목: 등락률이 음수인 품목만 필터링 하고 상위 3개 추출
-                let fallingPrices = sortedPrices
-                    .filter { Double($0.value.asString()) ?? 0 < 0 }
-                    .sorted { Double($0.value.asString()) ?? 0 < Double($1.value.asString()) ?? 0 }
-                let top3Falling = Array(fallingPrices.prefix(3))
-                self?.top3FallingPirces.onNext(top3Falling)
+                let pricesWithDrops: [(Price, Double)] = sortedByRate.compactMap { price in
+                    guard let currentPrice = Double(price.dpr1.asString()) else { return nil }
+                    
+                    let previousPrices: [Double] = [
+                        Double(price.dpr2.asString()),
+                        Double(price.dpr3.asString()),
+                        Double(price.dpr4.asString())
+                    ].compactMap { $0 }
+
+                    let maxDrop = previousPrices.map { previousPrice in
+                        return previousPrice - currentPrice
+                    }.max()
+
+                    if let maxDrop = maxDrop, maxDrop > 0 {
+                        return (price, maxDrop)
+                    }
+                    return nil
+                }
+
+                // 최대 하락폭으로 정렬 후 상위 3개 선택
+                let top3Falling: [Price] = pricesWithDrops.sorted(by: { $0.1 > $1.1 }).prefix(3).map { $0.0 }
+
+                // 결과를 Subject에 전달
+                self?.top3FallingPirces.onNext(Array(top3Falling))
+
+
+
+                // Print filtered falling prices for debugging
+                print("Top 3 Falling Prices: \(top3Falling)")
                 
-            }, onFailure: {error in
-                print("called ERROR MainViewmodel: \(error)")
+            }, onFailure: { error in
+                print("called ERROR MainViewModel: \(error)")
             }).disposed(by: disposeBag)
     }
 
