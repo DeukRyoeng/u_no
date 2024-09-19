@@ -18,9 +18,9 @@ class PriceFilterViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("시세상승", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 25) // Set font size
-        button.contentHorizontalAlignment = .left // Align title to the left
-        button.frame.size = CGSize(width: 200, height: 60) // Set button size
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25) 
+        button.contentHorizontalAlignment = .left
+        button.frame.size = CGSize(width: 200, height: 60)
         return button
     }()
 
@@ -28,9 +28,9 @@ class PriceFilterViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("시세하락", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 25) // Set font size
-        button.contentHorizontalAlignment = .left // Align title to the left
-        button.frame.size = CGSize(width: 200, height: 60) // Set button size
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+        button.contentHorizontalAlignment = .left
+        button.frame.size = CGSize(width: 200, height: 60)
         return button
     }()
 
@@ -57,7 +57,7 @@ class PriceFilterViewController: UIViewController {
         stackView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().inset(20) // 20 points from the right
+            $0.trailing.equalToSuperview().inset(20)
 
         }
     }
@@ -83,16 +83,16 @@ class PriceFilterViewController: UIViewController {
         
         if isPriceIncrease {
             priceIncreaseButton.setImage(checkmarkImage, for: .normal)
-            priceIncreaseButton.tintColor = UIColor.mainBlue // Set checkmark color to mainBlue
+            priceIncreaseButton.tintColor = UIColor.mainBlue
             priceDecreaseButton.setImage(nil, for: .normal)
-            priceIncreaseButton.setTitleColor(UIColor.mainBlue, for: .normal) // Set to blue
-            priceDecreaseButton.setTitleColor(.black, for: .normal) // Reset to black
+            priceIncreaseButton.setTitleColor(UIColor.mainBlue, for: .normal)
+            priceDecreaseButton.setTitleColor(.black, for: .normal)
         } else {
             priceIncreaseButton.setImage(nil, for: .normal)
             priceDecreaseButton.setImage(checkmarkImage, for: .normal)
-            priceDecreaseButton.tintColor = UIColor.mainBlue // Set checkmark color to mainBlue
-            priceIncreaseButton.setTitleColor(.black, for: .normal) // Reset to black
-            priceDecreaseButton.setTitleColor(UIColor.mainBlue, for: .normal) // Set to blue
+            priceDecreaseButton.tintColor = UIColor.mainBlue
+            priceIncreaseButton.setTitleColor(.black, for: .normal)
+            priceDecreaseButton.setTitleColor(UIColor.mainBlue, for: .normal)
         }
         
         // Align checkmark image to the right

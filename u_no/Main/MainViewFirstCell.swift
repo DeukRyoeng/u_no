@@ -81,7 +81,6 @@ class MainViewFirstCell: UICollectionViewCell {
         priceLabel.text = "\(price.dpr1.asString())원"
         discountLabel.text = "\(price.value.asString())%"
         
-        // Set colors based on price fluctuation
         if isRising {
             priceLabel.textColor = UIColor.mainRed
             discountLabel.textColor = UIColor.mainRed

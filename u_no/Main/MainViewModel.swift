@@ -16,9 +16,10 @@ class MainViewModel {
     let network = NetworkManager.shared
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
-    let top3RisingPrices = BehaviorSubject<[Price]>(value: []) 
+    let top3RisingPrices = BehaviorSubject<[Price]>(value: [])
     let top3FallingPirces = BehaviorSubject<[Price]>(value: [])
     
+    /// Fetch all data from the API
     func fetchAllData() {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
@@ -50,35 +51,21 @@ class MainViewModel {
                 let top3Rising = Array(risingPrices.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
-                let pricesWithDrops: [(Price, Double)] = sortedByRate.compactMap { price in
-                    guard let currentPrice = Double(price.dpr1.asString()) else { return nil }
-                    
-                    let previousPrices: [Double] = [
-                        Double(price.dpr2.asString()),
-                        Double(price.dpr3.asString()),
-                        Double(price.dpr4.asString())
-                    ].compactMap { $0 }
-
-                    let maxDrop = previousPrices.map { previousPrice in
-                        return previousPrice - currentPrice
-                    }.max()
-
-                    if let maxDrop = maxDrop, maxDrop > 0 {
-                        return (price, maxDrop)
-                    }
-                    return nil
+                let fallingPrices = sortedByRate.filter { price in
+                    return price.direction.asString() == "0"
                 }
 
-                // 최대 하락폭으로 정렬 후 상위 3개 선택
-                let top3Falling: [Price] = pricesWithDrops.sorted(by: { $0.1 > $1.1 }).prefix(3).map { $0.0 }
+                let top3Falling = fallingPrices.sorted {
+                    let currentPrice = Double($0.dpr1.asString()) ?? 0
+                    let previousPrice = Double($0.dpr2.asString()) ?? 0
 
-                // 결과를 Subject에 전달
+                    let nextCurrentPrice = Double($1.dpr1.asString()) ?? 0
+                    let nextPreviousPrice = Double($1.dpr2.asString()) ?? 0
+
+                    return (previousPrice - currentPrice) > (nextPreviousPrice - nextCurrentPrice)
+                }.prefix(3)
+
                 self?.top3FallingPirces.onNext(Array(top3Falling))
-
-
-
-                // Print filtered falling prices for debugging
-                print("Top 3 Falling Prices: \(top3Falling)")
                 
             }, onFailure: { error in
                 print("called ERROR MainViewModel: \(error)")

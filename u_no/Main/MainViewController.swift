@@ -157,7 +157,6 @@ class MainViewController: UIViewController {
 
         top3PricesObservable
             .do(onNext: { prices in
-                print("Prices: \(prices)") // Debug print to check the data
             })
             .map { prices in
                 [SectionModel(model: "Top3", items: prices)]

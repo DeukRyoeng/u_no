@@ -86,7 +86,6 @@ class PeopleCell: UICollectionViewCell {
         }
     }
 
-    // Method to configure the cell with person data
     func configure(emoji: UIImage, name: String, role: String, introduction: String) {
         emojiImageView.image = emoji
         nameLabel.text = name
