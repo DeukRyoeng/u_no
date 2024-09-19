@@ -61,7 +61,7 @@ class MainViewModel {
                 // 하락한 품목: 등락률이 음수인 품목만 필터링 하고 상위 3개 추출
                 let fallingPrices = sortedPrices
                     .filter { Double($0.value.asString()) ?? 0 < 0 }
-                    .sorted { Double($0.value.asString()) ?? 0 > Double($1.value.asString()) ?? 0 }
+                    .sorted { Double($0.value.asString()) ?? 0 < Double($1.value.asString()) ?? 0 }
                 let top3Falling = Array(fallingPrices.prefix(3))
                 self?.top3FallingPirces.onNext(top3Falling)
                 

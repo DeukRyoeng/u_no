@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SearchViewController: UIViewController {
     
@@ -25,7 +26,7 @@ class SearchViewController: UIViewController {
         searchBar.showsCancelButton = true
         searchBar.tintColor = .lightGray
         searchBar.searchTextField.textColor = .black
-        searchBar.searchTextField.layer.borderColor = UIColor.lightGray.cgColor
+        searchBar.searchTextField.layer.borderColor = UIColor.mainGreen.cgColor
         searchBar.searchTextField.layer.borderWidth = 1.0
         searchBar.searchTextField.layer.cornerRadius = 10
         searchBar.searchTextField.clipsToBounds = true
@@ -34,30 +35,39 @@ class SearchViewController: UIViewController {
             .foregroundColor: UIColor.lightGray
         ]
         searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "검색어를 입력하세요", attributes: placeholderAttributes)
-        
-        //        if let glassIconView = searchBar.searchTextField.leftView as? UIImage {
-        //            glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
-        //            glassIconView.tintColor = .lightGray
-        //        }
         return searchBar
     }()
+    
+    private let searchTableView = UITableView()
+    private let filteredData = BehaviorSubject<[Item]>(value: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindSearchBar()
         bindViewModel()
+        setupTableView()
     }
     
     private func setupUI() {
         view.backgroundColor = .white
-        view.addSubview(searchBar)
+        [searchBar, searchTableView].forEach { view.addSubview($0) }
         
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(15)
             $0.height.equalTo(44)
         }
+        
+        searchTableView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+    }
+    
+    private func setupTableView() {
+        searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.id)
     }
     
     override func viewDidLayoutSubviews() {
@@ -71,13 +81,17 @@ class SearchViewController: UIViewController {
     
     private func bindSearchBar() {
         // 텍스트 감지
-        searchBar.rx.text
-            .orEmpty // 옵셔널을 제거
+        searchBar.rx.text.orEmpty
             .distinctUntilChanged() // 같은 텍스트 입력은 무시
             .debounce(.milliseconds(300), scheduler: MainScheduler.instance) // 0.3초 후에 처리
-            .subscribe(onNext: { query in
+            .subscribe(onNext: { [weak self] query in
+                guard let self = self else { return }
                 print("검색어 입력: \(query)")
-                // 여기에 검색 로직을 추가
+                
+                if query.isEmpty {
+                    self.searchVM.searchData.onNext([])
+                    return
+                }
                 
                 if let itemCategory = self.itemManager.getItemCategory(for: query) {
                     if let firstCode = itemCategory.codes.first {
@@ -93,6 +107,7 @@ class SearchViewController: UIViewController {
                     }
                 } else {
                     print("상품을 찾을 수 없습니다.")
+                    self.searchVM.searchData.onNext([])
                 }
             })
             .disposed(by: disposeBag)
@@ -115,13 +130,25 @@ class SearchViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
     private func bindViewModel() {
         searchVM.searchData
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] items in
-                print("검색결과: \(items)")
-            }).disposed(by: disposeBag)
+            .bind(to: searchTableView.rx.items(cellIdentifier: SearchTableViewCell.id, cellType: SearchTableViewCell.self)) { row, item, cell in
+                cell.configure(with: item.itemname.asString())
+                print(item)
+            }
+            .disposed(by: disposeBag)
     }
+    
+//    private func bindViewModel() {
+//        searchVM.searchData
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] items in
+//                print("검색결과: \(items)")
+//            }).disposed(by: disposeBag)
+//    }
+    
     /// 부류코드와 품목코드를 조회하는 함수
     private func getItemCodes(for query: String) -> [String: String]? {
         let itemCodes: [String: [String: String]] = [
