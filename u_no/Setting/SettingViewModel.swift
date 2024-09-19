@@ -18,12 +18,12 @@ class SettingViewModel {
     let selection: Observable<SettingItem>
     let openURL: Observable<URL?>
     
-    // New observable for actions like logout or account deletion
     let actionTrigger: Observable<SettingAction>
     
     enum SettingAction {
         case accountDeletion
         case logout
+        case showPeopleController
     }
 
     private let disposeBag = DisposeBag()
@@ -49,15 +49,18 @@ class SettingViewModel {
             }
         }
         
-        // New mapping for logout and account deletion actions
         actionTrigger = selection
             .compactMap { item -> SettingAction? in
-                if item.title == "계정탈퇴" {
+                switch item.title {
+                case "계정탈퇴":
                     return .accountDeletion
-                } else if item.title == "로그아웃" {
+                case "로그아웃":
                     return .logout
+                case "만든 사람":
+                    return .showPeopleController
+                default:
+                    return nil
                 }
-                return nil
             }
     }
 }
