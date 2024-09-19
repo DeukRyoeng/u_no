@@ -30,11 +30,11 @@ class SettingViewModel {
     
     init() {
         let sampleItems = [
-            SettingItem(title: "계정설정", hasSwitch: false, titleColor: .black),
+            SettingItem(title: "만든 사람", hasSwitch: false, titleColor: .black),
             SettingItem(title: "알림", hasSwitch: true, titleColor: .black),
             SettingItem(title: "문의사항", hasSwitch: false, titleColor: .black),
             SettingItem(title: "로그아웃", hasSwitch: false, titleColor: .black),
-            SettingItem(title: "계정탈퇴", hasSwitch: false, titleColor: UIColor(red: 247/255, green: 63/255, blue: 63/255, alpha: 1))
+            SettingItem(title: "계정탈퇴", hasSwitch: false, titleColor: UIColor.mainRed)
         ]
         
         items = Observable.just(sampleItems)
@@ -43,7 +43,7 @@ class SettingViewModel {
 
         openURL = selection.map { item in
             if item.title == "문의사항" {
-                return URL(string: "https://www.naver.com")
+                return URL(string: "https://www.notion.so/a43bd4b54a4a4fee8d8e2530b15a2359")
             } else {
                 return nil
             }

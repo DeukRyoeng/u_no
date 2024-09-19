@@ -12,7 +12,8 @@ class SettingView: UIView {
 
     private let logoImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .systemBlue
+        image.image = UIImage(named: "mainTitle")
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -42,13 +43,12 @@ class SettingView: UIView {
         
         logoImage.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(100)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(100)
+            $0.top.equalToSuperview().offset(30)
+            $0.height.width.equalTo(350)
         }
         
         settingTable.snp.makeConstraints {
-            $0.top.equalTo(logoImage.snp.bottom).offset(200)
+            $0.top.equalTo(logoImage.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(0)
             $0.height.equalTo(300)
         }
