@@ -10,17 +10,26 @@ import UIKit
 import FirebaseCore
 import RxKakaoSDKCommon
 import RxKakaoSDKAuth
+import FirebaseAuth
+import AuthenticationServices
+import RxKakaoSDKAuth
 import KakaoSDKAuth
+import RxKakaoSDKUser
+import KakaoSDKUser
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    let disposeBag = DisposeBag()
+
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         RxKakaoSDK.initSDK(appKey: "315d9b181ac74c4ec88c384ed7811914")
-        
         FirebaseApp.configure()
         return true
     }
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
             if (AuthApi.isKakaoTalkLoginUrl(url)) {

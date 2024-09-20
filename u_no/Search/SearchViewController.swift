@@ -140,7 +140,7 @@ class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
-    
+
 //    private func bindViewModel() {
 //        searchVM.searchData
 //            .observe(on: MainScheduler.instance)
@@ -160,4 +160,5 @@ class SearchViewController: UIViewController {
         ]
         return itemCodes[query]
     }
+
 }

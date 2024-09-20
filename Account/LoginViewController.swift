@@ -2,6 +2,8 @@
 //  LoginViewController.swift
 //  u_no
 //
+
+
 //  Created by 이득령 on 9/10/24.
 //
 
@@ -15,17 +17,19 @@ import RxKakaoSDKAuth
 import KakaoSDKAuth
 import RxKakaoSDKUser
 import KakaoSDKUser
+
 class LoginViewController: UIViewController {
     
     fileprivate var currentNonce: String?
     let disposeBag = DisposeBag()
+    let acccountVM = AccountVM.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("called LoginViewcontroller - RunApp")
         view.backgroundColor = .white
         setupUI()
-        checkAuthState()
+        //checkAuthState()
 
     }
 }
@@ -40,7 +44,7 @@ extension LoginViewController {
             
         } else {
             print("사용자가 로그인하지 않음.")
-            gotoLoginVC()
+                acccountVM.gotoLoginVC()
         }
         
         if (AuthApi.hasToken()) {
@@ -55,7 +59,7 @@ extension LoginViewController {
             
         } else {
             //로그인 필요
-            self.gotoLoginVC()
+            acccountVM.gotoLoginVC()
             
             
         }
@@ -73,24 +77,7 @@ extension LoginViewController {
         //            }
         //        }
     }
-    func gotoLoginVC() {
-        // MainViewController 인스턴스 생성
-        let tabbarVC = LoginViewController()
-        
-        // 윈도우 객체 가져오기
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            
-            // 루트 ViewController를 MainViewController로 교체
-            window.rootViewController = tabbarVC
-            
-            // 전환 애니메이션을 추가하려면 아래와 같이 설정 가능
-            UIView.transition(with: window, duration: 0.5, options: .allowAnimatedContent, animations: nil, completion: nil)
-            
-            // 화면 보이기
-            window.makeKeyAndVisible()
-        }
-    }
+  
     
 }
 
@@ -178,6 +165,7 @@ private extension LoginViewController {
             UserApi.shared.rx.loginWithKakaoTalk()
                 .subscribe(onNext: { (oauthToken) in
                     print("loginWithKakaoTalk() success.")
+                    self.acccountVM.gotoMainVC()
                 }, onError: { error in
                     print("Kakao Login error: \(error)")
                 })
@@ -187,8 +175,7 @@ private extension LoginViewController {
             UserApi.shared.rx.loginWithKakaoAccount()
                 .subscribe(onNext:{ (oauthToken) in
                     print("loginWithKakaoAccount() success.")
-
-                    //do something
+                    self.acccountVM.gotoMainVC()
                     _ = oauthToken
                 }, onError: {error in
                     print(error)
