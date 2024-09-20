@@ -25,7 +25,7 @@ class MainViewFirstCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 22)
         label.textAlignment = .right
-        label.textColor = .black
+        label.textColor = UIColor(red: 75/255.0, green: 166/255.0, blue: 251/255.0, alpha: 1.0)
         return label
     }()
     
@@ -33,7 +33,7 @@ class MainViewFirstCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textAlignment = .right
-        label.textColor = .black
+        label.textColor = UIColor(red: 75/255.0, green: 166/255.0, blue: 251/255.0, alpha: 1.0)
         return label
     }()
     
@@ -48,11 +48,11 @@ class MainViewFirstCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.backgroundColor = .lightGray
-        contentView.layer.cornerRadius = 10
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 16
         contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 1
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowOpacity = 0.4
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 4)
         
         [nameLabel, priceLabel, discountLabel].forEach { contentView.addSubview($0) }
         
@@ -76,10 +76,20 @@ class MainViewFirstCell: UICollectionViewCell {
         }
     }
     
-    func configure(with price: Price) {
+    func configure(with price: Price, isRising: Bool) {
         nameLabel.text = price.itemName
         priceLabel.text = "\(price.dpr1.asString())원"
         discountLabel.text = "\(price.value.asString())%"
+        
+        if isRising {
+            priceLabel.textColor = UIColor.mainRed
+            discountLabel.textColor = UIColor.mainRed
+            discountLabel.text = "+\(price.value.asString())%"
+
+        } else {
+            priceLabel.textColor = UIColor.mainBlue
+            discountLabel.textColor = UIColor.mainBlue
+            discountLabel.text = "-\(price.value.asString())%"
+        }
     }
-    
 }

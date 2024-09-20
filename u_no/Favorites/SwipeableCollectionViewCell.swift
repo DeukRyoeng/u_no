@@ -153,7 +153,6 @@ class SwipeableCollectionViewCell: UICollectionViewCell {
         rightBottomLabel.text = rightBottomText
         self.indexPath = indexPath
         
-        // Set label colors based on the direction color
         rightTopLabel.textColor = priceColor
         rightBottomLabel.textColor = fluctuationColor
     }

@@ -61,7 +61,6 @@ class SettingController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        // Listen to the actions like logout and account deletion
         viewModel.actionTrigger
             .subscribe(onNext: { [weak self] action in
                 guard let self = self else { return }
@@ -89,11 +88,28 @@ class SettingController: UIViewController {
                             print("Logged out")
                         }
                     )
+                    
+                case .showPeopleController:
+                    self.showPeopleController()
                 }
             })
             .disposed(by: disposeBag)
     }
     
+    private func showPeopleController() {
+        let peopleVC = PeopleController()
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = "설정"
+        self.navigationItem.backBarButtonItem = backButton
+        
+        peopleVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.pushViewController(peopleVC, animated: true)
+    }
+
+
+
     private func presentConfirmationModal(title: String, description: String, sub:String, actionButtonText: String, actionHandler: @escaping () -> Void) {
         let confirmationVC = ConfirmationViewController(
             title: title,
@@ -105,10 +121,8 @@ class SettingController: UIViewController {
         
         confirmationVC.modalPresentationStyle = .pageSheet
         if let sheet = confirmationVC.sheetPresentationController {
-            // Use custom height detent (e.g., 300 points)
-            sheet.detents = [.custom(resolver: { _ in return 300 })] // Adjust 300 to the desired height
+            sheet.detents = [.custom(resolver: { _ in return 300 })]
         }
         present(confirmationVC, animated: true, completion: nil)
     }
-    
 }

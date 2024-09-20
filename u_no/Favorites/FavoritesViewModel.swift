@@ -54,7 +54,6 @@ class FavoritesViewModel {
                 self?.favoritePrices.accept(favoriteItems)
                 
                 let updatedItems = favoriteItems.map { price in
-                    // Determine the direction sign, color, and price color
                     let directionSign: String
                     let directionColor: UIColor
                     let priceColor: UIColor
@@ -62,15 +61,15 @@ class FavoritesViewModel {
                     let value = price.value.asString()
                     
                     switch direction {
-                    case "0": // Price dropped
+                    case "0":
                         directionSign = "-\(value)"
                         directionColor = UIColor.mainBlue
                         priceColor = UIColor.mainBlue
-                    case "1": // Price increased
+                    case "1":
                         directionSign = "+\(value)"
                         directionColor = UIColor.mainRed
                         priceColor = UIColor.mainRed
-                    case "2": // No change
+                    case "2":
                         directionSign = "\(value)"
                         directionColor = .black
                         priceColor = .black
@@ -97,19 +96,11 @@ class FavoritesViewModel {
         let itemToDelete = items.value[indexPath.row]
         guard let productno = itemToDelete.productno else { return }
         
-        // Delete from Core Data
         coreDataManager.deleteFavoriteItem(productno: productno)
         
-        // Remove from items array
         var currentItems = items.value
         currentItems.remove(at: indexPath.row)
         items.accept(currentItems)
-        
-        // Optionally, update favoritePrices if needed
-        // var currentPrices = favoritePrices.value
-        // currentPrices.removeAll { $0.productno == productno }
-        // favoritePrices.accept(currentPrices)
-        
-        itemDeleted.accept(indexPath) // Notify that an item was deleted
+        itemDeleted.accept(indexPath)
     }
 }
