@@ -24,6 +24,7 @@
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AF9BA2882C9BE909002E21D0 /* Favorites+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BA2872C9BE909002E21D0 /* Favorites+CoreDataProperties.swift */; };
 		AF9BA28A2C9D7252002E21D0 /* AccountVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BA2892C9D7252002E21D0 /* AccountVM.swift */; };
+		AF9BA28F2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AF9BA28D2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodeld */; };
 		AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433372C8AD1D900642697 /* SearchViewModel.swift */; };
 		AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433392C8DC2C800642697 /* ItemManager.swift */; };
 		AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333F2C8FA28E00642697 /* LoginViewController.swift */; };
@@ -46,7 +47,6 @@
 		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
 		C234BD632C80465C0074C822 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD622C80465C0074C822 /* SettingView.swift */; };
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
-
 		C23845172C942AAD0084ECD0 /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845162C942AAD0084ECD0 /* PeopleView.swift */; };
 		C23845192C942ABB0084ECD0 /* PeopleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845182C942ABB0084ECD0 /* PeopleController.swift */; };
 		C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */; };
@@ -57,7 +57,6 @@
 		C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F762C88012A008DC4D6 /* TabbarController.swift */; };
 		C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */; };
 		C2B71B8E2C9BDCBA001DCDD2 /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */; };
-		C2B71B992C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */; };
 		C2B71B9D2C9C6725001DCDD2 /* PriceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */; };
 		C2B71B9F2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
@@ -83,6 +82,7 @@
 		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AF9BA2872C9BE909002E21D0 /* Favorites+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Favorites+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AF9BA2892C9D7252002E21D0 /* AccountVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVM.swift; sourceTree = "<group>"; };
+		AF9BA28E2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		AFB433372C8AD1D900642697 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		AFB433392C8DC2C800642697 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		AFB4333F2C8FA28E00642697 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +100,6 @@
 		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
 		C234BD622C80465C0074C822 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
-
 		C23845162C942AAD0084ECD0 /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		C23845182C942ABB0084ECD0 /* PeopleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleController.swift; sourceTree = "<group>"; };
 		C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
@@ -111,7 +110,6 @@
 		C24E5F762C88012A008DC4D6 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
 		C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
-		C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFilterViewController.swift; sourceTree = "<group>"; };
 		C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -195,11 +193,8 @@
 				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
-
 				AF9BA2872C9BE909002E21D0 /* Favorites+CoreDataProperties.swift */,
-
-				C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */,
-
+				AF9BA28D2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
@@ -396,11 +391,11 @@
 				45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */,
 				45C958012C87FCA8005ADB63 /* SearchViewController.swift in Sources */,
 				4F8D7BBA2C8D5C040062EBD9 /* GraphModel.swift in Sources */,
-				C2B71B992C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				4F8D7BBC2C8D5C120062EBD9 /* GraphViewModel.swift in Sources */,
 				4F8D7BD02C9018320062EBD9 /* Common.swift in Sources */,
 				AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */,
 				AFD0E93A2C8012C100D0C24C /* MainModel.swift in Sources */,
+				AF9BA28F2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
 				AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */,
 				AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */,
@@ -752,19 +747,18 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */ = {
+		AF9BA28D2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */,
+				AF9BA28E2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = AF9BA28E2C9D841A002E21D0 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/t2023-m0117/Desktop/sparta/u_no/FavoritesCoreData.xcdatamodeld";
+			path = /Users/dx._.xk7/Desktop/u_no/FavoritesCoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
-
 	};
 	rootObject = AFD0E8FA2C800BA800D0C24C /* Project object */;
 }
