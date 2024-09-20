@@ -76,10 +76,20 @@ class MainViewFirstCell: UICollectionViewCell {
         }
     }
     
-    func configure(with price: Price) {
+    func configure(with price: Price, isRising: Bool) {
         nameLabel.text = price.itemName
         priceLabel.text = "\(price.dpr1.asString())원"
-        discountLabel.text = "(전일대비) \(price.value.asString())%"
+        discountLabel.text = "\(price.value.asString())%"
+        
+        if isRising {
+            priceLabel.textColor = UIColor.mainRed
+            discountLabel.textColor = UIColor.mainRed
+            discountLabel.text = "+\(price.value.asString())%"
+
+        } else {
+            priceLabel.textColor = UIColor.mainBlue
+            discountLabel.textColor = UIColor.mainBlue
+            discountLabel.text = "-\(price.value.asString())%"
+        }
     }
-    
 }

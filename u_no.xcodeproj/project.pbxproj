@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		451D9EB02C8ECD2E0046A4C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		451D9EB32C929F460046A4C0 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		451D9EB92C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */; };
 		451D9EBB2C92E6640046A4C0 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D9EBA2C92E6640046A4C0 /* SearchTableViewCell.swift */; };
 		45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */; };
 		45C957F62C85D67D005ADB63 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 45C957F52C85D67D005ADB63 /* RxDataSources */; };
@@ -46,6 +44,8 @@
 		AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */; };
 		C234BD632C80465C0074C822 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD622C80465C0074C822 /* SettingView.swift */; };
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
+		C23845172C942AAD0084ECD0 /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845162C942AAD0084ECD0 /* PeopleView.swift */; };
+		C23845192C942ABB0084ECD0 /* PeopleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845182C942ABB0084ECD0 /* PeopleController.swift */; };
 		C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */; };
 		C24E5F692C85AB36008DC4D6 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */; };
 		C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */; };
@@ -53,6 +53,10 @@
 		C24E5F752C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F742C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift */; };
 		C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F762C88012A008DC4D6 /* TabbarController.swift */; };
 		C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */; };
+		C2B71B8E2C9BDCBA001DCDD2 /* PeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */; };
+		C2B71B992C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */; };
+		C2B71B9D2C9C6725001DCDD2 /* PriceFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */; };
+		C2B71B9F2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */; };
 		C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA882C805B8B009C8652 /* SettingCell.swift */; };
 		C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */; };
 		C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */; };
@@ -62,7 +66,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
 		451D9EBA2C92E6640046A4C0 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		45C957F02C817999005ADB63 /* MainSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionHeaderView.swift; sourceTree = "<group>"; };
 		45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewFirstCell.swift; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 		AFD0E9402C86E2E200D0C24C /* EetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EetworkManager.swift; sourceTree = "<group>"; };
 		C234BD622C80465C0074C822 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		C23845162C942AAD0084ECD0 /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
+		C23845182C942ABB0084ECD0 /* PeopleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleController.swift; sourceTree = "<group>"; };
 		C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -99,6 +104,10 @@
 		C24E5F742C86DB0F008DC4D6 /* SwipeableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableCollectionViewCell.swift; sourceTree = "<group>"; };
 		C24E5F762C88012A008DC4D6 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
+		C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCell.swift; sourceTree = "<group>"; };
+		C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoritesCoreData.xcdatamodel; sourceTree = "<group>"; };
+		C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceFilterViewController.swift; sourceTree = "<group>"; };
+		C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
 		C2D7DA882C805B8B009C8652 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
@@ -137,6 +146,8 @@
 				45C957F92C86E84E005ADB63 /* MainViewFirstCell.swift */,
 				45C957FB2C86EAF3005ADB63 /* MainViewSecoundCell.swift */,
 				AFD0E9392C8012C100D0C24C /* MainModel.swift */,
+				C2B71B9C2C9C6725001DCDD2 /* PriceFilterViewController.swift */,
+				C2B71B9E2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -177,7 +188,7 @@
 				AFB4333E2C8FA27700642697 /* Account */,
 				C2EC7C2A2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift */,
 				C2EC7C2B2C8DD36800A19FE9 /* Favorites+CoreDataProperties.swift */,
-				451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */,
+				C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */,
 				C2EC7C2E2C8DDBE500A19FE9 /* CoreDataManager.swift */,
 				AFD0E9042C800BA800D0C24C /* u_no */,
 				AFD0E9032C800BA800D0C24C /* Products */,
@@ -244,6 +255,16 @@
 			path = Favorites;
 			sourceTree = "<group>";
 		};
+		C2B71B8C2C9AF6CC001DCDD2 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				C23845182C942ABB0084ECD0 /* PeopleController.swift */,
+				C23845162C942AAD0084ECD0 /* PeopleView.swift */,
+				C2B71B8D2C9BDCBA001DCDD2 /* PeopleCell.swift */,
+			);
+			path = People;
+			sourceTree = "<group>";
+		};
 		C2D7DA8A2C8060A5009C8652 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +274,7 @@
 				C2D7DA8E2C806BE5009C8652 /* SettingModel.swift */,
 				C2D7DA8B2C8060BB009C8652 /* SettingViewModel.swift */,
 				C24E5F782C89706F008DC4D6 /* ConfirmationViewController.swift */,
+				C2B71B8C2C9AF6CC001DCDD2 /* People */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -348,11 +370,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				451D9EB92C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				C24E5F712C85B8A3008DC4D6 /* FavoritesModel.swift in Sources */,
 				C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */,
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				451D9EB32C929F460046A4C0 /* (null) in Sources */,
+				C2B71B9F2C9C6AA7001DCDD2 /* HalfModalPresentationController.swift in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
@@ -361,6 +383,7 @@
 				45C957F12C817999005ADB63 /* MainSectionHeaderView.swift in Sources */,
 				45C958012C87FCA8005ADB63 /* SearchViewController.swift in Sources */,
 				4F8D7BBA2C8D5C040062EBD9 /* GraphModel.swift in Sources */,
+				C2B71B992C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld in Sources */,
 				4F8D7BBC2C8D5C120062EBD9 /* GraphViewModel.swift in Sources */,
 				4F8D7BD02C9018320062EBD9 /* Common.swift in Sources */,
 				AFD0E9412C86E2E200D0C24C /* EetworkManager.swift in Sources */,
@@ -368,12 +391,13 @@
 				AFD0E9082C800BA800D0C24C /* SceneDelegate.swift in Sources */,
 				AFD0E9362C80127C00D0C24C /* MainViewModel.swift in Sources */,
 				AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */,
+				C23845192C942ABB0084ECD0 /* PeopleController.swift in Sources */,
 				C234BD632C80465C0074C822 /* SettingView.swift in Sources */,
 				4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */,
 				AFD0E93C2C8012EE00D0C24C /* EndPoint.swift in Sources */,
 				C2EC7C2F2C8DDBE500A19FE9 /* CoreDataManager.swift in Sources */,
 				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
-				451D9EB02C8ECD2E0046A4C0 /* (null) in Sources */,
+				C23845172C942AAD0084ECD0 /* PeopleView.swift in Sources */,
 				4F8D7BC62C8ED7CD0062EBD9 /* ColorExtension.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
@@ -387,6 +411,8 @@
 				45C957FC2C86EAF3005ADB63 /* MainViewSecoundCell.swift in Sources */,
 				C24E5F792C89706F008DC4D6 /* ConfirmationViewController.swift in Sources */,
 				C2D7DA892C805B8C009C8652 /* SettingCell.swift in Sources */,
+				C2B71B9D2C9C6725001DCDD2 /* PriceFilterViewController.swift in Sources */,
+				C2B71B8E2C9BDCBA001DCDD2 /* PeopleCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,16 +555,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4DWV94Z6J6;
+				DEVELOPMENT_TEAM = NVHG2GB4N8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = u_no/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -546,6 +573,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "you-know.u-no";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -558,16 +586,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = u_no/u_no.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4DWV94Z6J6;
+				DEVELOPMENT_TEAM = NVHG2GB4N8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = u_no/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -575,6 +604,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "you-know.u-no";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -709,14 +739,14 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		451D9EB72C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodeld */ = {
+		C2B71B972C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */,
+				C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */,
 			);
-			currentVersion = 451D9EB82C92D54E0046A4C0 /* FavoritesCoreData.xcdatamodel */;
+			currentVersion = C2B71B982C9C4E0B001DCDD2 /* FavoritesCoreData.xcdatamodel */;
 			name = FavoritesCoreData.xcdatamodeld;
-			path = "/Users/yumin-u/Desktop/u_no/FavoritesCoreData.xcdatamodeld";
+			path = "/Users/t2023-m0117/Desktop/sparta/u_no/FavoritesCoreData.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

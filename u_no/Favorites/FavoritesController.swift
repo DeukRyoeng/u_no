@@ -41,7 +41,6 @@ class FavoritesController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        // Handle selection and navigate to GraphViewController
         favoritesView.collectionView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let self = self else { return }
@@ -49,7 +48,6 @@ class FavoritesController: UIViewController {
                 let selectedItem = self.viewModel.items.value[indexPath.row]
                 guard let productno = selectedItem.productno else { return }
                 
-                // Find the Price object that corresponds to the selected item
                 let selectedPrice = self.viewModel.favoritePrices.value.first { $0.productno == productno }
                 
                 if let price = selectedPrice {
