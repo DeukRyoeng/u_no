@@ -2,6 +2,8 @@
 //  LoginViewController.swift
 //  u_no
 //
+
+
 //  Created by 이득령 on 9/10/24.
 //
 
@@ -15,6 +17,7 @@ import RxKakaoSDKAuth
 import KakaoSDKAuth
 import RxKakaoSDKUser
 import KakaoSDKUser
+
 class LoginViewController: UIViewController {
     
     fileprivate var currentNonce: String?
@@ -25,7 +28,7 @@ class LoginViewController: UIViewController {
         print("called LoginViewcontroller - RunApp")
         view.backgroundColor = .white
         setupUI()
-        checkAuthState()
+        //checkAuthState()
 
     }
 }
