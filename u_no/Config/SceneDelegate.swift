@@ -29,23 +29,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        checkAppleSignInState { isLoggedIn in
-            if isLoggedIn {
-                // 로그인된 상태일 경우 메인 화면 (TabbarController) 설정
-                window.rootViewController = TabbarController()
-            } else {
-                // 로그인되지 않았을 경우 로그인 화면 설정
-                window.rootViewController = LoginViewController()
-            }
-            window.makeKeyAndVisible()
-            self.window = window
-        }
-        
-        //        // window 에게 루트 뷰 지정.
-        //        window.rootViewController = TabbarController()
-        //        // 이 메서드를 반드시 작성해줘야 윈도우가 활성화 됨.
-        //        window.makeKeyAndVisible()
-        //        self.window = window
+        // Apple과 Kakao 로그인 상태를 확인할 DispatchGroup
+           let group = DispatchGroup()
+           var isAppleLoggedIn = false
+           var isKakaoLoggedIn = false
+           // 비동기적으로 작동함
+           group.enter()
+           checkAppleSignInState { isLoggedIn in
+               isAppleLoggedIn = isLoggedIn
+               group.leave()
+           }
+           
+           group.enter()
+           checkKakaoSignInState { isLoggedIn in
+               isKakaoLoggedIn = isLoggedIn
+               group.leave()
+           }
+           
+           group.notify(queue: .main) {
+               if isAppleLoggedIn || isKakaoLoggedIn {
+                   // 둘 중 하나라도 로그인된 상태라면 메인 화면 (TabbarController) 설정
+                   window.rootViewController = TabbarController()
+               } else {
+                   // 로그인되지 않았을 경우 로그인 화면 설정
+                   window.rootViewController = LoginViewController()
+               }
+               window.makeKeyAndVisible()
+               self.window = window
+           }
     }
     
     func checkAppleSignInState(completion: @escaping (Bool) -> Void) {
@@ -78,9 +89,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserApi.shared.rx.accessTokenInfo()
                 .subscribe(onSuccess: { (_) in
                     // 토큰 유효
+                    completion(true)
                 }, onFailure: { error in
                    print(error)
-                    //로그인 필요 
+                    completion(false)
                 } ).disposed(by: disposeBag)
         }
         

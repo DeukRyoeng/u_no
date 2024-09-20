@@ -9,11 +9,14 @@ import RxSwift
 import RxCocoa
 import Foundation
 import UIKit
-
+import RxKakaoSDKAuth
+import RxKakaoSDKUser
+import KakaoSDKAuth
+import KakaoSDKUser
 class SettingViewModel {
     
     let itemSelected = PublishRelay<SettingItem>()
-    
+    let accountVM = AccountVM.shared
     let items: Observable<[SettingItem]>
     let selection: Observable<SettingItem>
     let openURL: Observable<URL?>
@@ -60,4 +63,17 @@ class SettingViewModel {
                 return nil
             }
     }
+    //카카오서비스 로그아웃 메서드입니다.
+    func startKakaoSignOut() {
+        UserApi.shared.rx.logout()
+            .subscribe(onCompleted:{
+                print("logout() success.")
+                self.accountVM.gotoLoginVC()
+            }, onError: {error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+
+    }
+    
 }

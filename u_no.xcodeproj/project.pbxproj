@@ -21,6 +21,7 @@
 		4FA06E4F2C86D40700F02657 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4D2C86D40700F02657 /* GraphViewController.swift */; };
 		4FA06E502C86D40700F02657 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06E4E2C86D40700F02657 /* GraphView.swift */; };
 		AF9BA2882C9BE909002E21D0 /* Favorites+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BA2872C9BE909002E21D0 /* Favorites+CoreDataProperties.swift */; };
+		AF9BA28A2C9D7252002E21D0 /* AccountVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9BA2892C9D7252002E21D0 /* AccountVM.swift */; };
 		AFB433382C8AD1D900642697 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433372C8AD1D900642697 /* SearchViewModel.swift */; };
 		AFB4333A2C8DC2C800642697 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB433392C8DC2C800642697 /* ItemManager.swift */; };
 		AFB433402C8FA28E00642697 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB4333F2C8FA28E00642697 /* LoginViewController.swift */; };
@@ -71,6 +72,7 @@
 		4FA06E4D2C86D40700F02657 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		4FA06E4E2C86D40700F02657 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		AF9BA2872C9BE909002E21D0 /* Favorites+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Favorites+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AF9BA2892C9D7252002E21D0 /* AccountVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVM.swift; sourceTree = "<group>"; };
 		AFB433372C8AD1D900642697 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		AFB433392C8DC2C800642697 /* ItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		AFB4333F2C8FA28E00642697 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				AFB4333F2C8FA28E00642697 /* LoginViewController.swift */,
+				AF9BA2892C9D7252002E21D0 /* AccountVM.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				C234BD652C8046680074C822 /* SettingController.swift in Sources */,
 				C24E5F772C88012A008DC4D6 /* TabbarController.swift in Sources */,
 				C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */,
+				AF9BA28A2C9D7252002E21D0 /* AccountVM.swift in Sources */,
 				AFD0E9062C800BA800D0C24C /* AppDelegate.swift in Sources */,
 				C2EC7C2C2C8DD36800A19FE9 /* Favorites+CoreDataClass.swift in Sources */,
 				AF9BA2882C9BE909002E21D0 /* Favorites+CoreDataProperties.swift in Sources */,
