@@ -14,6 +14,7 @@ class SettingController: UIViewController {
     
     private let settingView = SettingView()
     private let viewModel = SettingViewModel()
+    private let accountVM = AccountVM.shared
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -84,7 +85,13 @@ class SettingController: UIViewController {
                         sub: "(로그인화면으로 이동합니다.)",
                         actionButtonText: "로그아웃",
                         actionHandler: {
-                            self.viewModel.startKakaoSignOut()
+                            
+                            guard let accountType = UserDefaults.standard.string(forKey: "AccountType") else {
+                                return
+                            }
+                            print("account Type: \(accountType)")
+                            self.accountVM.accountTypeCheck()
+                            UserDefaults.standard.removeObject(forKey: "AccountType")
                             print("Logged out")
                         }
                     )

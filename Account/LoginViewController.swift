@@ -165,6 +165,7 @@ private extension LoginViewController {
             UserApi.shared.rx.loginWithKakaoTalk()
                 .subscribe(onNext: { (oauthToken) in
                     print("loginWithKakaoTalk() success.")
+                    UserDefaults.standard.set("kakao", forKey: "AccountType")
                     self.acccountVM.gotoMainVC()
                 }, onError: { error in
                     print("Kakao Login error: \(error)")
@@ -175,6 +176,7 @@ private extension LoginViewController {
             UserApi.shared.rx.loginWithKakaoAccount()
                 .subscribe(onNext:{ (oauthToken) in
                     print("loginWithKakaoAccount() success.")
+                    UserDefaults.standard.set("kakao", forKey: "AccountType")
                     self.acccountVM.gotoMainVC()
                     _ = oauthToken
                 }, onError: {error in
@@ -252,6 +254,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     return
                 }
                 //로그인에 성공했을 시 실행할 메서드
+                UserDefaults.standard.set("apple", forKey: "AccountType")
+                self.acccountVM.gotoMainVC()
             }
         }
     }
