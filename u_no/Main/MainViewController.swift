@@ -153,7 +153,7 @@ class MainViewController: UIViewController {
             }
         )
         
-        let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPirces
+        let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
 
         top3PricesObservable
             .do(onNext: { prices in
@@ -188,7 +188,7 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let top3PricesObservable = isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPirces
+        let top3PricesObservable = isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
         
         top3PricesObservable
             .take(1)

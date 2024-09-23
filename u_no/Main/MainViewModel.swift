@@ -17,7 +17,7 @@ class MainViewModel {
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
     let top3RisingPrices = BehaviorSubject<[Price]>(value: [])
-    let top3FallingPirces = BehaviorSubject<[Price]>(value: [])
+    let top3FallingPrices = BehaviorSubject<[Price]>(value: [])
     
     /// Fetch all data from the API
     func fetchAllData() {
@@ -57,7 +57,7 @@ class MainViewModel {
                     return firstRate > secondRate
                 }.prefix(3)
                 
-                self?.top3FallingPirces.onNext(Array(top3Falling))
+                self?.top3FallingPrices.onNext(Array(top3Falling))
                 
             }, onFailure: { error in
                 print("called ERROR MainViewModel: \(error)")
