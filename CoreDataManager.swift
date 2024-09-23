@@ -76,7 +76,6 @@ class CoreDataManager {
     }
     
     // 즐겨찾기 항목 삭제
-    // 즐겨찾기 항목 삭제
     func deleteFavoriteItem(productno: String) {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "productno == %@", productno)
