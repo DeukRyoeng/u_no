@@ -11,6 +11,7 @@ import RxKakaoSDKAuth
 import RxKakaoSDKUser
 import KakaoSDKUser
 import KakaoSDKAuth
+import KakaoSDKCommon
 import RxKakaoSDKCommon
 import AuthenticationServices
 import RxSwift
@@ -52,6 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                    window.rootViewController = TabbarController()
                } else {
                    // 로그인되지 않았을 경우 로그인 화면 설정
+                   print("로그인 안됌")
                    window.rootViewController = LoginViewController()
                }
                window.makeKeyAndVisible()
@@ -87,13 +89,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func checkKakaoSignInState(completion: @escaping(Bool) -> Void) {
         if (AuthApi.hasToken()) {
             UserApi.shared.rx.accessTokenInfo()
-                .subscribe(onSuccess: { (_) in
-                    // 토큰 유효
-                    completion(true)
-                }, onFailure: { error in
-                   print(error)
-                    completion(false)
-                } ).disposed(by: disposeBag)
+                .subscribe(onSuccess:{ (_) in
+                        completion(true)
+                }, onFailure: {error in
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        completion(false)
+                    }
+                    else {
+                        completion(false)
+                    }
+                })
+                .disposed(by: disposeBag)
+        }
+        else {
+            completion(false)
         }
         
     }

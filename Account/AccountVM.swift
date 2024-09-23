@@ -6,10 +6,59 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
+import RxSwift
+import RxKakaoSDKAuth
+import RxKakaoSDKUser
+import KakaoSDKUser
+
+enum AccountType {
+    case kakao
+    case apple
+}
+
 
 class AccountVM {
     static let shared = AccountVM()
     private init() {}
+    
+    private let disposeBag = DisposeBag()
+    
+    /// Firebase 로그아웃 메서드입니다
+    func startAppleSignOut() {
+        let firebase = Auth.auth()
+        do {
+            try firebase.signOut()
+            self.gotoLoginVC()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    
+    ///카카오서비스 로그아웃 메서드입니다.
+    func startKakaoSignOut() {
+        UserApi.shared.rx.logout()
+            .subscribe(onCompleted:{
+                print("logout() success.")
+                self.gotoLoginVC()
+            }, onError: {error in
+                print(error)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    ///현재 로그인 되어 있는 계저엥 맞게 로그아웃을 진행합니다.
+    func accountTypeCheck() {
+        var accountType = UserDefaults.standard.string(forKey: "AccountType")
+        
+        if accountType == "kakao" {
+            startKakaoSignOut()
+        }
+        else if accountType == "apple" {
+            startAppleSignOut()
+        }
+    }
     
     /// 로그인뷰로 가는 메서드입니다.
     func gotoLoginVC() {

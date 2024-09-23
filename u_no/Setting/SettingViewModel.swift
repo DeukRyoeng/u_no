@@ -66,17 +66,6 @@ class SettingViewModel {
                 }
             }
     }
-    //카카오서비스 로그아웃 메서드입니다.
-    func startKakaoSignOut() {
-        UserApi.shared.rx.logout()
-            .subscribe(onCompleted:{
-                print("logout() success.")
-                self.accountVM.gotoLoginVC()
-            }, onError: {error in
-                print(error)
-            })
-            .disposed(by: disposeBag)
-
-    }
+   
     
 }

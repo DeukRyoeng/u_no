@@ -25,6 +25,7 @@ class CoreDataManager {
         return persistentContainer.viewContext
     }
     
+    
     // 즐겨찾기 데이터 저장
     func saveFavoriteItem(productno: String) {
         if isItemAlreadyFavorited(productno: productno) {
