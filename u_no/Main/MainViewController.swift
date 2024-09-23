@@ -175,6 +175,8 @@ class MainViewController: UIViewController {
         collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
         collectionView.backgroundColor = UIColor.mainBackground
         collectionView.delegate = self
+        collectionView.isScrollEnabled = false 
+
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints {
