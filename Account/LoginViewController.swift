@@ -232,6 +232,7 @@ private extension LoginViewController {
 }
 extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
         if let appleIDcredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: 로그인 콜백이 수신되었지만 로그인 요청이 전송되지 않았습니다.")
@@ -254,6 +255,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     return
                 }
                 //로그인에 성공했을 시 실행할 메서드
+                let userIdentifier = appleIDcredential.user
+
+                UserDefaults.standard.set(userIdentifier, forKey: "appleUserIdentifier")
                 UserDefaults.standard.set("apple", forKey: "AccountType")
                 self.acccountVM.gotoMainVC()
             }
