@@ -14,10 +14,12 @@ class MainViewModel {
     private let disposeBag = DisposeBag()
     
     let network = NetworkManager.shared
+    let coreDataManager = CoreDataManager.shared // Add CoreDataManager for managing favorites
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
     let top3RisingPrices = BehaviorSubject<[Price]>(value: [])
     let top3FallingPrices = BehaviorSubject<[Price]>(value: [])
+    let favoritePrices = BehaviorSubject<[Price]>(value: [])
     
     /// Fetch all data from the API
     func fetchAllData() {
@@ -41,31 +43,70 @@ class MainViewModel {
                     return price.updatedValue(newValue: "\(rate)")
                 }
                 
-                // 등락률이 상승한 가격
-                let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
-                let top3Rising = Array(risingPrices.sorted {
-                    (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
-                }.prefix(3))
-                self?.top3RisingPrices.onNext(top3Rising)
-
-                // 등락률이 하락한 가격
-                let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
-
-                let top3Falling = fallingPrices.sorted {
-                    let firstRate = Double($0.value.asString()) ?? 0.0
-                    let secondRate = Double($1.value.asString()) ?? 0.0
-                    return firstRate > secondRate
-                }.prefix(3)
+                // Filter rising and falling prices
+                self?.processPrices(pricesWithRates)
                 
-                self?.top3FallingPrices.onNext(Array(top3Falling))
+                // Fetch Core Data favorite items and update favoritePrices
+                self?.fetchItems()
                 
             }, onFailure: { error in
                 print("called ERROR MainViewModel: \(error)")
             }).disposed(by: disposeBag)
     }
-
-    var currentTop3Prices: Observable<[Price]> {
-        return top3RisingPrices
+    
+    private func processPrices(_ pricesWithRates: [Price]) {
+        // Filter rising prices
+        let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
+        let top3Rising = Array(risingPrices.sorted {
+            (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
+        }.prefix(3))
+        self.top3RisingPrices.onNext(top3Rising)
+        
+        // Filter falling prices
+        let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
+        let top3Falling = Array(fallingPrices.sorted {
+            let firstRate = Double($0.value.asString()) ?? 0.0
+            let secondRate = Double($1.value.asString()) ?? 0.0
+            return firstRate > secondRate
+        }.prefix(3))
+        self.top3FallingPrices.onNext(top3Falling)
+    }
+    
+    private func fetchItems() {
+        let favoriteItems = coreDataManager.fetchFavoriteItems() 
+        let productnos = favoriteItems.compactMap { $0.productno }
+        if productnos.isEmpty {
+            print("즐겨찾기 항목이 없습니다.")
+            return
+        }
+        fetchFavoritePrices(productnos: productnos)
+    }
+    
+    private func fetchFavoritePrices(productnos: [String]) {
+        Observable.from(productnos)
+            .flatMap { productno -> Observable<Price> in
+                let endpoint = Endpoint(
+                    baseURL: "https://www.kamis.or.kr",
+                    path: "/service/price/xml.do",
+                    queryParameters: [
+                        "p_cert_key": "5845f7c3-4274-41a7-a88a-c79efefe21dc",
+                        "action": "dailySalesList",
+                        "p_cert_id": "4710",
+                        "p_returntype": "json",
+                        "productno": productno
+                    ])
+                return self.network.fetch(endpoint: endpoint)
+                    .asObservable()
+                    .map { (result: Foodprices) -> Price? in
+                        result.price.first(where: { $0.productno == productno })
+                    }
+                    .compactMap { $0 }
+            }
+            .toArray()
+            .subscribe(onSuccess: { [weak self] prices in
+                self?.favoritePrices.onNext(prices)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

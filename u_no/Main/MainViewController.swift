@@ -51,7 +51,7 @@ class MainViewController: UIViewController {
             } else if sectionIndex == 1 {
                 let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)
                 
                 let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(250))
                 let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, repeatingSubitem: item, count: 2)
@@ -60,8 +60,7 @@ class MainViewController: UIViewController {
                 let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [verticalGroup])
                 
                 let section = NSCollectionLayoutSection(group: horizontalGroup)
-                section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
                 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -136,6 +135,7 @@ class MainViewController: UIViewController {
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewSecoundCell.id, for: indexPath) as? MainViewSecoundCell else {
                         return UICollectionViewCell()
                     }
+                    cell.configure(with: item)
                     return cell
                 }
             },
@@ -143,29 +143,32 @@ class MainViewController: UIViewController {
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MainSectionHeaderView.id, for: indexPath) as? MainSectionHeaderView else {
                     return UICollectionReusableView()
                 }
-                
+
                 if indexPath.section == 0 {
                     header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락")
                 } else if indexPath.section == 1 {
-                    header.configure(with: "관심품목")
+                    header.configure(with: "즐겨찾기 항목")
                 }
                 return header
             }
         )
-        
-        let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
 
-        top3PricesObservable
-            .do(onNext: { prices in
-            })
-            .map { prices in
-                [SectionModel(model: "Top3", items: prices)]
+        let top3PricesObservable = self.isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
+        let favoritePricesObservable = mainVM.favoritePrices
+
+        Observable.combineLatest(top3PricesObservable, favoritePricesObservable)
+            .map { top3Prices, favoritePrices in
+                [
+                    SectionModel(model: "Top3", items: top3Prices),
+                    SectionModel(model: "즐겨찾기 항목", items: favoritePrices)
+                ]
             }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         collectionView.delegate = self
     }
+
 
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
@@ -188,21 +191,33 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let top3PricesObservable = isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
-        
-        top3PricesObservable
-            .take(1)
-            .subscribe(onNext: { [weak self] prices in
-                guard let self = self else { return }
-                let selectedPrice = prices[indexPath.row]
-                let graphViewController = GraphViewController()
-                graphViewController.nameData = [selectedPrice]
-                
-                self.present(graphViewController, animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
+        if indexPath.section == 0 {
+            // Handle Top 3 Section
+            let top3PricesObservable = isPriceIncrease ? mainVM.top3RisingPrices : mainVM.top3FallingPrices
+            top3PricesObservable
+                .take(1)
+                .subscribe(onNext: { [weak self] prices in
+                    guard let self = self, indexPath.row < prices.count else { return }
+                    let selectedPrice = prices[indexPath.row]
+                    let graphViewController = GraphViewController()
+                    graphViewController.nameData = [selectedPrice]
+                    self.present(graphViewController, animated: true, completion: nil)
+                })
+                .disposed(by: disposeBag)
+        } else if indexPath.section == 1 {
+            // Handle Favorites Section
+            mainVM.favoritePrices
+                .take(1)
+                .subscribe(onNext: { [weak self] favorites in
+                    guard let self = self, indexPath.row < favorites.count else { return }
+                    let selectedFavorite = favorites[indexPath.row]
+                    let graphViewController = GraphViewController()
+                    graphViewController.nameData = [selectedFavorite]
+                    self.present(graphViewController, animated: true, completion: nil)
+                })
+                .disposed(by: disposeBag)
+        }
     }
-
 }
 
 extension MainViewController: UIViewControllerTransitioningDelegate {
