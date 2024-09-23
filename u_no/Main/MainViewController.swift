@@ -169,7 +169,6 @@ class MainViewController: UIViewController {
         collectionView.delegate = self
     }
 
-
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
         collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)

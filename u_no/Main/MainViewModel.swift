@@ -14,14 +14,20 @@ class MainViewModel {
     private let disposeBag = DisposeBag()
     
     let network = NetworkManager.shared
-    let coreDataManager = CoreDataManager.shared // Add CoreDataManager for managing favorites
+    let coreDataManager = CoreDataManager.shared 
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
     let top3RisingPrices = BehaviorSubject<[Price]>(value: [])
     let top3FallingPrices = BehaviorSubject<[Price]>(value: [])
     let favoritePrices = BehaviorSubject<[Price]>(value: [])
     
-    /// Fetch all data from the API
+    init() {
+        coreDataManager.favoriteItemsUpdated
+            .subscribe(onNext: { [weak self] in
+                self?.fetchItems()
+            })
+            .disposed(by: disposeBag)
+    }
     func fetchAllData() {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
@@ -55,14 +61,12 @@ class MainViewModel {
     }
     
     private func processPrices(_ pricesWithRates: [Price]) {
-        // Filter rising prices
         let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
         let top3Rising = Array(risingPrices.sorted {
             (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
         }.prefix(3))
         self.top3RisingPrices.onNext(top3Rising)
         
-        // Filter falling prices
         let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
         let top3Falling = Array(fallingPrices.sorted {
             let firstRate = Double($0.value.asString()) ?? 0.0
@@ -73,14 +77,16 @@ class MainViewModel {
     }
     
     private func fetchItems() {
-        let favoriteItems = coreDataManager.fetchFavoriteItems() 
+        let favoriteItems = coreDataManager.fetchFavoriteItems()
         let productnos = favoriteItems.compactMap { $0.productno }
         if productnos.isEmpty {
             print("즐겨찾기 항목이 없습니다.")
+            favoritePrices.onNext([])
             return
         }
         fetchFavoritePrices(productnos: productnos)
     }
+    
     
     private func fetchFavoritePrices(productnos: [String]) {
         Observable.from(productnos)
@@ -104,7 +110,8 @@ class MainViewModel {
             }
             .toArray()
             .subscribe(onSuccess: { [weak self] prices in
-                self?.favoritePrices.onNext(prices)
+                let shuffledPrices = prices.shuffled()
+                self?.favoritePrices.onNext(shuffledPrices)
             })
             .disposed(by: disposeBag)
     }
