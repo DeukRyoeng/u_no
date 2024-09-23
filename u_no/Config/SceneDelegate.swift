@@ -53,7 +53,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                    window.rootViewController = TabbarController()
                } else {
                    // 로그인되지 않았을 경우 로그인 화면 설정
-                   print("로그인 안됌")
+                   print("kakao \(isKakaoLoggedIn) apple \(isAppleLoggedIn)")
                    window.rootViewController = LoginViewController()
                }
                window.makeKeyAndVisible()

@@ -254,6 +254,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     return
                 }
                 //로그인에 성공했을 시 실행할 메서드
+                let userIdentifier = appleIDcredential.user
+                print(userIdentifier)
+                UserDefaults.standard.set(userIdentifier, forKey: "appleUserIdentifier")
                 UserDefaults.standard.set("apple", forKey: "AccountType")
                 self.acccountVM.gotoMainVC()
             }

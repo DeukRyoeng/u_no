@@ -44,8 +44,8 @@ class MainViewModel {
                 let sortedByRate = pricesWithRates.sorted {
                     (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
                 }
-                
-                print("Sorted Prices: \(sortedByRate)")
+                // 데이터 출력
+//                print("Sorted Prices: \(sortedByRate)")
                 
                 let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
                 let top3Rising = Array(risingPrices.prefix(3))
