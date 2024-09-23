@@ -41,30 +41,22 @@ class MainViewModel {
                     return price.updatedValue(newValue: "\(rate)")
                 }
                 
-                let sortedByRate = pricesWithRates.sorted {
+                // 등락률이 상승한 가격
+                let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
+                let top3Rising = Array(risingPrices.sorted {
                     (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
-                }
-                
-                print("Sorted Prices: \(sortedByRate)")
-                
-                let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
-                let top3Rising = Array(risingPrices.prefix(3))
+                }.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
                 
-                let fallingPrices = sortedByRate.filter { price in
-                    return price.direction.asString() == "0"
-                }
+                // 등락률이 하락한 가격
+                let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
 
                 let top3Falling = fallingPrices.sorted {
-                    let currentPrice = Double($0.dpr1.asString()) ?? 0
-                    let previousPrice = Double($0.dpr2.asString()) ?? 0
-
-                    let nextCurrentPrice = Double($1.dpr1.asString()) ?? 0
-                    let nextPreviousPrice = Double($1.dpr2.asString()) ?? 0
-
-                    return (previousPrice - currentPrice) > (nextPreviousPrice - nextCurrentPrice)
+                    let firstRate = Double($0.value.asString()) ?? 0.0
+                    let secondRate = Double($1.value.asString()) ?? 0.0
+                    return firstRate > secondRate
                 }.prefix(3)
-
+                
                 self?.top3FallingPirces.onNext(Array(top3Falling))
                 
             }, onFailure: { error in
@@ -72,7 +64,6 @@ class MainViewModel {
             }).disposed(by: disposeBag)
     }
 
-    // Provide top 3 prices (always rising prices)
     var currentTop3Prices: Observable<[Price]> {
         return top3RisingPrices
     }
