@@ -47,7 +47,7 @@ class MainViewModel {
                     (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
                 }.prefix(3))
                 self?.top3RisingPrices.onNext(top3Rising)
-                
+
                 // 등락률이 하락한 가격
                 let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
 
