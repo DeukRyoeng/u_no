@@ -16,7 +16,7 @@ class SearchTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 12)
+        label.font = .boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -33,9 +33,9 @@ class SearchTableViewCell: UITableViewCell {
         contentView.addSubview(label)
         
         label.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(14)
             $0.leading.equalToSuperview().offset(25)
-            $0.width.equalTo(200)
+            $0.trailing.equalToSuperview().offset(-25)
         }
     }
     
