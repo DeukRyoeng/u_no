@@ -61,13 +61,16 @@ class MainViewModel {
     }
     
     private func processPrices(_ pricesWithRates: [Price]) {
-        let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
+
+        let retailPrices = pricesWithRates.filter { $0.productClsCode == "01" && $0.categoryCode != "500"}
+        
+        let risingPrices = retailPrices.filter { $0.direction.asString() == "1" }
         let top3Rising = Array(risingPrices.sorted {
             (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
         }.prefix(3))
         self.top3RisingPrices.onNext(top3Rising)
         
-        let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
+        let fallingPrices = retailPrices.filter { $0.direction.asString() == "0" }
         let top3Falling = Array(fallingPrices.sorted {
             let firstRate = Double($0.value.asString()) ?? 0.0
             let secondRate = Double($1.value.asString()) ?? 0.0
@@ -75,7 +78,7 @@ class MainViewModel {
         }.prefix(3))
         self.top3FallingPrices.onNext(top3Falling)
     }
-    
+
     private func fetchItems() {
         let favoriteItems = coreDataManager.fetchFavoriteItems()
         let productnos = favoriteItems.compactMap { $0.productno }
