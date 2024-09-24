@@ -96,5 +96,32 @@ class AccountVM {
             window.makeKeyAndVisible()
         }
     }
+    
+    ///Apple SignIn 탈퇴 메서드입니다.
+    func removeAccount() {
+
+      let token = UserDefaults.standard.string(forKey: "refreshToken")
+      if let token = token {
+          let url = URL(string: "https://us-central1-youknow-9a146.cloudfunctions.net/revokeToken?refresh_token=\(token)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "https://apple.com")!
+          let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+
+            guard data != nil else { return }
+          }
+          task.resume()
+      }
+        let firebaseAuth = Auth.auth()
+        let user = firebaseAuth.currentUser
+        do {
+            print("로그아웃 성공")
+            try firebaseAuth.signOut()
+            user?.delete()
+            gotoLoginVC()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+
+        }
+
+    }
+          
 
 }

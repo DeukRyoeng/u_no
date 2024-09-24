@@ -12,10 +12,10 @@ class PeopleController: UIViewController {
     private let peopleView = PeopleView()
 
     private let peopleData: [(emoji: UIImage, name: String, role: String, intro: String)] = [
-        (UIImage(systemName: "person")!, "이득령", "iOS Developer", "Swift를 사랑하는 개발자입니다."),
-        (UIImage(systemName: "person")!, "유민우", "iOS Developer", "swift로 세상을 그려나갑니다."),
-        (UIImage(systemName: "person")!, "점승현", "iOS Developer", "코드는 예술입니다."),
-        (UIImage(systemName: "person")!, "백시훈", "iOS Developer", "문제를 해결하는 개발자입니다.")
+        (UIImage(named: "Deuk")!, "Deuk Ryeong", "iOS Developer", "Swift를 사랑하는 개발자입니다."),
+        (UIImage(named: "Minwoo")!, "min woo", "iOS Developer", "swift로 세상을 그려나갑니다."),
+        (UIImage(named: "Jeom")!, "Jeom", "iOS Developer", "코드는 예술입니다."),
+        (UIImage(named: "Lime")!, "Lime", "iOS Developer", "문제를 해결하는 개발자입니다.")
     ]
 
     override func viewDidLoad() {
