@@ -17,6 +17,7 @@ import RxKakaoSDKAuth
 import KakaoSDKAuth
 import RxKakaoSDKUser
 import KakaoSDKUser
+import Alamofire
 
 class LoginViewController: UIViewController {
     
@@ -245,6 +246,23 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 print("데이터에서 토큰 문자열을 직렬화 할 수 없음: \(appleIDToken.debugDescription)")
                 return
             }
+            if let authorizationCode = appleIDcredential.authorizationCode, let codeString = String(data: authorizationCode, encoding: .utf8) {
+                  let url = URL(string: "https://us-central1-youknow-9a146.cloudfunctions.net/getRefreshToken?code=\(codeString)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "https://apple.com")!
+                //https://us-central1-youknow-9a146.cloudfunctions.net/getRefreshToken
+
+                        
+                    let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+                        
+                        if let data = data {
+                            let refreshToken = String(data: data, encoding: .utf8) ?? ""
+                            print(refreshToken)
+                            UserDefaults.standard.set(refreshToken, forKey: "refreshToken")
+                            UserDefaults.standard.synchronize()
+                        }
+                    }
+                  task.resume()
+                  
+              }
             // 사용자의 전체 이름을 포함한 Firebase 자격 증명을 초기화합니다.
             let credential = OAuthProvider.appleCredential(withIDToken: idTokenString, rawNonce: nonce, fullName: appleIDcredential.fullName)
             
@@ -255,6 +273,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     return
                 }
                 //로그인에 성공했을 시 실행할 메서드
+
                 let userIdentifier = appleIDcredential.user
 
                 UserDefaults.standard.set(userIdentifier, forKey: "appleUserIdentifier")
