@@ -109,9 +109,13 @@ class AccountVM {
           }
           task.resume()
       }
+        let firebaseAuth = Auth.auth()
+        let user = firebaseAuth.currentUser
         do {
             print("로그아웃 성공")
-            try Auth.auth().signOut()
+            try firebaseAuth.signOut()
+            user?.delete()
+            gotoLoginVC()
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
 
