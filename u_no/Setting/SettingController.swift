@@ -74,6 +74,9 @@ class SettingController: UIViewController {
                         sub: "(알고싶어 서비스를 더이상 이용하지 못합니다.)",
                         actionButtonText: "계정탈퇴",
                         actionHandler: {
+                            self.accountVM.removeAccount()
+                            UserDefaults.standard.removeObject(forKey: "refreshToken")
+
                             print("Account deleted")
                         }
                     )
