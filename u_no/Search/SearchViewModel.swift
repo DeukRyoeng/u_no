@@ -21,7 +21,7 @@ class SearchViewModel {
     
     init() {
         filteredPrices = Observable.combineLatest(priceAllInfo, searchQuery) { prices, query in
-            let retailPrices = prices.filter { $0.productClsName == "소매" }
+            let retailPrices = prices.filter { $0.productClsCode == "01" && $0.categoryCode == "500"}
             return retailPrices.filter { price in
                 price.itemName?.lowercased().contains(query.lowercased()) ?? false
             }
