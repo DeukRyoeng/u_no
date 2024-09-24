@@ -14,8 +14,9 @@ class MainViewSecoundCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 23)
-        label.numberOfLines = 2
+        label.font = .boldSystemFont(ofSize: 20)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.textColor = .black
         return label
@@ -47,7 +48,7 @@ class MainViewSecoundCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 10
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOpacity = 1
@@ -64,19 +65,42 @@ class MainViewSecoundCell: UICollectionViewCell {
         
         quantityLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-5)
-            $0.leading.equalToSuperview().offset(5)
+            $0.trailing.equalToSuperview().offset(-5)
+
         }
         
         priceLabel.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-5)
-            $0.trailing.equalToSuperview().offset(-5)
+            $0.leading.equalToSuperview().offset(5)
+
         }
     }
     
-    func configure(with favorites: FavoritesItem) {
-        nameLabel.text = favorites.leftTopText
-        quantityLabel.text = favorites.rightTopText
-        priceLabel.text = favorites.rightBottomText
+    func configure(with price: Price) {
+        nameLabel.text = price.productName ?? "Unknown Product"
+        priceLabel.text = "\(price.dpr1.asString())원"
+
+        let fluctuationString = price.value.asString()
+        let fluctuation = Double(fluctuationString) ?? 0.0
+        quantityLabel.text = "\(fluctuation)%"
+        
+        let directionValue = price.direction.asString()
+        switch directionValue {
+        case "0":
+            quantityLabel.textColor = .mainBlue
+            priceLabel.textColor = .mainBlue
+        case "1":
+            quantityLabel.textColor = .mainRed
+            priceLabel.textColor = .mainRed
+        case "2":
+            quantityLabel.textColor = .black
+            priceLabel.textColor = .black
+        default:
+            quantityLabel.textColor = .black
+            priceLabel.textColor = .black
+        }
     }
-    
+
+
 }
+
