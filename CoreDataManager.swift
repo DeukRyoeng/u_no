@@ -7,9 +7,13 @@
 
 import Foundation
 import CoreData
+import RxSwift
 
 class CoreDataManager {
+    
     static let shared = CoreDataManager()
+    
+    let favoriteItemsUpdated = PublishSubject<Void>()
 
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FavoritesCoreData")
@@ -39,11 +43,11 @@ class CoreDataManager {
         do {
             try context.save()
             print("Favorite item saved: \(productno)")
+            favoriteItemsUpdated.onNext(())
         } catch {
             print("Failed to save favorite item: \(error)")
         }
     }
-
     // 즐겨찾기 목록 불러오기
     func fetchFavoriteItems() -> [Favorites] {
         let fetchRequest: NSFetchRequest<Favorites> = Favorites.fetchRequest()
@@ -82,9 +86,11 @@ class CoreDataManager {
                 context.delete(itemToDelete)
                 print("Favorite item deleted: \(productno)")
                 try context.save()
+                favoriteItemsUpdated.onNext(())
             }
         } catch {
             print("Failed to delete favorite item: \(error)")
         }
     }
+
 }

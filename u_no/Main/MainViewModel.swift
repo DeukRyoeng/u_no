@@ -14,12 +14,20 @@ class MainViewModel {
     private let disposeBag = DisposeBag()
     
     let network = NetworkManager.shared
+    let coreDataManager = CoreDataManager.shared 
     
     let foodPrices = BehaviorSubject<[Price]>(value: [])
     let top3RisingPrices = BehaviorSubject<[Price]>(value: [])
-    let top3FallingPirces = BehaviorSubject<[Price]>(value: [])
+    let top3FallingPrices = BehaviorSubject<[Price]>(value: [])
+    let favoritePrices = BehaviorSubject<[Price]>(value: [])
     
-    /// Fetch all data from the API
+    init() {
+        coreDataManager.favoriteItemsUpdated
+            .subscribe(onNext: { [weak self] in
+                self?.fetchItems()
+            })
+            .disposed(by: disposeBag)
+    }
     func fetchAllData() {
         let endpoint = Endpoint(
             baseURL: "https://www.kamis.or.kr",
@@ -41,40 +49,71 @@ class MainViewModel {
                     return price.updatedValue(newValue: "\(rate)")
                 }
                 
-                let sortedByRate = pricesWithRates.sorted {
-                    (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
-                }
+                // Filter rising and falling prices
+                self?.processPrices(pricesWithRates)
                 
-                print("Sorted Prices: \(sortedByRate)")
-                
-                let risingPrices = sortedByRate.filter { Double($0.value.asString()) ?? 0 > 0 }
-                let top3Rising = Array(risingPrices.prefix(3))
-                self?.top3RisingPrices.onNext(top3Rising)
-                
-                let fallingPrices = sortedByRate.filter { price in
-                    return price.direction.asString() == "0"
-                }
-
-                let top3Falling = fallingPrices.sorted {
-                    let currentPrice = Double($0.dpr1.asString()) ?? 0
-                    let previousPrice = Double($0.dpr2.asString()) ?? 0
-
-                    let nextCurrentPrice = Double($1.dpr1.asString()) ?? 0
-                    let nextPreviousPrice = Double($1.dpr2.asString()) ?? 0
-
-                    return (previousPrice - currentPrice) > (nextPreviousPrice - nextCurrentPrice)
-                }.prefix(3)
-
-                self?.top3FallingPirces.onNext(Array(top3Falling))
+                // Fetch Core Data favorite items and update favoritePrices
+                self?.fetchItems()
                 
             }, onFailure: { error in
                 print("called ERROR MainViewModel: \(error)")
             }).disposed(by: disposeBag)
     }
-
-    // Provide top 3 prices (always rising prices)
-    var currentTop3Prices: Observable<[Price]> {
-        return top3RisingPrices
+    
+    private func processPrices(_ pricesWithRates: [Price]) {
+        let risingPrices = pricesWithRates.filter { $0.direction.asString() == "1" }
+        let top3Rising = Array(risingPrices.sorted {
+            (Double($0.value.asString()) ?? 0.0) > (Double($1.value.asString()) ?? 0.0)
+        }.prefix(3))
+        self.top3RisingPrices.onNext(top3Rising)
+        
+        let fallingPrices = pricesWithRates.filter { $0.direction.asString() == "0" }
+        let top3Falling = Array(fallingPrices.sorted {
+            let firstRate = Double($0.value.asString()) ?? 0.0
+            let secondRate = Double($1.value.asString()) ?? 0.0
+            return firstRate > secondRate
+        }.prefix(3))
+        self.top3FallingPrices.onNext(top3Falling)
+    }
+    
+    private func fetchItems() {
+        let favoriteItems = coreDataManager.fetchFavoriteItems()
+        let productnos = favoriteItems.compactMap { $0.productno }
+        if productnos.isEmpty {
+            print("즐겨찾기 항목이 없습니다.")
+            favoritePrices.onNext([])
+            return
+        }
+        fetchFavoritePrices(productnos: productnos)
+    }
+    
+    
+    private func fetchFavoritePrices(productnos: [String]) {
+        Observable.from(productnos)
+            .flatMap { productno -> Observable<Price> in
+                let endpoint = Endpoint(
+                    baseURL: "https://www.kamis.or.kr",
+                    path: "/service/price/xml.do",
+                    queryParameters: [
+                        "p_cert_key": "5845f7c3-4274-41a7-a88a-c79efefe21dc",
+                        "action": "dailySalesList",
+                        "p_cert_id": "4710",
+                        "p_returntype": "json",
+                        "productno": productno
+                    ])
+                return self.network.fetch(endpoint: endpoint)
+                    .asObservable()
+                    .map { (result: Foodprices) -> Price? in
+                        result.price.first(where: { $0.productno == productno })
+                    }
+                    .compactMap { $0 }
+            }
+            .toArray()
+            .subscribe(onSuccess: { [weak self] prices in
+                let shuffledPrices = prices.shuffled()
+                self?.favoritePrices.onNext(shuffledPrices)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
