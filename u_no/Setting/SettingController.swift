@@ -118,8 +118,6 @@ class SettingController: UIViewController {
         self.navigationController?.pushViewController(peopleVC, animated: true)
     }
 
-
-
     private func presentConfirmationModal(title: String, description: String, sub:String, actionButtonText: String, actionHandler: @escaping () -> Void) {
         let confirmationVC = ConfirmationViewController(
             title: title,

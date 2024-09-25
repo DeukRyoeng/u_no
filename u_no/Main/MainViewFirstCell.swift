@@ -67,6 +67,7 @@ class MainViewFirstCell: UICollectionViewCell {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-5)
             $0.width.equalTo(120)
+            $0.height.equalTo(60)
         }
         
         discountLabel.snp.makeConstraints {

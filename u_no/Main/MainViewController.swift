@@ -41,7 +41,7 @@ class MainViewController: UIViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                section.orthogonalScrollingBehavior = .none
+//                section.orthogonalScrollingBehavior = .none
                 
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
@@ -180,7 +180,7 @@ class MainViewController: UIViewController {
         collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
         collectionView.backgroundColor = UIColor.mainBackground
         collectionView.delegate = self
-        collectionView.isScrollEnabled = false 
+        collectionView.isScrollEnabled = true
 
         view.addSubview(collectionView)
         
