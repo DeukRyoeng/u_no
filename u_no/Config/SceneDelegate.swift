@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        
+        window.rootViewController = TabbarController()
         // Apple과 Kakao 로그인 상태를 확인할 DispatchGroup
            let group = DispatchGroup()
            var isAppleLoggedIn = false
@@ -50,11 +50,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            group.notify(queue: .main) {
                if isAppleLoggedIn || isKakaoLoggedIn {
                    // 둘 중 하나라도 로그인된 상태라면 메인 화면 (TabbarController) 설정
-                   window.rootViewController = TabbarController()
+//                   window.rootViewController = TabbarController()
                } else {
                    // 로그인되지 않았을 경우 로그인 화면 설정
                    print("로그인 안됌")
-                   window.rootViewController = LoginViewController()
+//                   window.rootViewController = LoginViewController()
                }
                window.makeKeyAndVisible()
                self.window = window
