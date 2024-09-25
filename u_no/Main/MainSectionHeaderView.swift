@@ -37,8 +37,8 @@ class MainSectionHeaderView: UICollectionReusableView {
         }
     }
     
-    func configure(with title: String) {
+    func configure(with title: String, isFavoriteHeader: Bool = false) {
         sectionTitle.text = title
-        }
-    
+        sectionTitle.font = isFavoriteHeader ? .boldSystemFont(ofSize: 30) : .boldSystemFont(ofSize: 35) 
+    }
 }

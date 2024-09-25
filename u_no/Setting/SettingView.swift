@@ -50,7 +50,7 @@ class SettingView: UIView {
         settingTable.snp.makeConstraints {
             $0.top.equalTo(logoImage.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(0)
-            $0.height.equalTo(240)
+            $0.height.equalTo(120)
         }
     }
     

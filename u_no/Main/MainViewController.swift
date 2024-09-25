@@ -49,25 +49,28 @@ class MainViewController: UIViewController {
                 
                 return section
             } else if sectionIndex == 1 {
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / 3.0), heightDimension: .absolute(110))
+                
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)
+
+                let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
                 
-                let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(250))
-                let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, repeatingSubitem: item, count: 2)
+                let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [item, item, item])
                 
-                let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250))
-                let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [verticalGroup])
-                
-                let section = NSCollectionLayoutSection(group: horizontalGroup)
+                let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(220))
+                let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, subitems: [horizontalGroup, horizontalGroup])
+
+                let section = NSCollectionLayoutSection(group: verticalGroup)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
-                
+
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header]
-                
+
                 return section
             }
+
             return nil
         }
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -147,7 +150,7 @@ class MainViewController: UIViewController {
                 if indexPath.section == 0 {
                     header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락")
                 } else if indexPath.section == 1 {
-                    header.configure(with: "즐겨찾기 항목")
+                    header.configure(with: "즐겨찾기 항목", isFavoriteHeader: true)
                 }
                 return header
             }
@@ -158,9 +161,10 @@ class MainViewController: UIViewController {
 
         Observable.combineLatest(top3PricesObservable, favoritePricesObservable)
             .map { top3Prices, favoritePrices in
-                [
+                let limitedFavorites = Array(favoritePrices.prefix(6))
+                return [
                     SectionModel(model: "Top3", items: top3Prices),
-                    SectionModel(model: "즐겨찾기 항목", items: favoritePrices)
+                    SectionModel(model: "즐겨찾기 항목", items: limitedFavorites)
                 ]
             }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
@@ -168,6 +172,7 @@ class MainViewController: UIViewController {
 
         collectionView.delegate = self
     }
+
 
     private func setupCollectionView() {
         collectionView.register(MainViewFirstCell.self, forCellWithReuseIdentifier: MainViewFirstCell.id)
