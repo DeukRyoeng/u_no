@@ -35,9 +35,9 @@ class SettingViewModel {
         let sampleItems = [
             SettingItem(title: "만든 사람", hasSwitch: false, titleColor: .black),
 //            SettingItem(title: "알림", hasSwitch: true, titleColor: .black),
-            SettingItem(title: "문의사항", hasSwitch: false, titleColor: .black),
-            SettingItem(title: "로그아웃", hasSwitch: false, titleColor: .black),
-            SettingItem(title: "계정탈퇴", hasSwitch: false, titleColor: UIColor.mainRed)
+            SettingItem(title: "문의사항", hasSwitch: false, titleColor: .black)
+//            SettingItem(title: "로그아웃", hasSwitch: false, titleColor: .black),
+//            SettingItem(title: "계정탈퇴", hasSwitch: false, titleColor: UIColor.mainRed)
         ]
         
         items = Observable.just(sampleItems)

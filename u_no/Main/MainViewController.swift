@@ -150,7 +150,7 @@ class MainViewController: UIViewController {
                 if indexPath.section == 0 {
                     header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락")
                 } else if indexPath.section == 1 {
-                    header.configure(with: "즐겨찾기 항목")
+                    header.configure(with: "즐겨찾기 항목", isFavoriteHeader: true)
                 }
                 return header
             }
