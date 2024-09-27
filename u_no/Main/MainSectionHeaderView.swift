@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainSectionHeaderView: UICollectionReusableView {
     
@@ -20,25 +22,42 @@ class MainSectionHeaderView: UICollectionReusableView {
         return label
     }()
     
+    let priceButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("시세보기", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20)
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.tintColor = .darkGray
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
-        self.backgroundColor = UIColor.mainBackground
+        setupView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func setupUI() {
+
+    private func setupView() {
         addSubview(sectionTitle)
+        addSubview(priceButton)
+
         sectionTitle.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+        }
+
+        priceButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-8)
+            $0.centerY.equalToSuperview()
         }
     }
     
-    func configure(with title: String) {
+    func configure(with title: String, isFavoriteHeader: Bool = false) {
         sectionTitle.text = title
-        }
-    
+        priceButton.isHidden = !isFavoriteHeader
+    }
 }

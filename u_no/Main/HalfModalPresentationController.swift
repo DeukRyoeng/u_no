@@ -22,23 +22,30 @@ class HalfModalPresentationController: UIPresentationController {
     
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView else { return .zero }
-        let height = containerView.bounds.height * 0.2
-        return CGRect(x: 0, y: containerView.bounds.height - height, width: containerView.bounds.width, height: height)
+        let height = containerView.bounds.height * 0.2 // Set modal height to 20% of container height
+        return CGRect(x: 0,
+                      y: containerView.bounds.height - height, // Position the modal at the bottom
+                      width: containerView.bounds.width,
+                      height: height)
     }
     
     override func presentationTransitionWillBegin() {
         guard let containerView = containerView else { return }
         
+        // Add dimming view to the container view
         containerView.addSubview(dimmingView)
         dimmingView.frame = containerView.bounds
         dimmingView.alpha = 0
         
+        // Style the presented view
         presentedView?.layer.cornerRadius = 12
         presentedView?.clipsToBounds = true
         presentedView?.backgroundColor = .white
         
+        // Bind the tap gesture for dismissing the modal
         bindDimmingViewTap()
         
+        // Animate the dimming view's appearance
         if let coordinator = presentedViewController.transitionCoordinator {
             coordinator.animate(alongsideTransition: { _ in
                 self.dimmingView.alpha = 1
@@ -49,6 +56,7 @@ class HalfModalPresentationController: UIPresentationController {
     }
     
     override func dismissalTransitionWillBegin() {
+        // Animate the dimming view's disappearance
         if let coordinator = presentedViewController.transitionCoordinator {
             coordinator.animate(alongsideTransition: { _ in
                 self.dimmingView.alpha = 0

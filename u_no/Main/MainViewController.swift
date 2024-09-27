@@ -16,19 +16,6 @@ class MainViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let mainVM = MainViewModel()
     
-    private let priceButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("시세보기", for: .normal)
-        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        button.tintColor = .darkGray
-        button.setTitleColor(.darkGray, for: .normal)
-        button.backgroundColor = UIColor.mainBackground
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             if sectionIndex == 0 {
@@ -41,33 +28,33 @@ class MainViewController: UIViewController {
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                section.orthogonalScrollingBehavior = .none
-                
+
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header]
                 
                 return section
             } else if sectionIndex == 1 {
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(110))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / 3.0), heightDimension: .absolute(110))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)
+
+                let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(110))
+                let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [item, item, item])
                 
-                let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .absolute(130), heightDimension: .absolute(250))
-                let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, repeatingSubitem: item, count: 2)
-                
-                let horizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250))
-                let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: horizontalGroupSize, subitems: [verticalGroup])
-                
-                let section = NSCollectionLayoutSection(group: horizontalGroup)
+                let verticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(220))
+                let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: verticalGroupSize, subitems: [horizontalGroup, horizontalGroup])
+
+                let section = NSCollectionLayoutSection(group: verticalGroup)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)
-                
+
                 let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
                 let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
                 section.boundarySupplementaryItems = [header]
-                
+
                 return section
             }
+
             return nil
         }
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -79,45 +66,14 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.mainBackground
         setupCollectionView()
-        setupPriceButton()
         bindCollectionView()
-        bindPriceButton()
         mainVM.fetchAllData()
     }
 
-    private func setupPriceButton() {
-        view.addSubview(priceButton)
-        priceButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(60)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.width.equalTo(100)
-            $0.height.equalTo(50)
-        }
+    private func bindCollectionView() {
+        updateCollectionViewBasedOnFilter()
     }
-
-    private func bindPriceButton() {
-        priceButton.rx.tap
-            .bind { [weak self] in
-                self?.showPriceFilter()
-            }
-            .disposed(by: disposeBag)
-    }
-
-    private func showPriceFilter() {
-        let priceFilterVC = PriceFilterViewController()
-        priceFilterVC.modalPresentationStyle = .custom
-        priceFilterVC.transitioningDelegate = self
-        
-        priceFilterVC.isPriceIncrease = isPriceIncrease
-        
-        priceFilterVC.onFilterSelected = { [weak self] isPriceIncrease in
-            self?.isPriceIncrease = isPriceIncrease
-            self?.updateCollectionViewBasedOnFilter()
-        }
-        
-        present(priceFilterVC, animated: true, completion: nil)
-    }
-
+    
     private func updateCollectionViewBasedOnFilter() {
         collectionView.delegate = nil
         collectionView.dataSource = nil
@@ -145,10 +101,16 @@ class MainViewController: UIViewController {
                 }
 
                 if indexPath.section == 0 {
-                    header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락")
+                    header.configure(with: self.isPriceIncrease ? "Top3: 시세상승" : "Top3: 시세하락", isFavoriteHeader: true)
                 } else if indexPath.section == 1 {
-                    header.configure(with: "즐겨찾기 항목")
+                    header.configure(with: "즐겨찾기 항목", isFavoriteHeader: false)
                 }
+                header.priceButton.rx.tap
+                    .bind { [weak self] in
+                        self?.showPriceFilter() // Call the method to show the price filter
+                    }
+                    .disposed(by: self.disposeBag)
+
                 return header
             }
         )
@@ -158,9 +120,10 @@ class MainViewController: UIViewController {
 
         Observable.combineLatest(top3PricesObservable, favoritePricesObservable)
             .map { top3Prices, favoritePrices in
-                [
+                let limitedFavorites = Array(favoritePrices.prefix(6))
+                return [
                     SectionModel(model: "Top3", items: top3Prices),
-                    SectionModel(model: "즐겨찾기 항목", items: favoritePrices)
+                    SectionModel(model: "즐겨찾기 항목", items: limitedFavorites)
                 ]
             }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
@@ -174,8 +137,7 @@ class MainViewController: UIViewController {
         collectionView.register(MainViewSecoundCell.self, forCellWithReuseIdentifier: MainViewSecoundCell.id)
         collectionView.register(MainSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MainSectionHeaderView.id)
         collectionView.backgroundColor = UIColor.mainBackground
-        collectionView.delegate = self
-        collectionView.isScrollEnabled = false 
+        collectionView.isScrollEnabled = true
 
         view.addSubview(collectionView)
         
@@ -184,9 +146,18 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func bindCollectionView() {
-        updateCollectionViewBasedOnFilter()
+    private func showPriceFilter() {
+        let priceFilterVC = PriceFilterViewController()
+        priceFilterVC.onFilterSelected = { [weak self] isIncreasing in
+            self?.isPriceIncrease = isIncreasing
+            self?.updateCollectionViewBasedOnFilter() // Rebind collection view data based on selected filter
+        }
+        priceFilterVC.isPriceIncrease = isPriceIncrease // Pass the current filter state
+        priceFilterVC.modalPresentationStyle = .custom
+        priceFilterVC.transitioningDelegate = self
+        present(priceFilterVC, animated: true, completion: nil)
     }
+
 }
 
 extension MainViewController: UICollectionViewDelegate {
