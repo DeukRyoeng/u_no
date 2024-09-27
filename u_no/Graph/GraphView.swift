@@ -116,7 +116,7 @@ class GraphView: UIView{
     }
     func setData(entries: [ChartDataEntry]) {
         let lineChartDataSet = LineChartDataSet(entries: entries, label: "가격")
-        lineChartDataSet.colors = [.green]         // 선 색상 설정
+        lineChartDataSet.colors = [UIColor.mainBlue]         // 선 색상 설정
         lineChartDataSet.circleColors = [.red]     // 데이터 포인트 색상 설정
         lineChartDataSet.drawCirclesEnabled = true // 데이터 포인트 표시 여부 설정
         lineChartDataSet.valueFormatter = self     // 데이터 포인트 위 값 포맷터 설정
