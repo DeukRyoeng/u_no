@@ -107,7 +107,7 @@ class MainViewController: UIViewController {
                 }
                 header.priceButton.rx.tap
                     .bind { [weak self] in
-                        self?.showPriceFilter() // Call the method to show the price filter
+                        self?.showPriceFilter() 
                     }
                     .disposed(by: self.disposeBag)
 
