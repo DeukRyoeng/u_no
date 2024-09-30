@@ -50,6 +50,7 @@
 		C234BD652C8046680074C822 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C234BD642C8046680074C822 /* SettingController.swift */; };
 		C23845172C942AAD0084ECD0 /* PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845162C942AAD0084ECD0 /* PeopleView.swift */; };
 		C23845192C942ABB0084ECD0 /* PeopleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23845182C942ABB0084ECD0 /* PeopleController.swift */; };
+		C2404DBA2CAA748600C133C9 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2404DB92CAA748600C133C9 /* LaunchViewController.swift */; };
 		C24E5F672C85AB2C008DC4D6 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */; };
 		C24E5F692C85AB36008DC4D6 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */; };
 		C24E5F6C2C85AB48008DC4D6 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */; };
@@ -105,6 +106,7 @@
 		C234BD642C8046680074C822 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
 		C23845162C942AAD0084ECD0 /* PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleView.swift; sourceTree = "<group>"; };
 		C23845182C942ABB0084ECD0 /* PeopleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleController.swift; sourceTree = "<group>"; };
+		C2404DB92CAA748600C133C9 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		C24E5F662C85AB2C008DC4D6 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		C24E5F682C85AB36008DC4D6 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		C24E5F6B2C85AB48008DC4D6 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			children = (
 				AFB4333F2C8FA28E00642697 /* LoginViewController.swift */,
 				AF9BA2892C9D7252002E21D0 /* AccountVM.swift */,
+				C2404DB92CAA748600C133C9 /* LaunchViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				4FA06E502C86D40700F02657 /* GraphView.swift in Sources */,
 				C23845172C942AAD0084ECD0 /* PeopleView.swift in Sources */,
 				4F8D7BC62C8ED7CD0062EBD9 /* ColorExtension.swift in Sources */,
+				C2404DBA2CAA748600C133C9 /* LaunchViewController.swift in Sources */,
 				C2D7DA8F2C806BE5009C8652 /* SettingModel.swift in Sources */,
 				C2D7DA8C2C8060BB009C8652 /* SettingViewModel.swift in Sources */,
 				451D9EBB2C92E6640046A4C0 /* SearchTableViewCell.swift in Sources */,
@@ -572,7 +576,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4DWV94Z6J6;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = u_no/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "알고싶어?";
@@ -608,7 +612,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4DWV94Z6J6;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = u_no/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "알고싶어?";
