@@ -16,7 +16,7 @@ class MainSectionHeaderView: UICollectionReusableView {
     
     let sectionTitle: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 35)
+        label.font = .boldSystemFont(ofSize: 34)
         label.textAlignment = .left
         label.textColor = .black
         return label

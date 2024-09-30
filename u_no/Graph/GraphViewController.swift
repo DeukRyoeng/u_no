@@ -179,6 +179,7 @@ extension GraphViewController: UICollectionViewDataSource, UICollectionViewDeleg
             label.textAlignment = .left
         }else{
             label.textAlignment = .center
+            label.text = "\(data) 원"
         }
         
         cell.contentView.addSubview(label)
