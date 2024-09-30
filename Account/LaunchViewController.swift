@@ -23,7 +23,7 @@ class LaunchViewController: UIViewController {
             $0.edges.equalToSuperview()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
             self?.switchTabbarController()
         }
     }
